@@ -1,0 +1,148 @@
+.Contentt {
+  width: 100%;
+}
+.Contsssentt {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    font-size: 2.8rem;
+    color: #2daaed;
+    font-weight: 500;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+    button {
+      width: 102px;
+      height: 25px;
+      background-color: transparent;
+      border: 1px solid #a6a6a6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 4px;
+      margin-left: 5px;
+      cursor: pointer;
+      p,
+      .Covvvntsssentt_btn {
+        font-size: 12px;
+        color: #333333;
+        margin-left: 2px;
+      }
+    }
+    .Contsssentt_btn {
+      background-color: #e74c3c;
+      p,
+      .Covvvntsssentt_btn {
+        color: white;
+      }
+    }
+  }
+}
+.Cossssntsssentt_btn {
+  display: flex;
+  margin-top: 20px;
+
+  div {
+    margin-left: 10px;
+    p {
+      font-size: 15px;
+      font-weight: 700;
+      padding-bottom: 5px;
+      font-weight: 700;
+
+      span {
+        font-size: 1.3rem;
+        color: rgb(165 165 162);
+        font-weight: 450;
+        margin-left: 5px;
+      }
+      .Cossssssssntssssssentt_btn {
+        font-size: 1.3rem;
+        color: rgb(165 165 162);
+      }
+    }
+  }
+}
+.Cossssssssntsssentt_btn {
+  width: 152px;
+}
+// create content
+.Create_content_header {
+  height: 40px;
+  background-color: steelblue;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    font-size: 16px;
+    margin: 0px 0px 0px 15px;
+    line-height: 30px;
+    color: white;
+    cursor: default;
+  }
+  .Create_content_sssssheader {
+    font-size: 16px;
+    margin: 0px 15px 0px 0px;
+    line-height: 30px;
+    color: white;
+    cursor: pointer;
+  }
+}
+.Create_content_content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100px;
+  div {
+    display: flex;
+  }
+  .Create_content_content_input {
+    width: 350px;
+    height: 43px;
+    display: flex;
+    padding-left: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Create_content_content_input {
+    border: 1px solid #c7c7c7;
+    border-radius: 3px;
+
+    &:focus {
+      border: none; /* Xóa border khi focus */
+      outline: none; /* Xóa viền mặc định của trình duyệt */
+    }
+    &::placeholder {
+      font-size: 14px; /* Thay đổi kích thước font của placeholder */
+      color: rgba(
+        117,
+        117,
+        117,
+        1.5
+      ); /* Bạn cũng có thể thay đổi màu sắc nếu muốn */
+    }
+  }
+
+  button {
+    margin-left: 10px;
+    width: 140px;
+    height: 41px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #2daaed;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-size: 1.6rem;
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,109 @@
+.Inpur_search_value {
+  width: 500px !important;
+  min-height: 300px;
+  background-color: aliceblue;
+  box-shadow: 1px 1px 1px 1px #111111;
+  margin-top: 49px;
+  margin-left: -5px;
+
+  p {
+    margin: 0 !important;
+  }
+}
+.Inpur_search_value_text {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  font-size: 1.7rem;
+  border-bottom: 0.2px solid #000;
+}
+.Inpur_search_List_hot_search {
+  display: flex;
+  flex-direction: column;
+
+  //div list anh trai
+  div {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    cursor: pointer;
+    p {
+      margin: 0 !important;
+
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      margin: 0;
+      font-size: 1.4rem;
+      color: #333;
+    }
+    .Inpur_search_List_hot_search_color1 {
+      font-weight: 700;
+      font-size: 15px;
+      color: #e74c3c;
+    }
+    .Inpur_search_List_hot_search_color2 {
+      font-weight: 700;
+      font-size: 15px;
+      color: #e74c3c;
+    }
+    .Inpur_search_List_hot_search_color3 {
+      font-weight: 700;
+      font-size: 15px;
+      color: #e74c3c;
+    }
+    .Inpur_search_List_hot_search_color4 {
+      font-weight: 700;
+      font-size: 15px;
+      color: #e74c3c;
+    }
+
+    .Inpur_search_List_hot_search_color5 {
+      font-weight: 700;
+      font-size: 15px;
+      color: #e74c3c;
+    }
+  }
+}
+.Inpur_search_List_hot_search_text_history {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #000;
+  border-top: 1px solid #000;
+  background-color: rgb(245 245 245);
+  p {
+    padding-left: 10px;
+    font-size: 1.7rem;
+  }
+}
+.Inpur_search_List_icon {
+  padding-right: 10px;
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+.Inpur_search_List_hot_search_do_not_history {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1.3rem;
+  font-style: italic;
+  cursor: pointer;
+  color: #a09e9e;
+  text-transform: none;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.inputField {
+  position: relative;
+  .Inpur_search_value {
+    position: absolute;
+    top: 1000px !important;
+    left: 0;
+  }
+}

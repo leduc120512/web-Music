@@ -1,0 +1,233 @@
+.pprofile {
+  margin-top: 70px;
+  p {
+    margin: 0;
+  }
+}
+.Profilee_content {
+  width: 100%;
+  height: 257px;
+  background-color: #3c3d51;
+}
+.Profilesse_content {
+  display: flex;
+  align-items: center;
+}
+.Profilee_content_img {
+  width: 100px;
+  border-radius: 50%;
+}
+.Prossfileess_content_img {
+  p {
+    font-size: 14px;
+    color: aliceblue;
+  }
+  .Prossfilee_cossssntdddent_img {
+    font-size: 36px !important;
+  }
+}
+.Profilesssssse_content {
+  margin-left: 191px;
+}
+.Profilesse_content {
+  padding-top: 30px;
+}
+.Prossfisdsslee_cossssntdddent_img {
+  display: flex;
+  padding-top: 38px;
+  padding-left: 90px;
+}
+
+.Prossfisdsslessssse_cossssntdddent_img {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  p {
+    display: flex;
+    align-items: center;
+
+    font-size: 12px;
+    color: #b5b5b5;
+
+    span {
+      color: white;
+      font-size: 14px;
+    }
+  }
+}
+.Prossfisdsslessssdddse_cossssntdddent_img {
+  margin-left: 10px;
+}
+.Profilee_nAV {
+  width: 100%;
+  height: 50px;
+  padding-left: 191px;
+  margin-bottom: 0;
+
+  background-color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  li {
+    font-size: 15px;
+    color: #282a21;
+    margin-left: 20px;
+    cursor: pointer;
+  }
+  .Profilee_nAVsss {
+    font-size: 2.4rem;
+  }
+}
+.Profilee_container {
+  display: flex;
+  justify-content: center;
+}
+.Profilee_Contetnt- {
+  min-height: 500px;
+
+  margin-left: 191px;
+  margin-top: 0;
+  padding-top: 0;
+}
+.Profileesss_sibar- {
+  min-height: 500px;
+}
+.Cossssntsssdssentt_btn {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+
+  div {
+    p {
+      font-size: 12px;
+      color: #acacac;
+      font-weight: 400 !important;
+      margin-left: -10px;
+    }
+    .Cosssssssssssfsdntsssentt_btn {
+      font-size: 14px;
+      color: black;
+      margin-top: 5px;
+      font-weight: 450;
+    }
+  }
+}
+.leduxa {
+  display: flex;
+  flex-wrap: wrap;
+}
+.icon_play {
+  font-size: 2.5rem;
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.Cossssntsssdssentt_btn:hover .icon_play {
+  display: block;
+}
+.Cossssntsssdssentt_btn {
+  cursor: pointer;
+  position: relative;
+  img {
+    transition: 0.3s ease;
+  }
+  img:hover {
+    filter: blur(5px); /* Làm mờ ảnh khi hover */
+  }
+}
+.hskjdh {
+  width: 100%;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  background-color: #41cc76;
+  p {
+    margin-left: 10px;
+    span {
+      font-size: 15px;
+      color: white;
+      margin-left: 10px;
+    }
+  }
+  .hskjdh_oco {
+    margin-left: 10px;
+    font-size: 19px;
+    color: white;
+  }
+}
+.Cossssgasdgssssssssfsdsdgsddntsssentt_btn {
+  background-color: #2882bc;
+  width: 140px !important;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .Cosssssssssssdsdgsfsdntsssentt_btn {
+    font-size: 6rem;
+    color: white;
+  }
+}
+.Cossssdgssssssssfsdntsssentt_btn,
+.Csdgosssssdggdsssssssfsdntsssentt_btn {
+  font-size: 14px;
+  color: #333333;
+  margin-top: 10px !important;
+}
+.Cosdgsagdsssssssssssfsdntsssentt_btn {
+  height: 31px;
+  width: 84px;
+  background-color: transparent;
+  border: 1px solid #a6a6a6;
+  border-radius: 5px;
+  margin-left: 15px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.Cossddssssssssssfsdntsssentt_btn {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin-left: 15px;
+}
+.Cosssssssssssfsdsdgsddntsssentt_btn {
+  display: flex;
+  margin-left: 15px;
+}
+.Cosssssssdgasdgssssfsdntsssentt_btn {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333333;
+  float: left;
+  width: 680px;
+}
+.Consdtedsdntt {
+  background-color: red;
+}
+.Contedssdgsddgsgdntt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .Contedssasdgsddgsgdntt {
+    font-size: 2.5rem;
+    color: #2882bc;
+    margin-left: 30px;
+  }
+}
+.Contedsdntt {
+  font-size: 14px;
+  color: #333333;
+  padding: 0 !important ;
+}
+
+.Consdtedsdntt:hover .Contedsdntt {
+  color: white;
+}
+.Consdtedsdntt:focus .Contedsdntt {
+  color: white;
+}
+.Contedsdntt {
+  color: #e74c3c;
+}

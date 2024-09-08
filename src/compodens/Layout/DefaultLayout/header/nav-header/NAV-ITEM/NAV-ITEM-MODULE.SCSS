@@ -1,0 +1,8 @@
+.NAV_ITEM {
+  font-size: 1.6rem !important;
+  font-weight: 600;
+  color: rgba(240, 255, 255, 0.4) !important;
+  border-bottom: 3px solid rgba(240, 255, 255, 0.4);
+  padding-bottom: 3px;
+  transition: color 0.3s, border 0.3s; /* Thêm hiệu ứng chuyển đổi khi hover */
+}

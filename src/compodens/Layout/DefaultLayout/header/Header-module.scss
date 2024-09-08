@@ -1,0 +1,372 @@
+.Headerin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+  position: fixed;
+  width: 100%;
+  height: 70px;
+  z-index: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.Header-nav {
+  display: flex;
+  gap: 15px;
+}
+
+.Header-nav-item {
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  position: relative; /* Ensure positioning context */
+}
+.menu-elip {
+  font-size: 1.9rem !important;
+}
+
+.Header-nav-item:hover {
+  color: aqua;
+}
+
+.Header-action {
+  display: flex;
+  align-items: center;
+}
+
+.Header-search {
+  position: relative;
+}
+
+.Header-search-input {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.Header-search-button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.searchBar {
+  height: 40px;
+  background: rgba(22, 24, 35, 0.06);
+  width: 350px;
+  display: flex;
+  margin-right: 20px;
+}
+
+.searchBar {
+  border: 1.8px solid rgba(255, 0, 0, 0.4);
+}
+
+.inputField {
+  font-size: 15px;
+  width: 90%;
+  font-weight: 400;
+  border-right: 1px solid rgba(22, 24, 35, 0.2);
+  background: transparent;
+  outline: none;
+  border: none;
+}
+
+.gf {
+  font-size: 1.8rem;
+}
+
+.searchButton {
+  font-size: 10px;
+  color: aliceblue;
+  background: transparent;
+  border: none;
+  width: 20%;
+  &:hover {
+    background-color: rgba(22, 24, 35, 0.06);
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.hearder-faUpload {
+  margin-right: 10px;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+.header-faHome {
+  margin-right: 20px;
+  font-size: 1.8rem;
+}
+
+/* BXH */
+/* Ensure NAV_main and NAV_ITEM have inline display */
+.NAV_main,
+.NAV_ITEM {
+  display: flex !important;
+  flex-direction: column; /* Ensure elements are inline */
+  position: relative; /* Positioning context for pseudo-element */
+  padding-bottom: 3px; /* Space between text and border */
+  font-size: 1.7rem !important; /* Specific styling */
+  font-weight: 600 !important;
+  color: black;
+}
+.NAV_ITEM {
+  margin-top: 10px;
+}
+.NAV_main {
+  margin-top: 15px;
+}
+/* Use pseudo-element for border */
+/* Ensure NAV_main and NAV_ITEM have inline display */
+.NAV_main,
+.NAV_ITEM {
+  display: inline-block; /* Ensure elements are inline-block */
+  position: relative; /* Positioning context for pseudo-element */
+  padding-bottom: 3px; /* Space between text and border */
+  font-size: 1.8rem !important; /* Specific styling for NAV_main */
+
+  transition: color 0.3s, border 0.3s; /* Add transition effect */
+}
+
+/* Use pseudo-element for border */
+.NAV_main::after,
+.NAV_ITEM::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px; /* Border height */
+  width: 100%; /* Full width of the element */
+  background-color: rgba(255, 255, 255, 0.4); /* Border color */
+  transition: background-color 0.3s; /* Transition effect for border */
+}
+
+/* Specific styling for NAV_ITEM */
+.NAV_ITEM {
+  font-size: 1.3rem !important; /* Specific styling */
+
+  color: black !important;
+}
+
+/* Hover effect */
+.NAV_main:hover,
+.NAV_ITEM:hover {
+  color: #2daaed !important; /* Change text color on hover */
+}
+
+.NAV_main:hover::after,
+.NAV_ITEM:hover::after {
+  background-color: rgba(255, 255, 255, 0.7); /* Change border color on hover */
+}
+
+/* BXH styles */
+.BXH {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  min-width: 500px !important;
+  min-height: 100px !important;
+  display: flex;
+  justify-content: space-around !important;
+  display: flex; /* Flex container */
+  flex-wrap: nowrap; /* Prevent wrapping to next line */
+}
+
+.BXH-list {
+  display: flex;
+  flex-direction: column; /* Align items in each list vertically */
+  width: 25%;
+}
+.dd {
+  display: flex;
+  flex-direction: column; /* Align items in each list vertically */
+  width: 100% !important;
+}
+.BXH-item {
+  display: inline-block !important;
+}
+
+/* Ensure BXH only appears on hover */
+.Header-nav-item:hover .BXH {
+  display: flex;
+}
+.WITDHTOP100 {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    div {
+      p {
+        font-size: 1.5rem !important; /* Specific styling */
+        font-weight: 550;
+        color: black;
+      }
+    }
+  }
+}
+// --ELIP
+.t2983 {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  min-width: 140px !important;
+  min-height: 100px !important;
+  display: flex;
+  flex-direction: column;
+  display: flex; /* Flex container */
+  flex-wrap: nowrap;
+  height: 40px !important;
+}
+.t2983:hover {
+  display: inline-block;
+}
+.eldi {
+  min-width: 150px !important;
+  min-height: 50px !important;
+}
+.alsij {
+}
+.sldfips {
+  // display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+
+  z-index: 1;
+  min-width: 200px !important;
+  min-height: 20px !important;
+  display: flex;
+  flex-direction: column;
+  display: flex; /* Flex container */
+  flex-wrap: nowrap;
+}
+.Header_create_acoutn {
+  width: 118px !important;
+}
+.das {
+  p {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 0;
+    color: black !important;
+  }
+  p:hover {
+    color: #2dbbf3 !important;
+  }
+}
+.Header_login {
+  width: 170px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+.Header_login1 {
+  display: flex;
+  align-items: center;
+}
+.Header_login2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-top: -14px;
+}
+.Header_login3 {
+  display: flex;
+  align-items: center;
+}
+.Header_login_img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.Header_login2 p {
+  margin-bottom: -7px;
+}
+.Header_login3 p {
+  margin-top: 4px;
+}
+.Header_login_profile {
+  position: absolute;
+  top: 125%;
+  left: 0;
+  z-index: 1;
+}
+.Header_login_profile::before {
+  content: "";
+  width: 170px;
+  height: 30px;
+
+  position: absolute;
+  top: -31px;
+}
+.Header_login2_icon_down {
+  margin-right: 5px;
+}
+.Header_login2_name {
+  font-weight: 700;
+}
+.Header_login2 {
+  margin-left: 5px !important;
+}
+.video {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around !important;
+  p {
+    margin: 0;
+    color: black;
+    padding-top: 10px;
+  }
+  p:hover {
+    color: #2daaed;
+  }
+}

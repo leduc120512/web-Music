@@ -1,0 +1,56 @@
+.BAIHAAT {
+  border-bottom: 1px solid #333333;
+  width: 95%;
+}
+
+.BAIHAAT-list {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -7px;
+
+  & + .BAIHAAT-list {
+    border-top: 1px solid #333333;
+  }
+}
+
+.BAIHAAT-p-item {
+  background: none;
+  font-size: 15px;
+  cursor: default;
+  font-weight: bold;
+}
+
+.BAIHAAT-p-itemt {
+  font-size: 14px;
+  color: #333333;
+  background-size: 17px auto;
+  line-height: 22px;
+  float: left;
+  width: auto;
+  cursor: pointer;
+  padding: 1px;
+  display: inline;
+  border-radius: 10px;
+  transition: background 0.3s, padding 0.3s, border-radius 0.3s;
+
+  &:hover,
+  &:focus {
+    background: #a22114;
+    display: inline;
+
+    outline: none; // Để loại bỏ viền mặc định khi focus
+  }
+}
+
+.BAIHAAT-p-item-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.BAIHAAT-p-itemts {
+  margin-top: -5px;
+}
+
+.jg23 {
+  margin-right: 26px !important;
+}

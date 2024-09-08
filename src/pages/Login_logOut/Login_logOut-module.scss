@@ -1,0 +1,146 @@
+.Login_main {
+  width: 100%;
+  height: 100%;
+}
+.Login_header {
+  width: 100%;
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    font-size: 1.7rem;
+    margin-left: 15px;
+  }
+  .Login_icon1 {
+    font-size: 1.4rem;
+    margin-right: 15px;
+  }
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+.Login_tr {
+  p {
+    font-size: 1.2rem;
+  }
+  td {
+    font-size: 1.2rem;
+    font-weight: 450;
+  }
+}
+.Login_issfputs {
+  font-size: 1.2rem;
+}
+.Login_inputs {
+  width: 510px;
+  height: 95%;
+}
+.Login_content {
+  display: flex;
+}
+.Login_btn {
+  width: 290px;
+  height: 100%;
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}
+.Login_iconsd1 {
+  display: flex;
+}
+.Login_td {
+  width: 110px;
+  margin-left: 5px !important;
+}
+.Login_list {
+  display: flex;
+  align-items: flex-start;
+  margin-left: -10px;
+  text-align: justify;
+  p {
+    margin-top: 7px;
+    font-size: 14px;
+  }
+}
+.Login_quen {
+  float: right;
+  font-weight: 500;
+  color: #0689ba;
+  font-size: 15px;
+  line-height: 16px;
+  margin-top: -18px;
+}
+.Login_input {
+  width: 100%;
+  height: 33px;
+  border-radius: 4px;
+  border: 1px solid black;
+}
+.fijkjd {
+  margin-top: -7px;
+}
+.dhj {
+  margin-top: 9px;
+  height: 36px;
+}
+.Login_list_icon {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.Login_list_i {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.Logi1n_btn_text {
+  font-size: 1.3rem;
+  text-align: center;
+}
+.Logi1n_btn_login {
+  width: 229px;
+  height: 36px;
+}
+.Logi1n_btn_logins {
+  text-align: center;
+  font-size: 1.4rem;
+}
+.Login_list_icon {
+  p {
+    font-size: 1.3rem;
+  }
+}
+//create acoutnt
+
+.Create_Acount {
+  display: flex;
+  flex-direction: column;
+}
+.Create_Acount_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    font-size: 1.7rem;
+  }
+}
+.Create_content {
+  width: 500px;
+  height: 100%;
+  p {
+    font-size: 1.2rem;
+  }
+}
+.Create_td {
+  td {
+    font-size: 1.2rem;
+  }
+}
+.Create_tded {
+  display: flex;
+  align-items: flex-start;
+  text-align: justify;
+  p {
+    margin-top: 8px;
+  }
+  margin-left: -9px;
+}

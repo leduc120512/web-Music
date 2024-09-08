@@ -1,0 +1,24 @@
+.Profile {
+  width: 150px;
+  min-height: 50px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px #111111;
+  margin: 0;
+  p {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+  p:hover {
+    background-color: cadetblue;
+  }
+}
+Link {
+  list-style-type: none;
+  text-decoration: none;
+}

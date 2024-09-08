@@ -1,0 +1,26 @@
+.item-music {
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.item-music img {
+  transition: 0.3s ease;
+}
+
+.item-music:hover img {
+  filter: blur(5px);
+}
+
+.item-music .list-SINGER_play {
+  font-size: 3rem;
+  display: none;
+  position: absolute;
+  top: 30%;
+  left: 75px;
+  color: white;
+}
+
+.item-music:hover .list-SINGER_play {
+  display: block;
+}

@@ -1,0 +1,344 @@
+.Music_right {
+  min-height: 1000px;
+  border: 1px solid #e3e3e3;
+  padding-top: 16px;
+}
+.Music_left {
+  min-height: 2000px;
+}
+.Music_nose {
+  margin-left: 100px;
+}
+.Musaic {
+  margin-left: 10px;
+  padding-top: 16px;
+}
+.Music_main {
+  width: 100%;
+}
+.Music {
+  display: flex;
+  margin-top: 86px;
+}
+.Music_tittel {
+  width: 838px;
+  height: 250px;
+  overflow: scroll;
+  border: 1px solid #e3e3e3;
+}
+.Music_note {
+  display: flex;
+  div {
+    display: flex;
+    align-items: center;
+    margin-left: 7px;
+    cursor: pointer;
+    p,
+    .icon_note {
+      font-size: 1.2rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+  }
+}
+.Name_music {
+  font-size: 2.5rem;
+  font-weight: 450;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+.video_music {
+  width: 838px;
+  height: 250px;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 1px solid #e3e3e3;
+}
+.Musicss {
+  display: flex !important;
+}
+.Music_item_list {
+  cursor: pointer;
+  display: flex;
+
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 37px;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+  div {
+    display: flex;
+    align-items: center;
+
+    p {
+      padding-left: 5px;
+    }
+    .Music_item_lisdst {
+      font-size: 1.5rem;
+      font-weight: 550;
+    }
+  }
+}
+.Music_item_lisdts {
+  color: #ccc;
+  font-size: 1.3rem;
+}
+.Music_item_icon_music {
+  margin-right: 15px;
+  color: #ccc;
+  font-size: 1.8rem;
+}
+.Music_item_list:focus {
+  background-color: #e9f3f7;
+}
+.Music_user {
+  width: 838px;
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    align-items: center;
+    img {
+      width: 51px;
+      border-radius: 50%;
+    }
+  }
+  .Music_user_info {
+    div {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      p {
+        margin: 0;
+        font-size: 15px;
+        color: #0689ba;
+      }
+      .Musisc_user_info {
+        font-weight: 900;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.Music_user_btn {
+  div {
+    margin-right: 40px;
+    cursor: pointer;
+  }
+}
+.Musisc_btn_info {
+  display: flex;
+  border: 1px solid #e3e3e3;
+  width: 838px;
+  height: 50px;
+  background-color: #f6f6f6;
+  justify-content: space-between;
+  div {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    p {
+      color: #707070;
+      font-weight: 700;
+    }
+  }
+
+  div {
+    display: flex;
+    button {
+      border-radius: 5px;
+      width: 70px;
+      cursor: pointer;
+      height: 23px;
+      display: flex;
+      align-items: center;
+      border: none;
+      margin-left: 5px;
+      justify-content: center;
+      background-color: #9f9f9f;
+      p {
+        color: white;
+      }
+    }
+    button:hover {
+      background-color: #0689ba;
+    }
+  }
+}
+.Music_srighsst,
+.Music_righssaat {
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #0689ba !important;
+  margin-right: 5px;
+}
+.music_subtitles {
+  width: 838px;
+  min-height: 410px;
+  margin-top: 10px;
+  border: 1px solid #e3e3e3;
+}
+.musicd_subtitles {
+  display: flex;
+  align-items: center;
+  p {
+    color: #0689ba;
+  }
+}
+.music_subtisastles {
+  p {
+    margin: 0;
+  }
+}
+.music_subtitlesssdd {
+  margin-left: 20px;
+  margin-top: 15px;
+  h3 {
+    font-size: 22px;
+    margin: 0;
+  }
+  .music_subtitlesdd {
+    border-bottom: 1px solid #e3e3e3 !important;
+    margin-top: 7px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #000;
+  }
+}
+.music_subtisastles {
+  p {
+    font-size: 14px;
+    margin-top: 7px;
+    border-bottom: 1px solid rgb(255 255 255);
+  }
+}
+.music_subtitlesdd {
+  font-size: 14.5px;
+  color: rgb(170 154 154);
+
+  span {
+    font-weight: 500;
+    color: #0689ba !important;
+  }
+}
+
+.musssicd_subtitles {
+  font-size: 1.4rem;
+  color: #0689ba;
+  margin-left: 5px;
+  margin-top: 10px;
+}
+.musicd_subtitles {
+  font-size: 1.4rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+}
+.Music_right_header {
+  display: flex;
+
+  flex-direction: column;
+}
+.Musisssac_right_hseader {
+  padding: 0 !important;
+}
+.Music_sright_header {
+  display: flex;
+  align-items: center;
+  margin-right: 150px;
+  p {
+    height: 18px;
+    color: #9a9a9a;
+    font-size: 1.5rem;
+  }
+}
+.Muasic_ssright_header {
+  border: 1px solid #9f9f9f;
+  border-radius: 50% !important;
+  margin: 5px;
+  width: 17px;
+  height: 17px;
+  display: inline-block;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px;
+  background-color: #9f9f9f;
+}
+.Muasicsss_ssright_header {
+  color: white !important;
+}
+.text-main {
+  margin-bottom: 0;
+  font-size: 2.5rem;
+  font-weight: 500 !important;
+}
+.Musisssac_right_header {
+  display: flex;
+
+  align-items: center !important;
+  justify-content: space-between;
+}
+.Musiacsa_right_header {
+  display: flex;
+  align-items: center;
+}
+.Musiac_righst_header {
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 10px;
+}
+.Musiacsa_right_header {
+  margin-top: 5px;
+  width: 350px;
+  border-bottom: 1px solid #e3e3e3;
+  padding: 0;
+  height: 50px;
+
+  padding-bottom: 5px;
+  div {
+    margin-left: 10px;
+    p {
+      color: #9f9f9f;
+    }
+    .Maausiac_righstss_header {
+      font-size: 1.4rem;
+      margin-bottom: 5px;
+      padding: 0;
+      margin: 0;
+    }
+    .Musiac_righsst_header {
+      font-size: 1.5rem;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+.Maausiac_sssssrighstaaass_header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 90px;
+  cursor: pointer;
+  border: 1px solid #9f9f9f;
+  justify-content: center;
+  width: 150px;
+  height: 35px;
+  border-radius: 20px;
+  background-color: transparent;
+  p {
+    text-align: center;
+  }
+}
+.Maausiac_sssssrighstaaass_header:hover {
+  background-color: #0689ba;
+  p {
+    color: white;
+  }
+}

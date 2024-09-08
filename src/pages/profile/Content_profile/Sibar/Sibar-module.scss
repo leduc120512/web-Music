@@ -1,0 +1,70 @@
+.Sibar {
+  width: 100%;
+}
+.Sibar_conternt {
+  margin-top: 20px;
+  width: 300px;
+  height: 240px;
+  cursor: pointer;
+  border-radius: 15px;
+  position: relative;
+  background-color: #2da3df;
+  p {
+    font-weight: bold;
+    text-align: center;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.88);
+    padding-top: 40px;
+    position: relative;
+    z-index: 2;
+  }
+}
+.ssSibarssss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -40px;
+  p {
+    text-align: center;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 2;
+    margin: 16px 17px 0px 17px;
+  }
+}
+.ssSibsssssarsssssssss {
+  position: absolute;
+  top: 65%;
+  left: 66px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 160px;
+  height: 48px;
+  border-radius: 20px;
+  p {
+    color: #2da3df;
+    margin: 0;
+    padding: 0;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: #2daaed;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+}
+.sssssdsjhsd {
+  color: #2da3df;
+}
+.ssssssssdsjhsd {
+  margin-top: 30px;
+}
+.dfiudsd {
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: #2da3df;
+  margin-bottom: 20px;
+}

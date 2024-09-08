@@ -1,0 +1,61 @@
+.Musicvchauau-img {
+  width: 90px;
+  height: 90px;
+}
+.Musicvchauau-list {
+  display: flex;
+  border-top: 2px solid rgba(255, 255, 255, 0.4); // Add border top to all
+}
+
+.Musicvchauau-list:not(:last-child) {
+  border-bottom: none; // Remove border bottom for all except the last one
+}
+
+.Musicvchauau-list:last-child {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4); // Add border bottom to the last child only
+}
+
+.Mvhot-main-text12314 {
+  margin: 0 !important;
+  margin-left: -10px !important;
+  border-bottom: none; // Remove border bottom
+  margin-bottom: 3px !important;
+  padding-bottom: 0 !important;
+}
+
+.Mvhots-main-text12 {
+  font-size: 1.2rem;
+}
+
+.Mvhot-masin-tex22 {
+  font-size: 1.4rem;
+}
+
+.Mvhot-main-text12314s {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+.Musicvchauau-l2 {
+  font-size: 2rem;
+}
+
+.Mussicvchauau-list {
+  margin-top: 3px !important;
+  display: flex;
+  align-items: center;
+  margin-left: 3px !important;
+}
+
+.Mvhsot-main-tex22 {
+  margin-top: -3px !important;
+}
+.type-hot-img {
+  margin-top: 10px;
+}
+.type-hot {
+  margin-top: 30px;
+}
+.type-hot-list {
+  margin-top: 20px;
+}

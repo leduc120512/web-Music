@@ -1,0 +1,145 @@
+.Data_right {
+  min-height: 500px;
+}
+.Data_left {
+  min-height: 500px;
+}
+.data_gird {
+  margin-top: 70px;
+}
+.Data_right_nav {
+  font-size: 14px !important;
+
+  color: #e74c3c;
+}
+.Data_right_box {
+  height: 40px;
+  background-color: #e5e5e5;
+  display: flex;
+
+  align-items: center;
+  margin-top: 10px;
+  width: 90%;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 80px;
+}
+.Data_right_box_1 {
+}
+.Data_right_box_main {
+  display: flex;
+  flex-direction: column;
+}
+.Data_right_box__k {
+  display: flex;
+  flex-direction: column;
+}
+.Data_right_box_main_tas {
+  background-color: #1abc9c;
+  width: 90%;
+  margin-top: 20px;
+  margin-left: 80px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    margin-left: 15px;
+    font-size: 1.4rem;
+    color: white;
+    font-weight: 500;
+  }
+
+  .Data_right_sbox__k {
+    margin-right: 20px;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+.data_gird_om {
+  width: 100% !important;
+
+  justify-content: center !important;
+}
+.data_main {
+  width: 100%;
+}
+.data_gird {
+  margin-left: 100px;
+}
+.Listmuici_detail:hover .Listssafsamuici_detail {
+  display: flex;
+}
+.Listmuici_detail {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  width: 90%;
+  height: 112px;
+  margin-left: 80px;
+  justify-content: space-around;
+  img {
+    width: 80px;
+  }
+  .Listmuici_detssail {
+    color: #e74c3c;
+    font-size: 2.2rem;
+  }
+  .Listmuici_detail_icon {
+    font-size: 1.8rem;
+    color: #999999;
+  }
+}
+.Listmuiciss_dssdetail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.Listmuici_dssdetail {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-left: 5px;
+  p {
+    margin: 0 !important;
+    font-size: 13px;
+    color: #a2a2a2;
+  }
+  .Lisdatmuici_detail {
+    font-size: 1.4rem;
+    color: black;
+  }
+}
+.Listssafsamuici_detail {
+  display: flex;
+  align-items: center;
+  display: none;
+  p {
+    font-size: 1.4rem;
+    color: #666666;
+    margin-left: 5px;
+  }
+}
+.Listmussici_detaasil {
+  display: flex;
+  align-items: center;
+}
+.Listmuici_sasdetaasil {
+  color: #c9c9c9;
+  font-size: 14px;
+  margin-left: 5px;
+}
+.Listmuici_detaasil {
+  color: #c9c9c9;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.djs {
+  margin-right: 15px;
+}
+.Dataa_right_sbox__k {
+  margin-left: 80px;
+}

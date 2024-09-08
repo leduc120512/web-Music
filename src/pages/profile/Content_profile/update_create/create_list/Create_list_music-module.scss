@@ -1,0 +1,26 @@
+.Profile_option_list {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.Profile_option_img {
+  width: 140px;
+  margin-left: 30px;
+}
+.Profile_option {
+  div {
+    p {
+      margin-left: 30px;
+    }
+  }
+}
+.tab_font_size {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.MuiTab-root {
+  font-size: 16px; /* Điều chỉnh lại kích thước chữ riêng cho các Tab */
+}
+.Profile_option_list_bottton {
+  font-weight: bold; /* Làm đậm chữ cho Đăng xuất */
+  color: #ff0000;
+}
