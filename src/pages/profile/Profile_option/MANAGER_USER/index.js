@@ -8,7 +8,9 @@ import styles from "../../profile-module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import img_list_video from "./1473409265946.webp";
-
+import Cookies from "js-cookie";
+import Crud from "../../../../crud/index"
+import userApi from "../../../../api/api_user";
 const cx = classnames.bind(styles);
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -21,7 +23,8 @@ const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#1A2027",
   }),
 }));
-
+const userCookie = Cookies.get("user");
+const user = userCookie ? JSON.parse(userCookie) : null;
 function Manager_user({ goToPlaylistTab, goTovideoTab }) {
   return (
     <div>
@@ -35,22 +38,17 @@ function Manager_user({ goToPlaylistTab, goTovideoTab }) {
                   <p>Giới thiệu</p>
                   <div>
                     <p>ID: 45316683</p>
-                    <p>Họ và tên: Đức Lê</p>
-                    <p>Ngày sinh: 01/01/1970</p>
-                    <p>Giới tính: Khác</p>
-                    <p>Điện thoại:</p>
-                    <p>Địa chỉ:Tỉnh thành:</p>
-                    <p>Số CMND:</p>
-                    <p>Giới thiệu:</p>
+                    <p>Họ và tên: {user.fullName}</p>
+                    <p>Ngày tạo tài khoản: {user.created_at}</p>
+
+
                   </div>
                 </div>
-                <button>
-                  <p>Chỉnh sửa</p>
-                  <FontAwesomeIcon
-                    className={cx("Manager_user_icon")}
-                    icon={faPen}
-                  />
-                </button>
+
+
+                <Crud api={userApi.updateMe} initialData={user} />
+
+
               </div>
             </div>
             <div className={cx("Manager_user list_box_Manager_user")}>
@@ -58,7 +56,8 @@ function Manager_user({ goToPlaylistTab, goTovideoTab }) {
                 <div>
                   <p>Tài khoản</p>
                   <div>
-                    <p>Tên tài khoản: gg.mailleduc05122004</p>
+                    <p>Tên tài khoản: {user.username}</p>
+                    <p>Gmail: {user.email}</p>
                     <p>
                       Mật khẩu:<span>Đổi mật khẩu</span>
                     </p>

@@ -25,7 +25,7 @@ const UpLoad = () => {
             <p>Hỗ trợ embed link Youtube</p>
           </div>
           <Button className={cx("UpLoad_btn")} variant="contained">
-            <p>Chọn File</p>
+            <p>Chọn File</p> 
           </Button>
         </div>
         <div className={cx("UpLoad_regulations")}>

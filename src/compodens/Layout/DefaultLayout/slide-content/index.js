@@ -46,7 +46,9 @@ function Content() {
               slides.length
             }`}</div>
             <img
-              src={slide.src}
+              src={
+                "https://avatar-ex-swe.nixcdn.com/slideshow/2024/12/10/0/5/f/8/1733841378288_org.jpg"
+              }
               style={{ width: "100%" }}
               alt={`Slide ${index + 1}`}
             />

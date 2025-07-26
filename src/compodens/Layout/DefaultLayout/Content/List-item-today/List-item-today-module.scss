@@ -24,3 +24,7 @@
 .item-music:hover .list-SINGER_play {
   display: block;
 }
+.list-music{
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -7,7 +7,7 @@ import imglisst from "../ANH/1.jpg";
 import Top100 from "../ANH/4.jpg";
 import imgmusic from "../ANH/234.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeader } from "@fortawesome/free-solid-svg-icons";
+import { faHeader, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classnames.bind(styles);
 
@@ -105,8 +105,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -119,8 +125,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -133,8 +145,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -147,8 +165,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
           </div>
@@ -163,8 +187,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -177,8 +207,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -191,8 +227,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -205,8 +247,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
             <div className={cx("content-music-list")}>
@@ -219,8 +267,14 @@ function Mv_hot() {
                 </div>
               </div>
               <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faHeart}
+                />
+                <FontAwesomeIcon
+                  className={cx("icon_list_item_product")}
+                  icon={faPlay}
+                />
               </div>
             </div>
           </div>

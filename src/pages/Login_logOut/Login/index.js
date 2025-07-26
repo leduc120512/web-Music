@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 import Box from "@mui/material/Box";
-
 import Modal from "@mui/material/Modal";
 import classnames from "classnames/bind";
 import styles from "../Login_logOut-module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceFive, faWindowClose } from "@fortawesome/free-solid-svg-icons";
-
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
+import { useNavigate } from "react-router-dom";
+
 const cx = classnames.bind(styles);
 
 const style = {
@@ -23,153 +25,176 @@ const style = {
 
 function ReusableModal({ open, handleClose }) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <div className={cx("Login_main")}>
-          <div className={cx("Login_header")}>
-            <p>Đăng Nhập</p>
-            <FontAwesomeIcon
-              onClick={handleClose}
-              className={cx("Login_icon1")}
-              icon={faWindowClose}
-            />
-          </div>
-          <div className={cx("Login_content")}>
-            <div className={cx("Login_inputs")}>
-              <p className={cx("Login_issfputs")}>
-                Những thông tin có đánh dấu (*) là bắt buộc nhập
-              </p>
-              <table>
-                <tr className={cx("Login_tr")}>
-                  <td className={cx("Login_td")}>Tên Đăng Nhập</td>
-                  <td>
-                    <input
-                      type="text"
-                      id="first"
-                      name="first"
-                      placeholder="Enter your Username"
-                      required
-                      className={cx("Login_input")}
-                    />
-                  </td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td className={cx("")}>Mật Khẩu</td>
-                  <td>
-                    {" "}
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      placeholder="Enter your Password"
-                      required
-                      className={cx("Login_input")}
-                    />
-                  </td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td></td>
-                  <td>
-                    {" "}
-                    <div className={cx("Login_list")}>
-                      <Checkbox {...label} defaultChecked />
-                      <p>Nhớ mật khẩu</p>
-                    </div>
-                  </td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td></td>
-                  <td>
-                    <div className={cx("Login_list fijkjd")}>
-                      <Checkbox {...label} defaultChecked />
-                      <p>
-                        Tôi đã đọc, hiểu rõ và tự nguyện đồng ý các điều khoản
-                        về việc thu thập, xử lý dữ liệu cá nhân, quyền và nghĩa
-                        vụ của tôi được quy định tại Chính sách bảo mật và Thỏa
-                        thuận sử dụng, và các chính sách khác được ban hành bởi
-                        NCT
-                      </p>
-                    </div>
-                  </td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td></td>
+  const navigate = useNavigate();
 
-                  <td colSpan={2} className={cx("Login_quen")}>
-                    Quên mật khẩu
-                  </td>
-                </tr>
-                <tr className={cx("Login_tr")}>
-                  <td></td>
-                  <td colSpan={3}>
-                    <Button
-                      className={cx("Login_input dhj")}
-                      variant="contained"
-                      color="success"
-                    >
-                      Đăng Nhập
-                    </Button>
-                  </td>
-                </tr>
-              </table>
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
+  const [agree, setAgree] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async () => {
+    if (!username || !password) {
+      alert("Vui lòng nhập đầy đủ tài khoản và mật khẩu.");
+      return;
+    }
+
+    if (!agree) {
+      alert("Bạn phải đồng ý với điều khoản sử dụng.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await axios.post("http://localhost:8082/api/auth/signin", {
+        usernameOrEmail: username,
+        password: password,
+      });
+
+      const userData = response.data.data;
+
+      const token = userData.accessToken;
+      const user = userData.user;
+      const role = user.role;
+
+      // ✅ Lưu vào cookie
+      Cookies.set("token", token, {
+        expires: rememberMe ? 7 : undefined,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      Cookies.set("user", JSON.stringify(user), {
+        expires: rememberMe ? 7 : undefined,
+        secure: true,
+        sameSite: "strict",
+      });
+
+      Cookies.set("role", role);
+
+
+      handleClose();
+
+      // ✅ Điều hướng theo vai trò
+      if (role === "ADMIN") {
+        navigate("/Search_results");
+      } else if (role === "AUTHOR") {
+        navigate("/author/dashboard");
+      } else {
+        navigate("/profile");
+      }
+
+    } catch (error) {
+      console.error("Đăng nhập thất bại:", error.response?.data || error.message);
+      alert("Sai tài khoản hoặc mật khẩu!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  return (
+      <Modal open={open} onClose={handleClose}>
+        <Box sx={style}>
+          <div className={cx("Login_main")}>
+            <div className={cx("Login_header")}>
+              <p>Đăng Nhập</p>
+              <FontAwesomeIcon
+                  onClick={handleClose}
+                  className={cx("Login_icon1")}
+                  icon={faWindowClose}
+              />
             </div>
-            <div className={cx("Login_btn")}>
-              <div className={cx("Logi1n_btn")}>
-                <p className={cx("Logi1n_btn_text")}>
-                  Bạn chưa có tài khoản NCT ID?
+            <div className={cx("Login_content")}>
+              <div className={cx("Login_inputs")}>
+                <p className={cx("Login_issfputs")}>
+                  Những thông tin có đánh dấu (*) là bắt buộc nhập
                 </p>
-                <Button
-                  className={cx("Logi1n_btn_login")}
-                  variant="outlined"
-                  color="error"
-                >
-                  ĐĂNG KÝ NGAY
-                </Button>
-                <p className={cx("Logi1n_btn_logins")}>Hoặc</p>
-                <div className={cx("Login_list_i")}>
-                  <div className={cx("Login_list_icon")}>
-                    <FontAwesomeIcon
-                      onClick={handleClose}
-                      className={cx("Login_icon2")}
-                      icon={faDiceFive}
-                    />{" "}
-                    <p>Đăng nhập qua Google</p>
-                  </div>
-                  <div className={cx("Login_list_icon")}>
-                    {" "}
-                    <FontAwesomeIcon
-                      onClick={handleClose}
-                      className={cx("Login_icon2")}
-                      icon={faDiceFive}
-                    />{" "}
-                    <p>Đăng nhập qua Google</p>
-                  </div>
-                  <div className={cx("Login_list_icon")}>
-                    {" "}
-                    <FontAwesomeIcon
-                      onClick={handleClose}
-                      className={cx("Login_icon2")}
-                      icon={faDiceFive}
-                    />{" "}
-                    <p>Đăng nhập bằng mã QR</p>{" "}
-                  </div>
-                </div>{" "}
+                <table>
+                  <tbody>
+                  <tr className={cx("Login_tr")}>
+                    <td className={cx("Login_td")}>Tên Đăng Nhập</td>
+                    <td>
+                      <input
+                          type="text"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                          placeholder="Nhập tên đăng nhập"
+                          className={cx("Login_input")}
+                          required
+                      />
+                    </td>
+                  </tr>
+                  <tr className={cx("Login_tr")}>
+                    <td>Mật Khẩu</td>
+                    <td>
+                      <input
+                          type="password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          placeholder="Nhập mật khẩu"
+                          className={cx("Login_input")}
+                          required
+                      />
+                    </td>
+                  </tr>
+                  <tr className={cx("Login_tr")}>
+                    <td></td>
+                    <td>
+                      <div className={cx("Login_list")}>
+                        <Checkbox
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            {...label}
+                        />
+                        <p>Nhớ mật khẩu</p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className={cx("Login_tr")}>
+                    <td></td>
+                    <td>
+                      <div className={cx("Login_list")}>
+                        <Checkbox
+                            checked={agree}
+                            onChange={(e) => setAgree(e.target.checked)}
+                            {...label}
+                        />
+                        <p>
+                          Tôi đồng ý với Chính sách bảo mật và Thỏa thuận sử dụng
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr className={cx("Login_tr")}>
+                    <td></td>
+                    <td colSpan={2} className={cx("Login_quen")}>
+                      Quên mật khẩu
+                    </td>
+                  </tr>
+                  <tr className={cx("Login_tr")}>
+                    <td></td>
+                    <td colSpan={2}>
+                      <Button
+                          onClick={handleLogin}
+                          className={cx("Login_input dhj")}
+                          variant="contained"
+                          color="success"
+                          disabled={loading}
+                      >
+                        {loading ? "Đang xử lý..." : "Đăng Nhập"}
+                      </Button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
+              {/* Các lựa chọn mạng xã hội có thể giữ nguyên */}
             </div>
           </div>
-        </div>
-      </Box>
-    </Modal>
+        </Box>
+      </Modal>
   );
 }
 

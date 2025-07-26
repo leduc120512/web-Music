@@ -68,6 +68,7 @@
 
 .searchBar {
   border: 1.8px solid rgba(255, 0, 0, 0.4);
+  border-radius: 3px;
 }
 
 .inputField {
@@ -78,10 +79,13 @@
   background: transparent;
   outline: none;
   border: none;
+  border-radius: 2px;
+  padding-left: 10px;
 }
 
 .gf {
   font-size: 1.8rem;
+  color: rgba(255, 0, 0, 0.5);
 }
 
 .searchButton {
@@ -343,6 +347,7 @@
 }
 .Header_login2_name {
   font-weight: 700;
+  margin-top: -5px;
 }
 .Header_login2 {
   margin-left: 5px !important;
@@ -369,4 +374,67 @@
   p:hover {
     color: #2daaed;
   }
+}
+.Header_login3 {
+  margin-top: 10px;
+}
+.coin {
+  margin-top: 26px !important;
+  font-size: 25px;
+  width: 0.1em;
+  height: 1em;
+  background: linear-gradient(#faa504, #141001);
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  animation: rotate_4001510 7s infinite linear;
+  transform-style: preserve-3d;
+}
+
+.coin .side,
+.coin:before,
+.coin:after {
+  content: "";
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  overflow: hidden;
+  border-radius: 50%;
+  right: -0.4em;
+  text-align: center;
+  line-height: 1;
+  transform: rotateY(-90deg);
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.coin .tails,
+.coin:after {
+  left: -0.4em;
+  transform: rotateY(90deg);
+}
+
+.coin:before,
+.coin:after {
+  background: linear-gradient(#faa504, #141001);
+  backface-visibility: hidden;
+  transform: rotateY(90deg);
+}
+
+.coin:after {
+  transform: rotateY(-90deg);
+}
+
+@keyframes rotate_4001510 {
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.svg_back {
+  transform: scaleX(-1);
 }

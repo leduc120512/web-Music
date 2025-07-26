@@ -29,10 +29,10 @@ function App() {
           <Route path="/Playlist" element={<PagePlayList />} />
           <Route path="/Video" element={<Pagevideo />} />
           <Route path="/top_100" element={<Top100_ />} />
-          <Route path="/Login" element={<Login />} />
 
           <Route path="/UpLoad" element={<UpLoad />} />
-          <Route path="/Nhac" element={<Play_music />} />
+          <Route path="/Nhac/:id" element={<Play_music />} />
+
 
           <Route path="/Search_results" element={<Search_results />} />
           <Route path="/Create_list_music" element={<Update_create />} />
@@ -43,6 +43,7 @@ function App() {
           </Route>
         </Routes>
         <Routes>
+          <Route path="Losgin" element={<Login />} />
           <Route path="/Profile" element={<Profile />}>
             <Route index element={<Contentt />} />
             <Route path="Maiprofile" element={<Contentt_main />} />{" "}

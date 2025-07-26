@@ -9,12 +9,15 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Cookies from "js-cookie";
 
 import Img_avatar from "../avatar_default_2020.png";
 import Contentt from "./Content_content-";
 import Sibar from "./Sibar";
 import { Outlet } from "react-router-dom";
 const cx = classnames.bind(styles);
+const userCookie = Cookies.get("user");
+const user = userCookie ? JSON.parse(userCookie) : null;
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -34,7 +37,7 @@ function Profilee_content() {
             <div className={cx("Prossfileess_content_img")}>
               <p className={cx("Prossfilee_cossssntdddent_img")}>Đức Le</p>
               <p>ID: 45316683</p>
-              <p>Tên thật: Đức Le</p>
+              <p>Tên thật:{user?.fullName  || 'chua co'}</p>
               <p>Sinh nhật: Đang cập nhật</p>
               <p>Giới tính: Khác</p>
             </div>
