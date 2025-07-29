@@ -18,8 +18,18 @@ import Friend from "../../../Profile_option/friend/index.js";
 import Playlist_profile from "../../../Profile_option/PlayList/index.js";
 import LogOut from "../../../Profile_option/LogOut/index.js";
 import Video from "../../../Profile_option/profile_Videos/index.js";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const cx = classnames.bind(styles);
+const tabPaths = [
+    "/profile/account",
+    "/profile/friends",
+    "/profile/playlist",
+    "/profile/video",
+    "/profile/history", // index = 4
+    "/profile/devices",
+    "/profile/logout"
+];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,10 +53,22 @@ function TabPanel(props) {
 
 function Create_list() {
   const [value, setValue] = React.useState(0);
+    const location = useLocation();
+    const navigate = useNavigate();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+// Gán tab hiện tại dựa theo URL
+    React.useEffect(() => {
+        const index = tabPaths.indexOf(location.pathname);
+        if (index !== -1) {
+            setValue(index);
+        }
+    }, [location.pathname]);
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+        navigate(tabPaths[newValue]);
+    };
+
+
 
   // Function to switch to the Playlist tab (index 2)
   const goToPlaylistTab = () => {

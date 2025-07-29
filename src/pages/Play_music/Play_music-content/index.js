@@ -58,17 +58,24 @@ function Music({ songId }) {
   console.log('songsa',songs)
   // ✅ Gọi API trực tiếp khi có songId
   useEffect(() => {
-    if (songId) {
-      axios
-          .get(`http://localhost:8082/api/songs/${songId}`)
-          .then((res) => {
-            // nếu backend trả về { success, message, data } thì lấy res.data.data
-            setSongData(res.data?.data || null);
-          })
-          .catch((err) => {
-            console.error("❌ Lỗi khi gọi API bài hát:", err);
-          });
-    }
+    if (!songId) return;
+
+    // Lấy token từ cookie
+    const token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("token="))
+        ?.split("=")[1];
+
+    axios
+        .get(`http://localhost:8082/api/songs/${songId}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        })
+        .then((res) => {
+          setSongData(res.data?.data || null);
+        })
+        .catch((err) => {
+          console.error("❌ Lỗi khi gọi API bài hát:", err);
+        });
   }, [songId]);
 
   const toggleExpand = () => setExpanded(!expanded);

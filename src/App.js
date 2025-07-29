@@ -33,8 +33,9 @@ function App() {
           <Route path="/UpLoad" element={<UpLoad />} />
           <Route path="/Nhac/:id" element={<Play_music />} />
 
+          <Route path="/profile/:section" element={<Create_list />} />
 
-          <Route path="/Search_results" element={<Search_results />} />
+          <Route path="/Search_results/:id" element={<Search_results />} />
           <Route path="/Create_list_music" element={<Update_create />} />
 
           <Route path="/Update_list_music" element={<Create_list />} />

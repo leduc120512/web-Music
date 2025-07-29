@@ -210,3 +210,72 @@ li {
 .Play_listssss_results {
   width: 25%;
 }
+.song_card {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.song_thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 12px;
+}
+
+.song_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.song_title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #0073e6;
+  margin: 0;
+}
+
+.song_artist {
+  font-size: 13px;
+  color: #555;
+}
+
+.song_tags {
+  display: flex;
+  gap: 6px;
+  margin-right: 12px;
+}
+
+.tag_official {
+  background-color: #ccc;
+  color: white;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.tag_sq {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.song_actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon {
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    color: #e74c3c;
+  }
+}

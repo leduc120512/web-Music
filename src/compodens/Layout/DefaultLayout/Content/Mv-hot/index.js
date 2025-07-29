@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from "./Mv-hot-module.scss";
 import classnames from "classnames/bind";
 import Text from "../../../../../pages/text";
@@ -8,290 +8,293 @@ import Top100 from "../ANH/4.jpg";
 import imgmusic from "../ANH/234.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeader, faHeart, faPlay } from "@fortawesome/free-solid-svg-icons";
+import songApi from "../../../../../api/api_music";
 
 const cx = classnames.bind(styles);
 
 function Mv_hot() {
+  const [songs, setSongs] = useState([]);
+  const [top5, setSongstop5] = useState([]);
+  useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const response = await songApi.getActiveSongs();
+        const responseTop5 = await songApi.getTop5List();
+
+        const result = response?.data?.data;
+        const resultTop5 = responseTop5?.data?.data;
+
+        console.log("🎧 TOP 5 SONGS:", resultTop5); // ✅ console đúng
+
+        if (Array.isArray(result)) {
+          setSongs(result);
+        } else {
+          setSongs([]);
+        }
+
+        if (Array.isArray(resultTop5)) {
+          setSongstop5(resultTop5);
+        } else {
+          setSongstop5([]);
+        }
+      } catch (error) {
+        console.error("❌ Lỗi khi lấy danh sách bài hát:", error);
+        setSongs([]);
+        setSongstop5([]);
+      }
+    };
+
+    fetchSongs();
+  }, []);
+
+
+  console.log('songs',top5)
   return (
     // mv hot 1
-    <div className={cx("Mvhot")}>
-      <div className={cx("Mvhot1")}>
-        <div className={cx("Mvhot-main")}>
-          <img className={cx("Mvhot-main-img")} src={imgmain} alt="main" />
-          <div className={cx("Mvhot-main-text")}>
-            <p className={cx("Mvhot-main-tex2")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text1")}>sapatan capeter</p>
-          </div>
+      <div className={cx("Mvhot")}>
+
+        {/* mvhot 2 */}
+        <div className={cx("Mvhot2")}>
+          {Array.isArray(songs) && songs.length > 0 ? (
+              songs.map((song, index) => (
+                  <div className={cx("Mvhot22")} key={song.id || index}>
+                    <img
+                        className={cx("Mvhot23")}
+                        src={song.coverImage || imglisst}
+                        alt={song.title}
+                    />
+                    <div className={cx("Mvhot-main-text123")}>
+                      <p className={cx("Mvhot-main-tex22")}>{song.title}</p>
+                      <p className={cx("Mvhot-main-text12")}>{song.artistName}</p>
+                    </div>
+                  </div>
+              ))
+          ) : (
+              <p>Không có bài hát nào.</p>
+          )}
         </div>
-        <div className={cx("Mvhot-main")}>
-          <img className={cx("Mvhot-main-img")} src={imgmain} alt="main" />
-          <div className={cx("Mvhot-main-text")}>
-            <p className={cx("Mvhot-main-tex2")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text1")}>sapatan capeter</p>
-          </div>
-        </div>
-      </div>
-      {/* mvhot 2 */}
-      <div className={cx("Mvhot2")}>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-        <div className={cx("Mvhot22")}>
-          <img className={cx("Mvhot23")} src={imglisst} />
-          <div className={cx("Mvhot-main-text123")}>
-            <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-            <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-          </div>
-        </div>
-      </div>
-      {/* music  */}
-      <div className={cx("main-content-music-s")}>
-        <Text>BÀI HÁT</Text>{" "}
-        <div className={cx("main-content-music")}>
-          <div className={cx("content-music")}>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+
+        {/* music  */}
+        <div className={cx("main-content-music-s")}>
+          <Text>BÀI HÁT</Text>{" "}
+          <div className={cx("main-content-music")}>
+            <div className={cx("content-music")}>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon icon={faHeader}/>
+                  <FontAwesomeIcon icon={faHeader}/>
                 </div>
               </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon icon={faHeader} />
-                <FontAwesomeIcon icon={faHeader} />
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
+                </div>
+              </div>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
+                </div>
+              </div>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
+                </div>
+              </div>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
+                </div>
               </div>
             </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+            <div className={cx("content-music")}>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
                 </div>
               </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
                 </div>
               </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
                 </div>
               </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
+                </div>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
                 </div>
               </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={cx("content-music")}>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+              <div className={cx("content-music-list")}>
+                {" "}
+                <div className={cx("content-music-list1233")}>
+                  <img className={cx("Mvhot-main-te12xt12")} src={imgmusic}/>
+                  <div className={cx("Mvhot-main-text1234")}>
+                    <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
+                    <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                  </div>
                 </div>
-              </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
+                <div className={cx("content-music-list1234231234")}>
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faHeart}
+                  />
+                  <FontAwesomeIcon
+                      className={cx("icon_list_item_product")}
+                      icon={faPlay}
+                  />
                 </div>
-              </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-                </div>
-              </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-                </div>
-              </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
-              </div>
-            </div>
-            <div className={cx("content-music-list")}>
-              {" "}
-              <div className={cx("content-music-list1233")}>
-                <img className={cx("Mvhot-main-te12xt12")} src={imgmusic} />
-                <div className={cx("Mvhot-main-text1234")}>
-                  <p className={cx("Mvhot-main-tex22")}>EcressXO</p>
-                  <p className={cx("Mvhot-main-text12")}>sapatan capeter</p>
-                </div>
-              </div>
-              <div className={cx("content-music-list1234231234")}>
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faHeart}
-                />
-                <FontAwesomeIcon
-                  className={cx("icon_list_item_product")}
-                  icon={faPlay}
-                />
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* top 100 */}
-      <div className={cx("content-TOP100")}>
-        <Text>TOP 100</Text>
+        {/* top 100 */}
         <div className={cx("content-TOP100-IMG")}>
-          <img className={cx("content-TOP100-IMG-LIST")} src={Top100} />
-          <img className={cx("content-TOP100-IMG-LIST")} src={Top100} />
-          <img className={cx("content-TOP100-IMG-LIST")} src={Top100} />
-          <img className={cx("content-TOP100-IMG-LIST")} src={Top100} />
-          <img className={cx("content-TOP100-IMG-LIST")} src={Top100} />
+          {top5.map((song, index) => (
+              <div key={song.id || index}>
+                <img
+                    className={cx("content-TOP100-IMG-LIST")}
+                    src={song.coverImage || Top100}
+                    alt={song.title}
+                />
+                <p>{song.title}</p>
+                <p>{song.artistName}</p>
+              </div>
+          ))}
         </div>
+
+
       </div>
-    </div>
   );
 }
 

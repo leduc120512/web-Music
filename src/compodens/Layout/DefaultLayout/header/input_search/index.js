@@ -64,7 +64,7 @@ const Input_search = () => {
                         {suggestedSongs.map((song, index) => (
                             <Link
                                 key={song.id}
-                                to={`/Search_results?keyword=${encodeURIComponent(song.title)}`}
+                                to={`/Search_results/${song.id}`}
                             >
                                 <div>
                                     <span className={cx("Inpur_search_List_hot_search_color1")}>{index + 1}</span>
@@ -84,7 +84,7 @@ const Input_search = () => {
                         {topSongs.map((song, index) => (
                             <Link
                                 key={song.id}
-                                to={`/Search_results?keyword=${encodeURIComponent(song.title)}`}
+                                to={`/Search_results/${song.id}`}
                             >
                                 <div>
                                     <span className={cx("Inpur_search_List_hot_search_color1")}>{index + 1}</span>

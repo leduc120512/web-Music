@@ -31,10 +31,15 @@ const Profile = () => {
               <p>Trang cá nhân</p>
           </Link>
           <p>Nhạc của tui</p>
-          <p>Tài khoản</p>
-          <a href="/Search_results">
+
+          <Link to="/profile/account">
+              <p>Tài khoản</p>
+          </Link>
+
+          <Link to="/profile/history">
               <p>Lịch sử Xem</p>
-          </a>
+          </Link>
+
 
           <p onClick={handleLogout} style={{cursor: "pointer", color: "red"}}>
               Đăng xuất
