@@ -46,7 +46,7 @@ function Manager_user({ goToPlaylistTab, goTovideoTab }) {
                 </div>
 
 
-                <Crud api={userApi.updateMe} initialData={user} />
+                <Crud api={userApi.updateMe} type='user' initialData={user} />
 
 
               </div>

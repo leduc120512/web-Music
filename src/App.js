@@ -19,6 +19,7 @@ import Contentt_Video from "./pages/profile/Video_profile";
 import UpLoadd from "./pages/profile/Content_profile/quanli_upload";
 import Friend_live from "./pages/profile/Content_profile/Friend_live";
 import Top100_ from "./pages/layout-page/Top_100";
+import Admin from "../src/compodens/admin"
 function App() {
   return (
     <Router>
@@ -39,6 +40,7 @@ function App() {
           <Route path="/Create_list_music" element={<Update_create />} />
 
           <Route path="/Update_list_music" element={<Create_list />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="Vietnam" element={<Importt />}>
             {" "}
           </Route>
