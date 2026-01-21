@@ -1,30 +1,30 @@
+// src/api/userApi.js
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const BASE_URL = "http://localhost:8082/api/auth";
 
-// ✅ Hàm tiện ích dùng chung để lấy token từ Cookie
+// ✅ Hàm tiện ích để lấy Authorization header từ Cookie
 const getAuthHeader = () => {
     const token = Cookies.get("token");
     return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 const userApi = {
-    // 🔹 Đăng nhập + lưu token vào Cookies
+    // 🔹 Đăng nhập + lưu token vào Cookie
     signin: async (credentials) => {
         const res = await axios.post(`${BASE_URL}/signin`, credentials);
         const { data } = res.data;
 
         if (data?.accessToken) {
-            Cookies.set("token", data.accessToken); // ✅ lưu token vào cookie
+            Cookies.set("token", data.accessToken); // ✅ Lưu token vào cookie
         }
 
         return res.data;
     },
 
     // 🔹 Đăng ký tài khoản
-    signup: (data) =>
-        axios.post(`${BASE_URL}/signup`, data),
+    signup: (data) => axios.post(`${BASE_URL}/signup`, data),
 
     // 🔹 Lấy thông tin người dùng hiện tại
     getMe: () =>
@@ -44,7 +44,7 @@ const userApi = {
             headers: getAuthHeader(),
         }),
 
-    // 🔹 ADMIN CRUD
+    // ---------- ADMIN CRUD ----------
     getAllUsers: () =>
         axios.get(`${BASE_URL}/users`, {
             headers: getAuthHeader(),
@@ -62,6 +62,28 @@ const userApi = {
 
     deleteUserById: (id) =>
         axios.delete(`${BASE_URL}/users/${id}`, {
+            headers: getAuthHeader(),
+        }),
+
+    // ---------- Upload avatar ----------
+    updateUserWithAvatar: (id, formData) =>
+        axios.put(`${BASE_URL}/users/${id}/avatar`, formData, {
+            headers: {
+                ...getAuthHeader(),
+                "Content-Type": "multipart/form-data",
+            },
+        }),
+
+    // ---------- Lịch sử đăng nhập ----------
+    // 🔸 Lấy lịch sử đăng nhập của chính mình
+    getMyLogins: (page = 0, size = 20) =>
+        axios.get(`${BASE_URL}/me/logins?page=${page}&size=${size}`, {
+            headers: getAuthHeader(),
+        }),
+
+    // 🔸 (Admin) Lấy lịch sử đăng nhập của user khác
+    getUserLogins: (userId, page = 0, size = 20) =>
+        axios.get(`${BASE_URL}/users/${userId}/logins?page=${page}&size=${size}`, {
             headers: getAuthHeader(),
         }),
 

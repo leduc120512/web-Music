@@ -1,79 +1,48 @@
-import React, { useEffect, useState } from "react";
+// src/compodens/Layout/DefaultLayout/header/input_search.jsx
+import React from "react";
 import styles from "./input_search-module.scss";
 import { Link } from "react-router-dom";
 import classnames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
-import songApi from "../../../../../api/api_music";
 
 const cx = classnames.bind(styles);
 
-const Input_search = () => {
-    const [keyword, setKeyword] = useState("");
-    const [topSongs, setTopSongs] = useState([]);
-    const [suggestedSongs, setSuggestedSongs] = useState([]);
-
-    // Load 5 bài mới nhất khi vào trang
-    useEffect(() => {
-        songApi
-            .getLatestSuggestions()
-            .then((res) => {
-                if (res.data.success) {
-                    setTopSongs(res.data.data);
-                }
-            })
-            .catch((err) => console.error("Lỗi lấy top mới nhất:", err));
-    }, []);
-
-    // Gợi ý khi nhập từ khóa
-    useEffect(() => {
-        const delayDebounce = setTimeout(() => {
-            if (keyword.trim()) {
-                songApi
-                    .search(keyword.trim())
-                    .then((res) => {
-                        if (res.data.success) {
-                            const result = res.data.data.content.slice(0, 5); // lấy 5 đầu tiên
-                            setSuggestedSongs(result);
-                        }
-                    })
-                    .catch((err) => console.error("Lỗi gợi ý tìm kiếm:", err));
-            } else {
-                setSuggestedSongs([]);
-            }
-        }, 300); // debounce 300ms
-
-        return () => clearTimeout(delayDebounce);
-    }, [keyword]);
+export default function SearchDropdown({
+                                           keyword = "",
+                                           topSongs = [],
+                                           suggestedSongs = [],
+                                           loading = false,
+                                           onSelect = () => {},
+                                       }) {
+    const hasKeyword = keyword.trim().length > 0;
 
     return (
         <div className={cx("Inpur_search_value")}>
-            <input
-                type="text"
-                placeholder="Nhập từ khóa..."
-                value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
-                className={cx("Inpur_search_input")}
-            />
+            {/* KHÔNG có <input> ở đây nữa */}
 
-            {/* Nếu có từ khóa, hiển thị kết quả tìm kiếm */}
-            {keyword.trim() ? (
+            {hasKeyword ? (
                 <>
-                    <p className={cx("Inpur_search_value_text")}>Kết quả gợi ý</p>
+                    <p className={cx("Inpur_search_value_text")}>
+                        {loading ? "Đang tìm..." : "Kết quả gợi ý"}
+                    </p>
                     <div className={cx("Inpur_search_List_hot_search")}>
-                        {suggestedSongs.map((song, index) => (
-                            <Link
-                                key={song.id}
-                                to={`/Search_results/${song.id}`}
-                            >
-                                <div>
-                                    <span className={cx("Inpur_search_List_hot_search_color1")}>{index + 1}</span>
+                        {(!loading && suggestedSongs?.length > 0) ? (
+                            suggestedSongs.map((song, index) => (
+                                <button
+                                    key={song.id}
+                                    type="button"
+                                    className={cx("ResultRow")}
+                                    onClick={() => onSelect(song.id)}
+                                >
+                  <span className={cx("Inpur_search_List_hot_search_color1")}>
+                    {index + 1}
+                  </span>
                                     <p>{song.title}</p>
-                                </div>
-                            </Link>
-                        ))}
-                        {suggestedSongs.length === 0 && (
-                            <p style={{ paddingLeft: 10 }}>Không tìm thấy kết quả.</p>
+                                </button>
+                            ))
+                        ) : (
+                            !loading && <p style={{ paddingLeft: 10 }}>Không tìm thấy kết quả.</p>
                         )}
                     </div>
                 </>
@@ -81,13 +50,12 @@ const Input_search = () => {
                 <>
                     <p className={cx("Inpur_search_value_text")}>Từ Khóa Tìm Kiếm Nhiều Nhất</p>
                     <div className={cx("Inpur_search_List_hot_search")}>
-                        {topSongs.map((song, index) => (
-                            <Link
-                                key={song.id}
-                                to={`/Search_results/${song.id}`}
-                            >
+                        {topSongs?.map((song, index) => (
+                            <Link key={song.id} to={`/Search_results/${song.id}`}>
                                 <div>
-                                    <span className={cx("Inpur_search_List_hot_search_color1")}>{index + 1}</span>
+                  <span className={cx("Inpur_search_List_hot_search_color1")}>
+                    {index + 1}
+                  </span>
                                     <p>{song.title}</p>
                                 </div>
                             </Link>
@@ -96,7 +64,7 @@ const Input_search = () => {
                 </>
             )}
 
-            {/* Lịch sử tìm kiếm */}
+            {/* Lịch sử tìm kiếm: giữ UI cũ (tùy bạn implement thêm) */}
             <div className={cx("Inpur_search_List_hot_search_text_history")}>
                 <Link to="/Search_results">
                     <p>Lịch Sử Tìm Kiếm Của Bạn</p>
@@ -109,6 +77,4 @@ const Input_search = () => {
             </div>
         </div>
     );
-};
-
-export default Input_search;
+}

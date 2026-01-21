@@ -48,13 +48,13 @@ function Siderbar() {
             </TabList>
           </Box>
           <TabPanel value="1">
-            <Music_vn />
+            <Music_vn  albumId={15} />
           </TabPanel>
           <TabPanel value="2">
-            <Music_chauau />
+            <Music_chauau  albumId={14} />
           </TabPanel>
           <TabPanel value="3">
-            <Music_han />
+            <Music_han albumId={16} />
           </TabPanel>
         </TabContext>
       </Box>

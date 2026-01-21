@@ -1,5 +1,4 @@
 // src/components/List_item_today/List_item.jsx
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames/bind";
@@ -12,22 +11,27 @@ import songApi from "../../../../../../src/api/api_music";
 import defaultImg from "../ANH/SONTUNG.webp";
 
 const cx = classnames.bind(styles);
+const ASSET_BASE = "http://localhost:8082";
+
+// Ghép URL ảnh an toàn + fallback
+const buildCover = (coverImage) => {
+  if (!coverImage) return defaultImg;
+  if (/^https?:\/\//i.test(coverImage)) return coverImage; // đã là URL tuyệt đối
+  return `${ASSET_BASE}${coverImage.startsWith("/") ? "" : "/"}${coverImage}`;
+};
 
 function ListItemToday() {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-    const fetchLatestSongs = async () => {
+    (async () => {
       try {
-        const response = await songApi.getLatestSongs();
-        const latestSongs = response.data?.data?.content || [];
-        setSongs(latestSongs);
-      } catch (error) {
-        console.error("❌ Lỗi khi lấy danh sách bài hát mới nhất:", error);
+        const res = await songApi.getLatestSongs();
+        setSongs(res?.data?.data?.content || []);
+      } catch (e) {
+        console.error("❌ Lỗi khi lấy danh sách bài hát mới nhất:", e);
       }
-    };
-
-    fetchLatestSongs();
+    })();
   }, []);
 
   return (
@@ -42,13 +46,11 @@ function ListItemToday() {
                     <div className={cx("image-wrapper")}>
                       <img
                           className={cx("list-SINGER")}
-                          src={song.coverImage || defaultImg}
+                          src={buildCover(song.coverImage)}
                           alt={song.title}
+                          loading="lazy"
                       />
-                      <FontAwesomeIcon
-                          className={cx("list-SINGER_play")}
-                          icon={faPlay}
-                      />
+                      <FontAwesomeIcon className={cx("list-SINGER_play")} icon={faPlay} />
                     </div>
                     <p className={cx("song-title")}>{song.title}</p>
                     <p className={cx("song-artist")}>{song.artistName}</p>

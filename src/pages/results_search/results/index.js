@@ -16,7 +16,15 @@ import {
 
 import List_item_music from "./List_item_musci1";
 import Play_list from "./Play_list";
+import defaultImg from "../../../compodens/Layout/DefaultLayout/Content/ANH/SONTUNG.webp";
+const ASSET_BASE = "http://localhost:8082";
 
+// Ghép URL ảnh an toàn + fallback
+const buildCover = (coverImage) => {
+    if (!coverImage) return defaultImg;
+    if (/^https?:\/\//i.test(coverImage)) return coverImage; // đã là URL tuyệt đối
+    return `${ASSET_BASE}${coverImage.startsWith("/") ? "" : "/"}${coverImage}`;
+};
 const cx = classnames.bind(styles);
 
 function Results() {
@@ -26,7 +34,7 @@ function Results() {
     useEffect(() => {
         if (id) {
             axios
-                .get(`http://localhost:8082/api/songs/${id}`)
+                .get(`http://localhost:8082/api/songs/public/find-by-id?id=${id}`)
                 .then((res) => {
                     if (res.data.success) {
                         setSong(res.data.data);
@@ -37,6 +45,7 @@ function Results() {
                 });
         }
     }, [id]);
+
 
     return (
         <div className={cx("Results")}>
@@ -79,8 +88,9 @@ function Results() {
             {song && (
                 <div className={cx("song_card")}>
                     <img
-                        src={song.thumbnail || "https://via.placeholder.com/60"}
+
                         alt={song.title}
+                        src={buildCover(song.coverImage)}
                         className={cx("song_thumbnail")}
                     />
                     <div className={cx("song_info")}>

@@ -9,6 +9,7 @@ import UpLoad from "./pages/UpLoad";
 import Play_music from "./pages/Play_music";
 import Search_results from "./pages/results_search";
 import Profile from "./pages/profile";
+import Profile2 from "./pages/profile2";
 import Update_create from "./pages/profile/Content_profile/update_create/Update_list_music";
 import Create_list from "./pages/profile/Content_profile/update_create/create_list";
 import Importt from "./compodens/Layout/DefaultLayout/header/header-nav-music/top100/Import_to";
@@ -54,6 +55,14 @@ function App() {
             <Route path="upload_proifle" element={<UpLoadd />} />
             <Route path="Friend_live" element={<Friend_live />} />
           </Route>
+        </Routes>
+        <Routes>
+
+          <Route path="/ProfileAuthor/:id" element={<Profile2 />}>
+            <Route index element={<Contentt />} />
+            <Route path="Maiprofile" element={<Contentt_main />} />
+          </Route>
+
         </Routes>
       </div>
     </Router>

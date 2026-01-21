@@ -1,16 +1,20 @@
+// src/api/albums.js
 import axios from "axios";
 import Cookies from "js-cookie";
 
 const API_BASE_URL = "http://localhost:8082/api/albums";
 
-// 🔒 Hàm lấy token từ cookie
+// 🔒 Lấy JWT token từ cookie
 const getTokenFromCookie = () => {
-    return Cookies.get("token"); // hoặc "access_token", tuỳ tên bạn đặt
+    return Cookies.get("token"); // hoặc đổi thành "access_token" nếu bạn dùng tên khác
 };
 
-// 📦 Hàm cấu hình headers
+// 📦 Header có Bearer token
 const getAuthHeaders = () => {
     const token = getTokenFromCookie();
+    if (!token) {
+        throw new Error("Token not found. Please login again.");
+    }
     return {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -18,8 +22,8 @@ const getAuthHeaders = () => {
     };
 };
 
-// 📌 Lấy album mới nhất (có phân trang)
-export const fetchLatestAlbums = async (page = 0, size = 20) => {
+// 📌 Lấy danh sách album mới nhất
+const fetchLatestAlbums = async (page = 0, size = 20) => {
     const response = await axios.get(`${API_BASE_URL}/latest`, {
         params: { page, size },
     });
@@ -27,33 +31,53 @@ export const fetchLatestAlbums = async (page = 0, size = 20) => {
 };
 
 // 🔍 Tìm kiếm album theo từ khóa
-export const searchAlbums = async (keyword, page = 0, size = 20) => {
+const searchAlbums = async (keyword, page = 0, size = 20) => {
     const response = await axios.get(`${API_BASE_URL}/search`, {
         params: { keyword, page, size },
     });
     return response.data;
 };
 
-// 📄 Lấy chi tiết 1 album theo ID
-export const getAlbumById = async (id) => {
+// 📄 Lấy album theo ID
+const getAlbumById = async (id) => {
     const response = await axios.get(`${API_BASE_URL}/${id}`, getAuthHeaders());
     return response.data;
 };
 
-// ➕ Tạo mới album
-export const createAlbum = async (albumData) => {
+// ➕ Tạo album mới
+const createAlbum = async (albumData) => {
     const response = await axios.post(`${API_BASE_URL}`, albumData, getAuthHeaders());
     return response.data;
 };
 
-// ✏️ Cập nhật album theo ID
-export const updateAlbum = async (id, albumData) => {
+// ✏️ Cập nhật album
+const updateAlbum = async (id, albumData) => {
     const response = await axios.put(`${API_BASE_URL}/${id}`, albumData, getAuthHeaders());
     return response.data;
 };
 
-// ❌ Xoá album theo ID
-export const deleteAlbum = async (id) => {
+// ❌ Xoá album
+const deleteAlbum = async (id) => {
     const response = await axios.delete(`${API_BASE_URL}/${id}`, getAuthHeaders());
     return response.data;
+};
+
+// ✅ Export theo 2 cách
+export {
+    fetchLatestAlbums,
+    searchAlbums,
+    getAlbumById,
+    createAlbum,
+    updateAlbum,
+    deleteAlbum,
+};
+
+// ✅ Export default để dùng import albums from ...
+export default {
+    fetchLatestAlbums,
+    searchAlbums,
+    getAlbumById,
+    createAlbum,
+    updateAlbum,
+    deleteAlbum,
 };

@@ -438,3 +438,115 @@
 .svg_back {
   transform: scaleX(-1);
 }
+/* ============ SEARCH (ĐẸP HƠN) ============ */
+
+.Header-search {
+  position: relative;
+  /* responsive width: 260px → 420px tùy màn hình */
+  width: clamp(260px, 32vw, 420px);
+}
+
+/* khối ô tìm kiếm dạng pill */
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  height: 44px;
+  padding: 0 6px 0 12px;
+
+  background: #fff; /* nếu header sáng */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 999px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+/* hiệu ứng khi input bên trong được focus */
+.Header-search:focus-within .searchBar {
+  border-color: #2daaed;
+  box-shadow:
+          0 8px 20px rgba(45, 170, 237, 0.15),
+          0 0 0 3px rgba(45, 170, 237, 0.12);
+  background: #fff;
+}
+
+/* ô nhập */
+.inputField {
+  flex: 1 1 auto;
+  min-width: 0;              /* tránh tràn */
+  height: 100%;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  font-size: 15px;
+  line-height: 1.2;
+  padding: 0 8px;
+  color: #111;
+}
+
+.inputField::placeholder {
+  color: #9aa0a6;
+}
+
+/* nút kính lúp tròn */
+.searchButton {
+  border: none;
+  background: #2daaed;
+  color: #fff;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  transition: transform .12s ease, filter .2s ease, box-shadow .2s ease;
+}
+
+.searchButton:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(45, 170, 237, 0.25);
+}
+
+.searchButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* icon kính lúp */
+.gf {
+  font-size: 1.05rem;
+  line-height: 0;
+}
+
+/* dropdown gợi ý (nếu cần chỉnh thêm) */
+.Inpur_search_value {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 14px;
+  box-shadow: 0 16px 32px rgba(0,0,0,.12);
+  overflow: hidden;
+  z-index: 10;
+
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .Header-search {
+    width: min(92vw, 520px);
+  }
+}

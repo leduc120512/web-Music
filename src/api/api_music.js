@@ -10,7 +10,11 @@ const PUBLIC_URL = `${BASE_URL}/public`;
  * ✅ Lấy token từ cookie và trả về header Authorization
  */
 const getAuthHeader = () => {
-    const token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyNSIsImlhdCI6MTc1NDExNTYxNCwiZXhwIjoxNzU0MjAyMDE0fQ.ouuLXAxQGG8eaykgrEkxr61J1claPCZexgW5_mshk-RYIacE8hOeeaTxXDmyNxo_qSNktVXtp5Y1ftzNR-ufGw"; // test tạm
+    const token = Cookies.get("token"); // 🔥 Lấy token từ cookie
+    if (!token) {
+        console.warn("⚠️ Không tìm thấy token trong cookie!");
+        return {};
+    }
     return { Authorization: `Bearer ${token}` };
 };
 
@@ -29,15 +33,11 @@ const getFormHeaders = (data) => {
 const songApi = {
     // 🔥 Lấy danh sách bài hát phổ biến (có xác thực)
     getPopularSongs: () =>
-        axios.get(`${BASE_URL}/popular`, {
-            headers: getAuthHeader(),
-        }),
+        axios.get(`${BASE_URL}/popular`, { headers: getAuthHeader() }),
 
     // 📥 Lấy danh sách bài hát mới nhất (có xác thực)
     getLatestSongs: () =>
-        axios.get(`${BASE_URL}/latest`, {
-            headers: getAuthHeader(),
-        }),
+        axios.get(`${BASE_URL}/latest`, { headers: getAuthHeader() }),
 
     // 🔍 Tìm kiếm bài hát theo từ khóa
     search: (keyword, page = 0, size = 20) =>
@@ -55,15 +55,11 @@ const songApi = {
 
     // 🎧 Lấy chi tiết bài hát theo ID
     getById: (id) =>
-        axios.get(`${BASE_URL}/${id}`, {
-            headers: getAuthHeader(),
-        }),
+        axios.get(`${BASE_URL}/${id}`, { headers: getAuthHeader() }),
 
     // 💡 Gợi ý tìm kiếm theo từ khóa (public)
     searchSuggestions: (keyword) =>
-        axios.get(`${PUBLIC_URL}/search-suggestions`, {
-            params: { keyword },
-        }),
+        axios.get(`${PUBLIC_URL}/search-suggestions`, { params: { keyword } }),
 
     // 🎧 API công khai không cần xác thực
     getLatestSongsPublic: () => axios.get(`${PUBLIC_URL}/latest`),
@@ -86,9 +82,7 @@ const songApi = {
 
     // ❌ Xóa bài hát
     delete: (id) =>
-        axios.delete(`${BASE_URL}/${id}`, {
-            headers: getAuthHeader(),
-        }),
+        axios.delete(`${BASE_URL}/${id}`, { headers: getAuthHeader() }),
 };
 
 export default songApi;

@@ -1,79 +1,182 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import classnames from "classnames/bind";
 import styles from "./slide-content-module.scss";
-import bannerApi from "../../../../api/banner"; // đường dẫn chính xác đến file bạn tạo
+import bannerApi from "../../../../api/banner";
+import defaultImg from "../Content/ANH/SONTUNG.webp";
 
 const cx = classnames.bind(styles);
+const ASSET_BASE = "http://localhost:8082";
 
-function Content() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState([]);
+// Build URL ảnh + fallback
+const buildCover = (coverImage) => {
+    if (!coverImage) return defaultImg;
+    if (/^https?:\/\//i.test(coverImage)) return coverImage;
+    return `${ASSET_BASE}${coverImage.startsWith("/") ? "" : "/"}${coverImage}`;
+};
 
-  // Gọi API banner khi component load
-  useEffect(() => {
-    bannerApi.getAll()
-        .then((res) => {
-          if (res.data.success && Array.isArray(res.data.data)) {
-            setSlides(res.data.data);
-            console.log("✅ Banner data:", res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.error("❌ Lỗi khi load banner:", err);
+function Slider() {
+    const [slides, setSlides] = useState([]);
+    const [current, setCurrent] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [errorMsg, setErrorMsg] = useState("");
+    const intervalRef = useRef(null);
+    const isHoveringRef = useRef(false);
+
+    // --- Debug checkpoints ---
+    console.log("[Slider] file loaded"); // khi file được import
+
+    // Fetch banners
+    useEffect(() => {
+        console.log("[Slider] useEffect(fetch) start");
+        let isMounted = true;
+
+        const fetchBanners = async () => {
+            try {
+               const res = await bannerApi.getAll();
+                 const ok = res?.success;
+               const list = Array.isArray(res?.data) ? res.data : [];
+                if (!ok) {
+                    throw new Error("API trả về success=false");
+                }
+                if (isMounted) {
+                    setSlides(list);
+                    setCurrent(0);
+                }
+                console.log("✅ Banner data loaded:", list);
+            } catch (err) {
+                console.error("❌ Lỗi khi load banner:", err);
+                if (isMounted) setErrorMsg("Không tải được banner");
+            } finally {
+                if (isMounted) setLoading(false);
+                console.log("[Slider] useEffect(fetch) done");
+            }
+        };
+
+        fetchBanners();
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    // Auto-play (chỉ chạy khi có >= 2 slide)
+    useEffect(() => {
+        if (slides.length < 2) return;
+
+        const start = () => {
+            clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(() => {
+                if (!isHoveringRef.current) {
+                    setCurrent((p) => (p + 1) % slides.length);
+                }
+            }, 5000);
+        };
+
+        start();
+        return () => clearInterval(intervalRef.current);
+    }, [slides.length]);
+
+    const go = (delta) => {
+        setCurrent((p) => {
+            const len = slides.length || 1;
+            return (p + delta + len) % len;
         });
-  }, []);
+    };
 
-  // Tự động chuyển slide mỗi 5 giây
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
+    const setSlide = (idx) => setCurrent(idx);
 
-  const plusSlides = (n) => {
-    setCurrentSlide((prevSlide) => (prevSlide + n + slides.length) % slides.length);
-  };
+    const onMouseEnter = () => (isHoveringRef.current = true);
+    const onMouseLeave = () => (isHoveringRef.current = false);
 
-  const setSlide = (n) => {
-    setCurrentSlide(n);
-  };
+    const activeSlide = useMemo(() => slides[current] || null, [slides, current]);
 
-  return (
-      <div className={cx("slide-content")}>
-        <div className="slideshow-container">
-          {slides.map((slide, index) => (
-              <div
-                  key={slide.id}
-                  className={cx("mySlides", "fade", {
-                    active: index === currentSlide,
-                  })}
-                  style={{ display: index === currentSlide ? "block" : "none" }}
-              >
-                <div className="numbertext">{`${index + 1} / ${slides.length}`}</div>
-                <img
-                    src={slide.image}
-                    style={{ width: "100%" }}
-                    alt={`Slide ${index + 1}`}
-                />
-                <div className="text">{slide.note}</div>
-              </div>
-          ))}
-          <a className="prev" onClick={() => plusSlides(-1)}>&#10094;</a>
-          <a className="next" onClick={() => plusSlides(1)}>&#10095;</a>
+    // --- UI states ---
+    if (loading) {
+        return (
+            <div className={cx("slide-content")}>
+                <div className={cx("slideshow-container")}>
+                    <div className={cx("loading")}>Đang tải banner…</div>
+                </div>
+            </div>
+        );
+    }
+
+    if (errorMsg || slides.length === 0) {
+        return (
+            <div className={cx("slide-content")}>
+                <div className={cx("slideshow-container")}>
+                    <div className={cx("fallback")}>
+                        <img src={defaultImg} alt="Banner mặc định" style={{ width: "100%" }} />
+                        <div className="text">{errorMsg || "Chưa có banner"}</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <div className={cx("slide-content")}>
+            <div
+                className="slideshow-container"
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+            >
+                {slides.map((slide, index) => (
+                    <div
+                        key={slide.id ?? index}
+                        className={cx("mySlides", "fade", { active: index === current })}
+                        style={{ display: index === current ? "block" : "none" }}
+                    >
+
+                        <img
+                            src={buildCover(slide.image)}
+                            style={{ width: "100%" }}
+                            className={cx("img-slide-d-content")}
+
+                            alt={slide?.note ? `${slide.note}` : `Slide ${index + 1}`}
+                            onError={(e) => {
+                                e.currentTarget.src = defaultImg;
+                            }}
+                        />
+                        {slide?.note && <div className="text">{slide.note}</div>}
+                    </div>
+                ))}
+
+                <button
+                    type="button"
+                    className="prev"
+                    aria-label="Slide trước"
+                    onClick={() => go(-1)}
+                >
+                    &#10094;
+                </button>
+                <button
+                    type="button"
+                    className="next"
+                    aria-label="Slide tiếp"
+                    onClick={() => go(1)}
+                >
+                    &#10095;
+                </button>
+            </div>
+
+            <br />
+            <div style={{ textAlign: "center" }}>
+                {slides.map((_, index) => (
+                    <span
+                        key={index}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`Chuyển đến slide ${index + 1}`}
+                        className={cx("dot", { active: index === current })}
+                        onClick={() => setSlide(index)}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") setSlide(index);
+                        }}
+                    />
+                ))}
+            </div>
         </div>
-        <br />
-        <div style={{ textAlign: "center" }}>
-          {slides.map((_, index) => (
-              <span
-                  key={index}
-                  className={cx("dot", { active: index === currentSlide })}
-                  onClick={() => setSlide(index)}
-              ></span>
-          ))}
-        </div>
-      </div>
-  );
+    );
 }
 
-export default Content;
+export default Slider;

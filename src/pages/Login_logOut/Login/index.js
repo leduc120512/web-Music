@@ -77,12 +77,12 @@ function ReusableModal({ open, handleClose }) {
       handleClose();
 
       // ✅ Điều hướng theo vai trò
-      if (role === "ADMIN") {
-        navigate("/Search_results");
-      } else if (role === "AUTHOR") {
-        navigate("/author/dashboard");
-      } else {
-        navigate("/profile");
+      if (role === "ROLE_ADMIN") {
+        navigate("/admin");
+      } else if (role === "ROLE_AUTHOR") {
+        navigate("/admin");
+      }  else if (role === "ROLE_USER") {
+        navigate("/");
       }
 
     } catch (error) {
