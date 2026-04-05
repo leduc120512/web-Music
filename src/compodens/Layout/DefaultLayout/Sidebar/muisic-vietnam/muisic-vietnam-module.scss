@@ -1,0 +1,159 @@
+.Musicvchauau {
+  margin-top: 12px;
+}
+
+/* ITEM SONG */
+.Musicvchauau-list {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+/* hover nâng cấp */
+.Musicvchauau-list:hover {
+  background: rgba(255, 94, 0, 0.08);
+  transform: translateX(6px);
+}
+
+/* thanh màu bên trái */
+.Musicvchauau-list::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 3px;
+  background: linear-gradient(180deg, #ff6a00, #ff2d55);
+  border-radius: 10px;
+  opacity: 0;
+  transition: 0.25s;
+}
+
+.Musicvchauau-list:hover::before {
+  opacity: 1;
+}
+
+/* SỐ THỨ TỰ */
+.Musicvchauau-l2 {
+  font-size: 15px;
+  font-weight: 800;
+  color: #ff5e00;
+  width: 30px;
+  text-align: center;
+}
+
+/* TOP 1 2 3 nổi bật */
+.Musicvchauau-l2:nth-child(1) {
+  color: #ff3b30;
+}
+.Musicvchauau-l2:nth-child(2) {
+  color: #ff9500;
+}
+.Musicvchauau-l2:nth-child(3) {
+  color: #ffcc00;
+}
+
+/* TITLE */
+.Mvhot-main-tex22 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: 0.2s;
+}
+
+/* hover đổi màu title */
+.Musicvchauau-list:hover .Mvhot-main-tex22 {
+  color: #ff5e00;
+}
+
+/* ARTIST */
+.Mvhot-main-text12 {
+  font-size: 12px;
+  color: #888;
+}
+
+/* HEADER ALBUM */
+.Musicvchauau-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  object-fit: cover;
+  transition: 0.3s ease;
+}
+
+/* hover ảnh zoom nhẹ */
+.Musicvchauau-list:hover .Musicvchauau-img {
+  transform: scale(1.08);
+}
+
+/* HOT ALBUM */
+.type-hot {
+  margin-top: 18px;
+}
+
+.type-hot-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-top: 10px;
+}
+
+/* ẩn scrollbar xấu */
+.type-hot-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* item */
+.type-hot-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* hover đẹp hơn */
+.type-hot-img:hover {
+  transform: scale(1.15) rotate(1deg);
+}
+
+/* LOADING skeleton */
+.skeleton {
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(
+                  90deg,
+                  #f0f0f0 25%,
+                  #e0e0e0 50%,
+                  #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ERROR */
+.error-box {
+  padding: 10px;
+  background: #ffeaea;
+  color: #e74c3c;
+  border-radius: 8px;
+  font-size: 13px;
+}

@@ -6,7 +6,7 @@ import Modal from "@mui/material/Modal";
 import classnames from "classnames/bind";
 import styles from "../Login_logOut-module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiceFive, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
@@ -52,26 +52,28 @@ function ReusableModal({ open, handleClose }) {
         password: password,
       });
 
-      const userData = response.data.data;
+      const userData = response?.data?.data;
+      const token = userData?.accessToken;
+      const user = userData?.user;
+      const role = user?.role;
 
-      const token = userData.accessToken;
-      const user = userData.user;
-      const role = user.role;
+      if (!token || !user || !role) {
+        throw new Error("Dữ liệu đăng nhập không hợp lệ từ server");
+      }
+
+      const isHttps = window.location.protocol === "https:";
+      const cookieOptions = {
+        expires: rememberMe ? 7 : undefined,
+        secure: isHttps,
+        sameSite: "strict",
+      };
 
       // ✅ Lưu vào cookie
-      Cookies.set("token", token, {
-        expires: rememberMe ? 7 : undefined,
-        secure: true,
-        sameSite: "strict",
-      });
+      Cookies.set("token", token, cookieOptions);
 
-      Cookies.set("user", JSON.stringify(user), {
-        expires: rememberMe ? 7 : undefined,
-        secure: true,
-        sameSite: "strict",
-      });
+      Cookies.set("user", JSON.stringify(user), cookieOptions);
 
-      Cookies.set("role", role);
+      Cookies.set("role", role, cookieOptions);
 
 
       handleClose();

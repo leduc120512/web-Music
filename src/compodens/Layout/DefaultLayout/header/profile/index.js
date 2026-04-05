@@ -1,28 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./profile-module.scss"; // Đường dẫn đúng đến file SCSS module
 import { useNavigate } from "react-router-dom";
 import classnames from "classnames/bind";
-import ReusableModal from "../../../../../pages/Login_logOut/Login"; // Đảm bảo đường dẫn đúng
 import Cookies from "js-cookie";
 const cx = classnames.bind(styles);
 
 const Profile = () => {
-
-  const [openModal, setOpenModal] = useState(false);
-
-  const handleLogoutClick = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
     const navigate = useNavigate();
 
     const handleLogout = () => {
         Cookies.remove("token");
         Cookies.remove("user");
+        Cookies.remove("role");
         navigate("/");
     };
   return (
@@ -39,14 +29,9 @@ const Profile = () => {
           <Link to="/profile/history">
               <p>Lịch sử Xem</p>
           </Link>
-
-
-          <p onClick={handleLogout} style={{cursor: "pointer", color: "red"}}>
+          <button type="button" className={cx("logoutBtn")} onClick={handleLogout}>
               Đăng xuất
-          </p>
-
-
-          <ReusableModal open={openModal} handleClose={handleCloseModal}/>
+          </button>
       </div>
   );
 };

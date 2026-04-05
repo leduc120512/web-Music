@@ -235,13 +235,12 @@ function Header() {
                 </div>
             ) : (
                 <div>
-                  <Button onClick={() => setOpenLogin(true)} primary>
+                  <Button className="auth-login" onClick={() => setOpenLogin(true)}>
                     Đăng Nhập
                   </Button>
                   <Button
-                      className={cx("Header_create_acoutn")}
+                      className="auth-register"
                       onClick={() => setOpenRegister(true)}
-                      primary
                   >
                     Đăng Ký
                   </Button>

@@ -1,4 +1,3 @@
-// src/components/List_item_today/List_item.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames/bind";
@@ -13,10 +12,9 @@ import defaultImg from "../ANH/SONTUNG.webp";
 const cx = classnames.bind(styles);
 const ASSET_BASE = "http://localhost:8082";
 
-// Ghép URL ảnh an toàn + fallback
 const buildCover = (coverImage) => {
   if (!coverImage) return defaultImg;
-  if (/^https?:\/\//i.test(coverImage)) return coverImage; // đã là URL tuyệt đối
+  if (/^https?:\/\//i.test(coverImage)) return coverImage;
   return `${ASSET_BASE}${coverImage.startsWith("/") ? "" : "/"}${coverImage}`;
 };
 
@@ -29,7 +27,7 @@ function ListItemToday() {
         const res = await songApi.getLatestSongs();
         setSongs(res?.data?.data?.content || []);
       } catch (e) {
-        console.error("❌ Lỗi khi lấy danh sách bài hát mới nhất:", e);
+        console.error("Lỗi khi lấy danh sách bài hát mới nhất:", e);
       }
     })();
   }, []);
@@ -37,23 +35,38 @@ function ListItemToday() {
   return (
       <div className={cx("content")}>
         <div className={cx("list-music-lk")}>
-          <Text>BÀI HÁT MỚI NHẤT</Text>
+          <Text className={cx("section-title")}>BÀI HÁT MỚI NHẤT</Text>
 
           <div className={cx("list-music")}>
             {songs.map((song) => (
                 <div key={song.id} className={cx("item-music")}>
-                  <Link to={`/Nhac/${song.id}`}>
+                  <Link to={`/Nhac/${song.id}`} className={cx("item-link")}>
                     <div className={cx("image-wrapper")}>
                       <img
                           className={cx("list-SINGER")}
                           src={buildCover(song.coverImage)}
                           alt={song.title}
                           loading="lazy"
+                          onError={(e) => {
+                            e.currentTarget.src = defaultImg;
+                          }}
                       />
-                      <FontAwesomeIcon className={cx("list-SINGER_play")} icon={faPlay} />
+
+                      <div className={cx("overlay")} />
+                      <div className={cx("play-button")}>
+                        <FontAwesomeIcon
+                            className={cx("list-SINGER_play")}
+                            icon={faPlay}
+                        />
+                      </div>
                     </div>
-                    <p className={cx("song-title")}>{song.title}</p>
-                    <p className={cx("song-artist")}>{song.artistName}</p>
+
+                    <p className={cx("song-title")} title={song.title}>
+                      {song.title}
+                    </p>
+                    <p className={cx("song-artist")} title={song.artistName}>
+                      {song.artistName}
+                    </p>
                   </Link>
                 </div>
             ))}

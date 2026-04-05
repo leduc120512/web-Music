@@ -93,3 +93,32 @@
   padding: 5px;
   background-color: #a22114;
 }
+
+/* Header auth button variants */
+.auth-login {
+  min-width: 118px;
+  border-radius: 999px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border-color: transparent;
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.26);
+
+  &:hover {
+    background: linear-gradient(135deg, #1d4ed8, #1e40af);
+    box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3);
+  }
+}
+
+.auth-register {
+  min-width: 118px;
+  border-radius: 999px;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border-color: #bfdbfe;
+
+  &:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+  }
+}
+

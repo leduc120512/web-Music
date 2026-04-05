@@ -1,39 +1,40 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,
     Button,
     Typography,
-    Modal,
     Grid,
     TextField,
     MenuItem,
     Select,
     FormControl,
     InputLabel,
-    FormControlLabel,
     Checkbox,
+    FormControlLabel,
+    CircularProgress,
+    Modal,
 } from '@mui/material';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faPlus,
-    faEdit,
-    faSave,
-    faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 
+// API imports
 import { fetchLatestAlbums } from '../api/albums';
-import bannerApi from '../api2/genreApi.js';
+import {
+    fetchAllGenres,
+    // Nếu cần: createGenre, updateGenre, deleteGenre,...
+} from '../api/genner'; // Đổi tên file nếu cần thành genreApi.js cho rõ nghĩa
 
-// Cache dữ liệu tham chiếu (chỉ fetch 1 lần cho toàn bộ ứng dụng)
-const genreCache = { data: [], loaded: false };
-const albumCache = { data: [], loaded: false };
+// Global cache (fetch 1 lần cho toàn app)
+let cachedAlbums = [];
+let cachedGenres = [];
 
-// Lấy thông tin user từ cookie (nếu cần)
+// User từ cookie (chỉ parse 1 lần)
 const userCookie = Cookies.get('user');
 const currentUser = userCookie ? JSON.parse(userCookie) : null;
 
-// Định nghĩa các field cho từng loại form
+// ──────────────────────────────────────────────
+// Cấu hình fields theo type entity
 export const FORM_FIELDS = {
     song: [
         { name: 'title', label: 'Tiêu đề', type: 'text', required: true },
@@ -41,227 +42,242 @@ export const FORM_FIELDS = {
         { name: 'coverImage', label: 'Ảnh bìa', type: 'file', accept: 'image/*' },
         { name: 'audioFile', label: 'File âm thanh', type: 'file', accept: 'audio/*' },
         { name: 'duration', label: 'Thời lượng (giây)', type: 'number' },
-        { name: 'lyrics', label: 'Lời bài hát', type: 'textarea', multiline: true, rows: 4 },
-        { name: 'genre.id', label: 'Thể loại', type: 'select', optionsKey: 'genres', required: true },
+        { name: 'playCount', label: 'Lượt phát', type: 'number' },
+        { name: 'lyrics', label: 'Lời bài hát', type: 'textarea', multiline: true },
+        { name: 'genre.id', label: 'Thể loại', type: 'select', optionsKey: 'genres' },
         { name: 'album.id', label: 'Album', type: 'select', optionsKey: 'albums' },
     ],
-
+    users: [
+        { name: 'username', label: 'Tên đăng nhập', type: 'text', required: true },
+        { name: 'fullName', label: 'Họ tên', type: 'text' },
+        { name: 'email', label: 'Email', type: 'email' },
+        { name: 'avatar', label: 'Ảnh đại diện', type: 'file', accept: 'image/*' },
+        { name: 'active', label: 'Kích hoạt', type: 'checkbox' },
+    ],
     album: [
         { name: 'title', label: 'Tiêu đề album', type: 'text', required: true },
         { name: 'description', label: 'Mô tả', type: 'text' },
         { name: 'coverImage', label: 'Ảnh bìa', type: 'file', accept: 'image/*' },
     ],
-
-    // Có thể thêm các type khác ở đây...
+    banner: [
+        { name: 'note', label: 'Ghi chú', type: 'text' },
+        { name: 'image', label: 'Ảnh banner', type: 'file', accept: 'image/*' },
+    ],
+    // Thêm type khác nếu cần
 };
 
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: { xs: '92%', sm: 620, md: 720 },
-    maxHeight: '92vh',
-    bgcolor: 'background.paper',
-    borderRadius: 2,
-    boxShadow: 24,
-    p: { xs: 2, sm: 4 },
-    overflowY: 'auto',
-};
-
-export default function CrudModal({ api, type, onSuccess }) {
+// ──────────────────────────────────────────────
+export default function CrudForm({
+                                     open = false,           // Prop từ cha: modal có mở không
+                                     onClose,                // Prop từ cha: hàm đóng modal
+                                     edit = 0,               // 0 = create, 1 = edit
+                                     api,                    // object api { create, update, ... }
+                                     type,                   // 'song' | 'album' | 'users' | 'banner'
+                                     initialData = {},       // dữ liệu khi edit
+                                     onSuccess,              // callback khi thành công
+                                 }) {
+    const isEdit = edit === 1;
     const fields = FORM_FIELDS[type] || [];
 
-    // State cho dữ liệu tham chiếu
-    const [genres, setGenres] = useState([]);
-    const [albums, setAlbums] = useState([]);
-    const [loadingRefs, setLoadingRefs] = useState(true);
-
-    // State cho modal & form
-    const [open, setOpen] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
-    const [currentItem, setCurrentItem] = useState({});
     const [formData, setFormData] = useState({});
+    const [albums, setAlbums] = useState(cachedAlbums);
+    const [genres, setGenres] = useState(cachedGenres);
+    const [loadingData, setLoadingData] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
-    // Load dữ liệu tham chiếu (genres + albums) - chỉ 1 lần
+    // Load albums & genres chỉ 1 lần khi cần
     useEffect(() => {
-        const loadReferenceData = async () => {
-            setLoadingRefs(true);
+        let isMounted = true;
 
+        const loadReferenceData = async () => {
             try {
-                // Genres
-                if (!genreCache.loaded && fields.some(f => f.optionsKey === 'genres' || f.name === 'genre.id')) {
-                    const res = await bannerApi.fetchAllGenres();
-                    const genreList = res.data?.data || res.data || res || [];
-                    genreCache.data = genreList.map(g => ({
-                        id: g.id,
-                        name: g.name || g.genreName || g.title || 'Không có tên',
-                    }));
-                    genreCache.loaded = true;
-                    setGenres(genreCache.data);
-                } else if (genreCache.loaded) {
-                    setGenres(genreCache.data);
+                if (cachedAlbums.length === 0) {
+                    const res = await fetchLatestAlbums(0, 100);
+                    cachedAlbums = res.data?.content || res.data || [];
+                    if (isMounted) setAlbums(cachedAlbums);
                 }
 
-                // Albums
-                if (!albumCache.loaded && fields.some(f => f.optionsKey === 'albums' || f.name === 'album.id')) {
-                    const res = await fetchLatestAlbums(0, 100);
-                    const albumList = res.data?.content || res.data || res || [];
-                    albumCache.data = albumList;
-                    albumCache.loaded = true;
-                    setAlbums(albumCache.data);
-                } else if (albumCache.loaded) {
-                    setAlbums(albumCache.data);
+                if (cachedGenres.length === 0) {
+                    const res = await fetchAllGenres();
+                    cachedGenres = res.data || [];
+                    if (isMounted) setGenres(cachedGenres);
                 }
             } catch (err) {
-                console.error('Lỗi khi tải dữ liệu tham chiếu:', err);
+                console.error('Lỗi tải albums/genres:', err);
             } finally {
-                setLoadingRefs(false);
+                if (isMounted) setLoadingData(false);
             }
         };
 
-        if (fields.length > 0) {
+        if (open && fields.some(f => f.optionsKey)) {
             loadReferenceData();
+        } else if (!fields.some(f => f.optionsKey)) {
+            setLoadingData(false);
         }
-    }, []); // Chỉ chạy một lần khi component mount
 
-    // Chuẩn bị dữ liệu form khi mở modal (thêm mới hoặc sửa)
-    const openModal = (item = {}, editMode = false) => {
-        const initialValues = fields.reduce((acc, field) => {
-            let value = editMode ? item[field.name] : undefined;
+        return () => { isMounted = false; };
+    }, [open, fields]);
 
-            // Xử lý trường hợp nested object (genre, album)
-            if (typeof value === 'object' && value !== null && 'id' in value) {
-                value = value.id;
+    // Reset form khi modal mở hoặc initialData thay đổi
+    useEffect(() => {
+        if (!open) return;
+
+        const defaults = fields.reduce((acc, field) => {
+            let val = initialData[field.name];
+
+            if (val === undefined || val === null) {
+                if (field.type === 'checkbox') val = false;
+                else if (field.type === 'number') val = 0;
+                else if (field.type === 'file') val = null;
+                else val = '';
             }
 
-            // Giá trị mặc định
-            if (value === undefined || value === null) {
-                if (field.type === 'checkbox') value = false;
-                else if (field.type === 'number') value = 0;
-                else value = '';
-            }
-
-            acc[field.name] = value;
+            acc[field.name] = val;
             return acc;
         }, {});
 
-        setFormData(initialValues);
-        setCurrentItem(item);
-        setIsEdit(editMode);
-        setOpen(true);
-    };
+        setFormData(defaults);
+    }, [open, initialData, fields]);
 
-    // Các hàm điều khiển modal
-    const handleAddNew = () => openModal({}, false);
-    const handleEdit = (item) => openModal(item, true);
-    const handleClose = () => setOpen(false);
-
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
         const { name, value, type: inputType, files, checked } = e.target;
 
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
             [name]:
                 inputType === 'file' ? (files?.[0] ?? null)
                     : inputType === 'checkbox' ? checked
                         : value,
         }));
-    };
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (submitting) return;
+
+        setSubmitting(true);
 
         try {
-            const hasFile = fields.some((f) => f.type === 'file');
-            const payload = hasFile ? new FormData() : {};
+            const hasFiles = fields.some(f => f.type === 'file');
+            const payload = hasFiles ? new FormData() : {};
 
             Object.entries(formData).forEach(([key, val]) => {
-                if (hasFile) {
-                    payload.append(key, val ?? '');
-                } else {
-                    payload[key] = val;
+                if (val !== null && val !== undefined && val !== '') {
+                    if (hasFiles) {
+                        payload.append(key, val);
+                    } else {
+                        payload[key] = val;
+                    }
                 }
             });
 
-            if (isEdit && currentItem.id) {
-                await api.update(currentItem.id, payload);
-                alert('Cập nhật thành công!');
+            if (isEdit && initialData.id) {
+                await api.update(initialData.id, payload);
             } else {
                 await api.create(payload);
-                alert('Thêm mới thành công!');
             }
 
-            onSuccess?.();
-            handleClose();
+            alert(`${isEdit ? 'Cập nhật' : 'Tạo mới'} thành công!`);
+            if (onSuccess) onSuccess();
+            onClose?.();
         } catch (err) {
-            const msg = err.response?.data?.message || err.message || 'Lỗi không xác định';
-            alert('Lỗi: ' + msg);
+            const msg = err.response?.data?.message || err.message || 'Có lỗi xảy ra';
+            alert(`Lỗi: ${msg}`);
             console.error(err);
+        } finally {
+            setSubmitting(false);
         }
     };
 
     // ──────────────────────────────────────────────
     // Render
-    // ──────────────────────────────────────────────
+    if (!open) return null;
 
     return (
-        <>
-            {/* Nút mở modal thêm mới (có thể đặt ở đâu cũng được) */}
-            <Box sx={{ mb: 3 }}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<FontAwesomeIcon icon={faPlus} />}
-                    onClick={handleAddNew}
-                >
-                    Thêm mới {type === 'song' ? 'bài hát' : type === 'album' ? 'album' : ''}
-                </Button>
-            </Box>
+        <Modal
+            open={open}
+            onClose={onClose}
+            aria-labelledby="crud-form-modal"
+        >
+            <Box
+                sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: { xs: '90%', sm: 700 },
+                    maxHeight: '90vh',
+                    overflowY: 'auto',
+                    bgcolor: 'background.paper',
+                    borderRadius: 2,
+                    boxShadow: 24,
+                    p: 4,
+                }}
+            >
+                {loadingData && fields.some(f => f.optionsKey) ? (
+                    <Box sx={{ textAlign: 'center', py: 6 }}>
+                        <CircularProgress />
+                        <Typography mt={2}>Đang tải dữ liệu tham chiếu...</Typography>
+                    </Box>
+                ) : (
+                    <>
+                        <Typography variant="h6" component="h2" mb={3}>
+                            {isEdit ? `Chỉnh sửa ${type}` : `Tạo mới ${type}`}
+                        </Typography>
 
-            {/* Modal */}
-            <Modal open={open} onClose={handleClose}>
-                <Box sx={modalStyle}>
-                    <Typography variant="h6" component="h2" gutterBottom>
-                        {isEdit ? 'Chỉnh sửa' : 'Thêm mới'}{' '}
-                        {type === 'song' ? 'Bài hát' : type === 'album' ? 'Album' : ''}
-                    </Typography>
-
-                    {loadingRefs ? (
-                        <Typography>Đang tải danh sách thể loại/album...</Typography>
-                    ) : (
-                        <form onSubmit={handleSubmit}>
+                        <form onSubmit={handleSubmit} noValidate>
                             <Grid container spacing={2.5}>
-                                {fields.map((field) => {
+                                {fields.map(field => {
                                     const value = formData[field.name] ?? '';
 
-                                    // Trường hợp file
+                                    // File input
                                     if (field.type === 'file') {
                                         return (
                                             <Grid item xs={12} key={field.name}>
                                                 <Typography variant="body2" gutterBottom>
-                                                    {field.label}
+                                                    {field.label} {field.required && '*'}
                                                 </Typography>
                                                 <input
                                                     type="file"
                                                     name={field.name}
                                                     accept={field.accept}
                                                     onChange={handleChange}
-                                                    style={{ width: '100%', fontSize: '0.875rem' }}
+                                                    disabled={submitting}
+                                                    style={{ display: 'block', marginTop: 8 }}
                                                 />
-                                                {isEdit && typeof value === 'string' && value && (
-                                                    <Typography variant="caption" color="text.secondary" mt={0.5} component="div">
-                                                        File hiện tại: {value.split('/').pop()}
+                                                {typeof value === 'string' && value && (
+                                                    <Typography variant="caption" color="text.secondary" mt={1} display="block">
+                                                        Hiện có: {value.split('/').pop()}
                                                     </Typography>
                                                 )}
                                             </Grid>
                                         );
                                     }
 
-                                    // Trường hợp select (genre & album)
+                                    // Checkbox
+                                    if (field.type === 'checkbox') {
+                                        return (
+                                            <Grid item xs={12} key={field.name}>
+                                                <FormControlLabel
+                                                    control={
+                                                        <Checkbox
+                                                            name={field.name}
+                                                            checked={!!value}
+                                                            onChange={handleChange}
+                                                            disabled={submitting}
+                                                            size="small"
+                                                        />
+                                                    }
+                                                    label={field.label}
+                                                />
+                                            </Grid>
+                                        );
+                                    }
+
+                                    // Select
                                     if (field.type === 'select' || field.name.endsWith('.id')) {
-                                        const options = field.optionsKey === 'genres' ? genres : albums;
-                                        const labelKey = field.optionsKey === 'genres' ? 'name' : 'title';
+                                        const options = field.optionsKey === 'albums' ? albums : genres;
+                                        const labelKey = field.optionsKey === 'albums' ? 'title' : 'name';
 
                                         return (
                                             <Grid item xs={12} sm={6} key={field.name}>
@@ -272,13 +288,14 @@ export default function CrudModal({ api, type, onSuccess }) {
                                                         value={value || ''}
                                                         label={field.label}
                                                         onChange={handleChange}
+                                                        disabled={submitting}
                                                     >
-                                                        <MenuItem value="">
-                                                            <em>-- Chọn {field.label.toLowerCase()} --</em>
+                                                        <MenuItem value="" disabled>
+                                                            -- Chọn {field.label.toLowerCase()} --
                                                         </MenuItem>
-                                                        {options.map((opt) => (
-                                                            <MenuItem key={opt.id} value={opt.id}>
-                                                                {opt[labelKey] || 'Không có tên'}
+                                                        {options.map(item => (
+                                                            <MenuItem key={item.id} value={item.id}>
+                                                                {item[labelKey]}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -287,7 +304,7 @@ export default function CrudModal({ api, type, onSuccess }) {
                                         );
                                     }
 
-                                    // Các field text, number, textarea...
+                                    // Text, number, textarea, email
                                     return (
                                         <Grid item xs={12} sm={6} key={field.name}>
                                             <TextField
@@ -299,8 +316,9 @@ export default function CrudModal({ api, type, onSuccess }) {
                                                 fullWidth
                                                 size="small"
                                                 multiline={field.multiline}
-                                                rows={field.rows}
+                                                rows={field.multiline ? 4 : undefined}
                                                 required={field.required}
+                                                disabled={submitting}
                                                 inputProps={{ style: { fontSize: '0.875rem' } }}
                                                 InputLabelProps={{ style: { fontSize: '0.875rem' } }}
                                             />
@@ -309,26 +327,35 @@ export default function CrudModal({ api, type, onSuccess }) {
                                 })}
                             </Grid>
 
-                            <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+                            <Box mt={4} display="flex" justifyContent="flex-end" gap={2}>
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    startIcon={<FontAwesomeIcon icon={faSave} />}
+                                    color="primary"
+                                    size="small"
+                                    disabled={submitting}
+                                    startIcon={
+                                        submitting ? <CircularProgress size={16} color="inherit" /> : <FontAwesomeIcon icon={faSave} size="sm" />
+                                    }
                                 >
-                                    Lưu
+                                    {submitting ? 'Đang lưu...' : 'Lưu'}
                                 </Button>
+
                                 <Button
                                     variant="outlined"
-                                    onClick={handleClose}
-                                    startIcon={<FontAwesomeIcon icon={faTimes} />}
+                                    color="inherit"
+                                    size="small"
+                                    onClick={onClose}
+                                    disabled={submitting}
+                                    startIcon={<FontAwesomeIcon icon={faTimes} size="sm" />}
                                 >
                                     Huỷ
                                 </Button>
                             </Box>
                         </form>
-                    )}
-                </Box>
-            </Modal>
-        </>
+                    </>
+                )}
+            </Box>
+        </Modal>
     );
 }

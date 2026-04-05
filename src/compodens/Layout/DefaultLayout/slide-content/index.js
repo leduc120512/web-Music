@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classnames from "classnames/bind";
 import styles from "./slide-content-module.scss";
 import bannerApi from "../../../../api/banner";
@@ -32,16 +32,24 @@ function Slider() {
 
         const fetchBanners = async () => {
             try {
-               const res = await bannerApi.getAll();
-                 const ok = res?.success;
-               const list = Array.isArray(res?.data) ? res.data : [];
-                if (!ok) {
-                    throw new Error("API trả về success=false");
-                }
+                // Homepage should use public endpoint (no login required)
+                const res = await bannerApi.getPublic();
+
+                // Accept both payload styles:
+                // 1) { success, data: [...] }
+                // 2) [...]
+                const payload = res?.data;
+                const list = Array.isArray(payload)
+                    ? payload
+                    : Array.isArray(payload?.data)
+                        ? payload.data
+                        : [];
+
                 if (isMounted) {
                     setSlides(list);
                     setCurrent(0);
                 }
+
                 console.log("✅ Banner data loaded:", list);
             } catch (err) {
                 console.error("❌ Lỗi khi load banner:", err);
@@ -53,10 +61,13 @@ function Slider() {
         };
 
         fetchBanners();
+
         return () => {
             isMounted = false;
         };
     }, []);
+
+
 
     // Auto-play (chỉ chạy khi có >= 2 slide)
     useEffect(() => {
@@ -87,7 +98,6 @@ function Slider() {
     const onMouseEnter = () => (isHoveringRef.current = true);
     const onMouseLeave = () => (isHoveringRef.current = false);
 
-    const activeSlide = useMemo(() => slides[current] || null, [slides, current]);
 
     // --- UI states ---
     if (loading) {
