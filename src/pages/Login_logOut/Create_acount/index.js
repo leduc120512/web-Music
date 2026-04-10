@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Checkbox from "@mui/material/Checkbox";
 import classnames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiceFive, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 import styles from "../Login_logOut-module.scss";
+import userApi from "../../../api/api_user";
 
 const cx = classnames.bind(styles);
 
@@ -16,12 +16,10 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 800,
-  height: 400,
-  bgcolor: "background.paper",
+  width: { xs: "92%", sm: 540 },
+  bgcolor: "transparent",
+  outline: "none",
 };
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 function Create_Acount({ open, handleClose }) {
   const [formData, setFormData] = useState({
@@ -30,16 +28,18 @@ function Create_Acount({ open, handleClose }) {
     confirmPassword: "",
     email: "",
     fullName: "",
+    gender: "OTHER",
+    avatar: null,
   });
 
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, files, type } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === "file" ? files?.[0] || null : value,
     }));
   };
 
@@ -58,14 +58,17 @@ function Create_Acount({ open, handleClose }) {
 
     try {
       setLoading(true);
-      const payload = {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        fullName: formData.fullName || formData.username,
-      };
+      const payload = new FormData();
+      payload.append("username", formData.username);
+      payload.append("email", formData.email);
+      payload.append("password", formData.password);
+      payload.append("fullName", formData.fullName || formData.username);
+      payload.append("gender", formData.gender || "OTHER");
+      if (formData.avatar) {
+        payload.append("avatar", formData.avatar);
+      }
 
-      const response = await axios.post("http://localhost:8082/api/auth/signup", payload);
+      const response = await userApi.signup(payload);
 
       if (response.data.success) {
         alert("Đăng ký thành công!");
@@ -82,110 +85,138 @@ function Create_Acount({ open, handleClose }) {
   };
 
   return (
-      <Modal open={open} onClose={handleClose}>
+      <Modal
+          open={open}
+          onClose={handleClose}
+          slotProps={{
+            backdrop: {
+              sx: {
+                backgroundColor: "rgba(2, 6, 23, 0.78)",
+                backdropFilter: "blur(4px)",
+              },
+            },
+          }}
+      >
         <Box sx={style}>
-          <div className={cx("Create_Acount")}>
+          <div className={cx("Create_Acount", "Create_main") }>
             <div className={cx("Login_header")}>
               <p>Đăng Ký</p>
               <FontAwesomeIcon
                   onClick={handleClose}
-                  className={cx("Login_icon1")}
+                  className={cx("Login_icon1", "Login_close")}
                   icon={faWindowClose}
               />
             </div>
-            <div className={cx("Login_iconsd1")}>
-              <div className={cx("Create_content")}>
-                <p>Những thông tin có đánh dấu (*) là bắt buộc nhập</p>
-                <form onSubmit={handleSubmit}>
-                  <table>
-                    <tbody>
-                    <tr className={cx("Create_td")}>
-                      <td className={cx("Login_td")}>Tên đăng nhập*</td>
-                      <td>
-                        <input
-                            type="text"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                            className={cx("Login_input")}
-                        />
-                      </td>
-                    </tr>
-                    <tr className={cx("Create_td")}>
-                      <td className={cx("Login_td")}>Email*</td>
-                      <td>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                            className={cx("Login_input")}
-                        />
-                      </td>
-                    </tr>
-                    <tr className={cx("Create_td")}>
-                      <td className={cx("Login_td")}>Mật khẩu*</td>
-                      <td>
-                        <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                            className={cx("Login_input")}
-                        />
-                      </td>
-                    </tr>
-                    <tr className={cx("Create_td")}>
-                      <td className={cx("Login_td")}>Nhập lại mật khẩu*</td>
-                      <td>
-                        <input
-                            type="password"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                            className={cx("Login_input")}
-                        />
-                      </td>
-                    </tr>
+            <form className={cx("Create_content")} onSubmit={handleSubmit}>
+              <p className={cx("Login_issfputs")}>Những thông tin có đánh dấu (*) là bắt buộc nhập</p>
 
-                    <tr className={cx("Create_td")}>
-                      <td></td>
-                      <td>
-                        <div className={cx("Create_tded")}>
-                          <Checkbox
-                              checked={agree}
-                              onChange={(e) => setAgree(e.target.checked)}
-                              {...label}
-                          />
-                          <p>
-                            Tôi đã đọc và đồng ý với Chính sách bảo mật & điều khoản sử dụng
-                          </p>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className={cx("Create_td")}>
-                      <td></td>
-                      <td>
-                        <Button
-                            className={cx("Login_input")}
-                            variant="contained"
-                            color="success"
-                            type="submit"
-                            disabled={loading}
-                        >
-                          {loading ? "Đang xử lý..." : "ĐĂNG KÝ NGAY"}
-                        </Button>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </form>
+              <div className={cx("Login_field")}>
+                <label htmlFor="register-username">Tên đăng nhập *</label>
+                <input
+                    id="register-username"
+                    type="text"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                    placeholder="Nhập tên đăng nhập"
+                    className={cx("Login_input")}
+                />
               </div>
-            </div>
+
+              <div className={cx("Login_field")}>
+                <label htmlFor="register-email">Email *</label>
+                <input
+                    id="register-email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Nhập email"
+                    className={cx("Login_input")}
+                />
+              </div>
+
+              <div className={cx("Create_grid") }>
+                <div className={cx("Login_field")}>
+                  <label htmlFor="register-password">Mật khẩu *</label>
+                  <input
+                      id="register-password"
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                      placeholder="Nhập mật khẩu"
+                      className={cx("Login_input")}
+                  />
+                </div>
+
+                <div className={cx("Login_field")}>
+                  <label htmlFor="register-confirm-password">Nhập lại mật khẩu *</label>
+                  <input
+                      id="register-confirm-password"
+                      type="password"
+                      name="confirmPassword"
+                      value={formData.confirmPassword}
+                      onChange={handleChange}
+                      required
+                      placeholder="Nhập lại mật khẩu"
+                      className={cx("Login_input")}
+                  />
+                </div>
+              </div>
+
+              <div className={cx("Create_grid") }>
+                <div className={cx("Login_field")}>
+                  <label htmlFor="register-gender">Giới tính *</label>
+                  <select
+                    id="register-gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className={cx("Login_input")}
+                  >
+                    <option value="MALE">Nam</option>
+                    <option value="FEMALE">Nữ</option>
+                    <option value="OTHER">Khác</option>
+                  </select>
+                </div>
+
+                <div className={cx("Login_field")}>
+                  <label htmlFor="register-avatar">Ảnh đại diện (tuỳ chọn)</label>
+                  <input
+                    id="register-avatar"
+                    type="file"
+                    name="avatar"
+                    accept="image/*"
+                    onChange={handleChange}
+                    className={cx("Login_input")}
+                  />
+                </div>
+              </div>
+
+              <label className={cx("Create_agree") }>
+                <Checkbox
+                    checked={agree}
+                    onChange={(e) => setAgree(e.target.checked)}
+                    sx={{ color: "#67e8f9", "&.Mui-checked": { color: "#22d3ee" } }}
+                />
+                <span>Tôi đã đọc và đồng ý với Chính sách bảo mật và điều khoản sử dụng</span>
+              </label>
+
+              <Button
+                  className={cx("Create_submit")}
+                  variant="contained"
+                  type="submit"
+                  disabled={loading}
+                  disableElevation
+                  fullWidth
+              >
+                {loading ? "Đang xử lý..." : "Đăng Ký Ngay"}
+              </Button>
+            </form>
           </div>
         </Box>
       </Modal>

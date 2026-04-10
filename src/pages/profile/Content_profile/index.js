@@ -1,55 +1,82 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classnames from "classnames/bind";
 import styles from "../profile-module.scss";
-import { faCircleDot, faHome } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 // grid
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Cookies from "js-cookie";
 
 import Img_avatar from "../avatar_default_2020.png";
-import Contentt from "./Content_content-";
 import Sibar from "./Sibar";
-import { Outlet } from "react-router-dom";
-const cx = classnames.bind(styles);
-const userCookie = Cookies.get("user");
-const user = userCookie ? JSON.parse(userCookie) : null;
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+const cx = classnames.bind(styles);
+
+const PROFILE_NAV_ITEMS = [
+  { to: "/Profile/chinh-sua-thong-tin", label: "Thông tin cá nhân" },
+  { to: "/Profile/Maiprofile", label: "PlayList" },
+  { to: "/Profile/Contentt_Video", label: "Video" },
+  { to: "/Profile/upload_proifle", label: "Tải lên" },
+  { to: "/Profile/Friend_live", label: "Bạn bè" },
+  { to: "/Profile/author-request", label: "Đăng ký tác giả" },
+];
+
+const readUserFromCookie = () => {
+  const raw = Cookies.get("user");
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    return null;
+  }
+};
 
 function Profilee_content() {
+  const [user, setUser] = useState(() => readUserFromCookie());
+  const location = useLocation();
+
+  useEffect(() => {
+    const syncUser = () => setUser(readUserFromCookie());
+    window.addEventListener("profile-updated", syncUser);
+    return () => window.removeEventListener("profile-updated", syncUser);
+  }, []);
+
+  const userMeta = useMemo(
+    () => ({
+      displayName: user?.fullName || user?.username || "Người dùng",
+      displayId: user?.id || "---",
+      displayGender: user?.gender || "Chưa cập nhật",
+      avatar: user?.avatar ? `http://localhost:8082${user.avatar}` : Img_avatar,
+      birthday: user?.birthday || user?.birthDate || "Đang cập nhật",
+    }),
+    [user]
+  );
+
   return (
     <div className={cx("Profilee_content")}>
       <div className={cx("Profilee_main")}>
-        <div className={cx("Profilesssssse_content")}>
-          <div className={cx("Profilesse_content")}>
-            <img className={cx("Profilee_content_img")} src={Img_avatar} />
-            <div className={cx("Prossfileess_content_img")}>
-              <p className={cx("Prossfilee_cossssntdddent_img")}>Đức Le</p>
-              <p>ID: 45316683</p>
-              <p>Tên thật:{user?.fullName  || 'chua co'}</p>
-              <p>Sinh nhật: Đang cập nhật</p>
-              <p>Giới tính: Khác</p>
+        <div className={cx("profileHero")}> 
+          <div className={cx("profileIdentity")}> 
+            <img className={cx("Profilee_content_img")} src={userMeta.avatar} alt={userMeta.displayName} />
+            <div className={cx("profileIdentityText")}> 
+              <p className={cx("profileTitle")}>{userMeta.displayName}</p>
+              <p>ID: {userMeta.displayId}</p>
+              <p>Tên thật: {user?.fullName || "Chưa cập nhật"}</p>
+              <p>Sinh nhật: {userMeta.birthday}</p>
+              <p>Giới tính: {userMeta.displayGender}</p>
             </div>
           </div>
-          <div className={cx("Prossfisdsslee_cossssntdddent_img")}>
-            <div className={cx("Prossfisdsslessssse_cossssntdddent_img")}>
-              <p className={cx("Prossfisdsslessssdddse_cossssntdddent_img")}>
+
+          <div className={cx("profileStatsRow")}> 
+            <div className={cx("profileStatCard")}> 
+              <p className={cx("profileStatValue")}>
                 <span>17</span>
               </p>
               <p>Lượt xem profile</p>
             </div>
-            <div className={cx("Prossfisdsslessssse_cossssntdddent_img")}>
+            <div className={cx("profileStatCard")}> 
               <p>
                 <span>0</span>
               </p>
@@ -57,33 +84,31 @@ function Profilee_content() {
             </div>
           </div>
         </div>
-        <ul className={cx("Profilee_nAV")}>
-          <li>
-            {" "}
+
+        <nav className={cx("profileNavBar")}>
+          <Link to="/" className={cx("homeIconWrap")} aria-label="Trang chu">
             <FontAwesomeIcon className={cx("Profilee_nAVsss")} icon={faHome} />
-          </li>
-          <Link to="/Profile/Maiprofile">
-            <li>PlayList</li>
           </Link>
-          <Link to="/Profile/Contentt_Video">
-            {" "}
-            <li> Video</li>
-          </Link>
-          <Link to="/Profile/upload_proifle">
-            <li> Tui Upload</li>
-          </Link>
-          <Link to="/Profile/Friend_live">
-            {" "}
-            <li> Bạn Bè</li>
-          </Link>
-        </ul>
+
+          {PROFILE_NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={({ isActive }) => cx("profileNavItem", { profileNavItemActive: isActive })}
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
 
         <Box className={cx("Profilee_container")} sx={{ flexGrow: 1 }}>
-          <Grid className={cx("Profilee_container")} container spacing={2}>
-            <Grid className={cx("Profilee_Contetnt-")} item xs={8} md={7}>
-              <Outlet />
+          <Grid className={cx("Profilee_container", "profileLayoutGrid")} container spacing={2}>
+            <Grid className={cx("Profilee_Contetnt-", "profileMainPanel")} item xs={12} lg={8}>
+              <div key={location.pathname} className={cx("profileOutletTransition")}>
+                <Outlet />
+              </div>
             </Grid>
-            <Grid className={cx("Profileesss_sibar-")} item xs={4} md={3}>
+            <Grid className={cx("Profileesss_sibar-", "profileSidePanel")} item xs={12} lg={4}>
               <Sibar />
             </Grid>
           </Grid>

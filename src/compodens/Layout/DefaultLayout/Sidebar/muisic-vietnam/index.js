@@ -1,16 +1,18 @@
 // src/compodens/Layout/DefaultLayout/Sidebar/music-anh/index.js
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./muisic-vietnam-module.scss";
 import classnames from "classnames/bind";
 import Imgvb from "../1699029204532.jpg";
 import imgt from "../12437.jpg";
 import Text from "../../../../../pages/text";
 import axios from "axios";
+import { buildSongPath } from "../../../../../utils/songRoute";
+import songApi from "../../../../../api/api_music";
 
 const cx = classnames.bind(styles);
 
-const API_ORIGIN =
-    import.meta?.env?.VITE_API_ORIGIN || "http://localhost:8082";
+const API_ORIGIN = process.env.REACT_APP_API_ORIGIN || "http://localhost:8082";
 
 const resolveImage = (path) => {
   if (!path) return Imgvb;
@@ -57,8 +59,8 @@ function MUSICANH({ id = 14 }) {
     (async () => {
       try {
         setLoadingSongs(true);
-        const res = await axios.get(`${API_ORIGIN}/api/songs/by-album/${id}`);
-        if (!ignore) setSongs(res?.data?.data?.content || []);
+        const list = await songApi.getSongsByAlbumPublic(id);
+        if (!ignore) setSongs(Array.isArray(list) ? list : []);
       } catch (e) {
         if (!ignore) setErrSongs(e?.message || "Không tải được danh sách bài hát");
       } finally {
@@ -145,8 +147,9 @@ function MUSICANH({ id = 14 }) {
             </>
         )}
         {!loadingSongs && !errSongs && songs.map((song, idx) => (
-            <div
+            <Link
                 key={song.id}
+                to={buildSongPath(song)}
                 className={cx(
                     "Musicvchauau-list",
                     "Mussicvchauau-list",
@@ -177,7 +180,7 @@ function MUSICANH({ id = 14 }) {
                   {song.artistName || "Không rõ nghệ sĩ"}
                 </p>
               </div>
-            </div>
+            </Link>
         ))}
         {!loadingSongs && errSongs && (
             <div className={cx("error-box")}>Lỗi bài hát: {errSongs}</div>

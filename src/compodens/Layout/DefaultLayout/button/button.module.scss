@@ -11,6 +11,8 @@
   background-color: var(--white);
   border: 1px solid transparent;
   user-select: none;
+  transition: transform 0.16s ease, box-shadow 0.2s ease, background-color 0.2s ease,
+    border-color 0.2s ease;
 
   + .wrapper {
     margin-left: 8px;
@@ -19,6 +21,10 @@
   &.disabled {
     pointer-events: none;
     opacity: 0.5;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
   }
 }
 
@@ -96,29 +102,32 @@
 
 /* Header auth button variants */
 .auth-login {
-  min-width: 118px;
+  min-width: 126px;
+  height: 40px;
   border-radius: 999px;
   color: #ffffff;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #06b6d4, #0284c7);
   border-color: transparent;
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.26);
+  box-shadow: 0 10px 20px rgba(2, 132, 199, 0.34);
 
   &:hover {
-    background: linear-gradient(135deg, #1d4ed8, #1e40af);
-    box-shadow: 0 10px 20px rgba(30, 64, 175, 0.3);
+    background: linear-gradient(135deg, #0891b2, #0369a1);
+    box-shadow: 0 12px 24px rgba(3, 105, 161, 0.36);
   }
 }
 
 .auth-register {
-  min-width: 118px;
+  min-width: 126px;
+  height: 40px;
   border-radius: 999px;
-  color: #1d4ed8;
-  background: #eff6ff;
-  border-color: #bfdbfe;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.82);
+  border-color: rgba(148, 163, 184, 0.35);
 
   &:hover {
-    background: #dbeafe;
-    border-color: #93c5fd;
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(103, 232, 249, 0.55);
+    box-shadow: 0 8px 18px rgba(2, 6, 23, 0.35);
   }
 }
 

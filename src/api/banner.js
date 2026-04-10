@@ -18,8 +18,8 @@ const getAuthHeaders = () => {
 };
 
 const bannerApi = {
-    // Public endpoint for homepage banner slider
-    getPublic: () => axios.get(`${BASE_URL}/public`),
+    // Public endpoint for homepage banner slider (no login required)
+    getPublic: () => axios.get(BASE_URL),
 
     // 📌 GET all banners
     getAll: () =>

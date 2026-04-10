@@ -3,6 +3,8 @@
   flex-direction: column;
   margin: 0;
   justify-content: center;
+  min-height: 100vh;
+  background: transparent;
 }
 
 .header {
@@ -20,15 +22,25 @@
   width: 100%;
   float: right !important;
   justify-content: center;
-  margin-left: 100px;
+  margin-left: 0;
+  gap: 20px;
+  padding: 20px 28px 40px;
 }
 
 .Content-width {
   width: 65%;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 18px;
+  padding: 20px;
+  backdrop-filter: blur(6px);
 }
 
 .Sider-bar-width {
   width: 23%;
-
-  float: right !important; /* Đẩy Siderbar về bên phải */
+  float: right !important;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 18px;
+  padding: 16px;
 }

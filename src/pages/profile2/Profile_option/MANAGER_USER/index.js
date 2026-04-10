@@ -61,6 +61,7 @@ function Manager_user({ goToPlaylistTab, goTovideoTab }) {
                     <div>
                       <p>ID: {user.id}</p>
                       <p>Họ và tên: {user.fullName}</p>
+                      <p>Giới tính: {user.gender || "Chưa cập nhật"}</p>
                       <p>
                         Ngày tạo tài khoản:{" "}
                         {new Date(user.createdAt).toLocaleDateString("vi-VN")}

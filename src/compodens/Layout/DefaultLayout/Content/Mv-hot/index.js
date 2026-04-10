@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Mv-hot-module.scss";
 import classnames from "classnames/bind";
 import Text from "../../../../../pages/text";
 import songApi from "../../../../../api/api_music";
 import defaultImg from "../ANH/SONTUNG.webp";
+import { buildSongPath } from "../../../../../utils/songRoute";
 
 const cx = classnames.bind(styles);
 const ASSET_BASE = "http://localhost:8082";
@@ -49,7 +51,7 @@ function Mv_hot() {
           {songs.length > 0 ? (
               songs.map((song, index) => (
                   <div className={cx("Mvhot22")} key={song.id || index}>
-                    <div className={cx("card")}>
+                    <Link to={buildSongPath(song)} className={cx("card") }>
                       <img
                           className={cx("Mvhot23")}
                           src={buildCover(song.coverImage)}
@@ -67,7 +69,7 @@ function Mv_hot() {
                           {song.artistName}
                         </p>
                       </div>
-                    </div>
+                    </Link>
                   </div>
               ))
           ) : (
@@ -82,7 +84,7 @@ function Mv_hot() {
         <div className={cx("content-TOP100-IMG")}>
           {top5.length > 0 ? (
               top5.map((song, index) => (
-                  <div className={cx("topCard")} key={song.id || index}>
+                  <Link to={buildSongPath(song)} className={cx("topCard")} key={song.id || index}>
                     <img
                         className={cx("content-TOP100-IMG-LIST")}
                         src={buildCover(song.coverImage)}
@@ -97,7 +99,7 @@ function Mv_hot() {
                     <p className={cx("topCardArtist")} title={song.artistName}>
                       {song.artistName}
                     </p>
-                  </div>
+                  </Link>
               ))
           ) : (
               <p className={cx("emptyText")}>Không có top 5.</p>

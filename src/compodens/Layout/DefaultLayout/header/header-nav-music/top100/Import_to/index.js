@@ -1,7 +1,5 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 
 import PropTypes from "prop-types";
@@ -12,29 +10,15 @@ import styles from "./Vietnam-module.scss";
 import Header from "../../..";
 import List_mui from "./list_muisic";
 import classnames from "classnames/bind";
-import { Link } from "react-router-dom";
 import imgt from "./12437.jpg";
 import Text from "../../../../../../../pages/text";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircle,
   faCirclePlay,
-  faCreditCard,
   faFaceFlushed,
-  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 //grid
 const cx = classnames.bind(styles);
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  ...theme.applyStyles("dark", {
-    backgroundColor: "#1A2027",
-  }),
-}));
 //tab
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -135,10 +119,10 @@ function Data() {
                           {...a11yProps(5)}
                           sx={{
                             "&.Mui-selected": {
-                              color: "initial",
+                              color: "#ffffff",
                             },
                             "&:not(.Mui-selected)": {
-                              color: "black",
+                              color: "#cbd5e1",
                             },
                           }}
                         />
@@ -186,11 +170,11 @@ function Data() {
                 <div className={cx("type-hot")}>
                   <Text>CHỦ ĐỀ HOT</Text>
                   <div className={cx("type-hot-list")}>
-                    <img className={cx("type-hot-img")} src={imgt} />
-                    <img className={cx("type-hot-img")} src={imgt} />
-                    <img className={cx("type-hot-img")} src={imgt} />
-                    <img className={cx("type-hot-img")} src={imgt} />
-                    <img className={cx("type-hot-img")} src={imgt} />
+                    <img className={cx("type-hot-img")} src={imgt} alt="Chu de hot 1" />
+                    <img className={cx("type-hot-img")} src={imgt} alt="Chu de hot 2" />
+                    <img className={cx("type-hot-img")} src={imgt} alt="Chu de hot 3" />
+                    <img className={cx("type-hot-img")} src={imgt} alt="Chu de hot 4" />
+                    <img className={cx("type-hot-img")} src={imgt} alt="Chu de hot 5" />
                   </div>
                 </div>
               </div>

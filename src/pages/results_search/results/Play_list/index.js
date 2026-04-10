@@ -75,6 +75,9 @@ function Play_list() {
                                         className={cx("Plssssay_list_results")}
                                         src={item.imgSrc}
                                         alt={item.title}
+                                        onError={(e) => {
+                                            e.currentTarget.src = LIsst_muisic;
+                                        }}
                                     />
                                     <p className={cx("Plasssy_list_results")}>{item.title}</p>
                                     <p>{item.artist}</p>
@@ -87,7 +90,8 @@ function Play_list() {
             {/* Nếu số mục lớn hơn itemsPerPage, hiển thị nút điều hướng */}
             {playListData.length > itemsPerPage && (
                 <>
-                    <p
+                    <button
+                        type="button"
                         className={cx("Pdddlasssy_list_results sssss")}
                         onClick={handlePrev}
                     >
@@ -95,8 +99,9 @@ function Play_list() {
                             className={cx("Plasssy_sssslist_results lesft")}
                             icon={faArrowLeft}
                         />
-                    </p>
-                    <p
+                    </button>
+                    <button
+                        type="button"
                         className={cx("Pdddlasssy_list_results pppp")}
                         onClick={handleNext}
                     >
@@ -104,7 +109,7 @@ function Play_list() {
                             className={cx("Plasssy_sssslist_results right")}
                             icon={faArrowRight}
                         />
-                    </p>
+                    </button>
                 </>
             )}
         </div>

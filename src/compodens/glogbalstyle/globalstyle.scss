@@ -1,8 +1,14 @@
 @import "normalize.css";
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
-  --primary: #fe2c55;
+  --primary: #22d3ee;
+  --bg-main: #020617;
+  --bg-surface: #0b1220;
+  --bg-card: #111827;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border-soft: rgba(148, 163, 184, 0.22);
 }
 
 * {
@@ -16,9 +22,9 @@ html {
 }
 
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Be Vietnam Pro", "Inter", "Segoe UI", Roboto, sans-serif;
   font-optical-sizing: auto;
-  font-weight: weight;
+  font-weight: 400;
   font-style: normal;
   font-size: 1.6rem;
   line-height: 1.5;
@@ -27,6 +33,12 @@ body {
   margin-right: 0;
   margin-left: 0;
   max-width: 100%;
+  background: radial-gradient(circle at 15% -10%, #1e293b 0, #020617 42%), #020617;
+  color: var(--text-main);
+}
+
+a {
+  color: inherit;
 }
 .Row {
   display: flex;

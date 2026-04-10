@@ -1,96 +1,337 @@
 .pprofile {
   margin-top: 70px;
+  min-height: 100vh;
+  padding-bottom: 28px;
+  background: radial-gradient(circle at 20% -10%, #1e293b 0, #020617 42%), #020617;
+  color: #e2e8f0;
+
   p {
     margin: 0;
   }
 }
+
 .Profilee_content {
   width: 100%;
-  height: 257px;
-  background-color: #3c3d51;
-}
-.Profilesse_content {
-  display: flex;
-  align-items: center;
-}
-.Profilee_content_img {
-  width: 100px;
-  border-radius: 50%;
-}
-.Prossfileess_content_img {
-  p {
-    font-size: 14px;
-    color: aliceblue;
-  }
-  .Prossfilee_cossssntdddent_img {
-    font-size: 36px !important;
-  }
-}
-.Profilesssssse_content {
-  margin-left: 191px;
-}
-.Profilesse_content {
-  padding-top: 30px;
-}
-.Prossfisdsslee_cossssntdddent_img {
-  display: flex;
-  padding-top: 38px;
-  padding-left: 90px;
+  min-height: calc(100vh - 70px);
+  padding: 20px 0;
 }
 
-.Prossfisdsslessssse_cossssntdddent_img {
+.Profilee_main {
+  width: min(1220px, 95vw);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
+  gap: 14px;
+}
+
+.profileHero,
+.artistHero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.88));
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.3);
+}
+
+.Profilesse_content {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  flex: 1;
+}
+
+.Profilee_content_img {
+  width: 108px;
+  height: 108px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(103, 232, 249, 0.45);
+}
+
+.Prossfileess_content_img {
+  p {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #cbd5e1;
+  }
+
+  .Prossfilee_cossssntdddent_img {
+    margin-bottom: 4px !important;
+    font-size: clamp(26px, 4vw, 34px) !important;
+    color: #f8fafc;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+}
+
+.artistText {
+  max-width: 680px;
+}
+
+.artistSubline {
+  color: #94a3b8 !important;
+}
+
+.artistBio {
+  margin-top: 8px !important;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.Prossfisdsslee_cossssntdddent_img,
+.artistStats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.Prossfisdsslessssse_cossssntdddent_img,
+.statCard {
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.26);
+  margin-left: 0;
+
   p {
     display: flex;
     align-items: center;
-
+    gap: 6px;
     font-size: 12px;
-    color: #b5b5b5;
+    color: #94a3b8;
 
     span {
-      color: white;
-      font-size: 14px;
+      color: #f8fafc;
+      font-size: 19px;
+      font-weight: 700;
     }
   }
 }
-.Prossfisdsslessssdddse_cossssntdddent_img {
-  margin-left: 10px;
-}
-.Profilee_nAV {
-  width: 100%;
-  height: 50px;
-  padding-left: 191px;
-  margin-bottom: 0;
 
-  background-color: #f4f4f4;
+.Prossfisdsslessssdddse_cossssntdddent_img {
+  margin-left: 0;
+}
+
+.profileNavBar,
+.Profilee_nAV,
+.artistNav {
+  width: 100%;
+  min-height: 58px;
+  padding: 10px;
+  margin-bottom: 0;
+  background-color: rgba(15, 23, 42, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(148, 163, 184, 0.08);
   display: flex;
   align-items: center;
-  li {
-    font-size: 15px;
-    color: #282a21;
-    margin-left: 20px;
-    cursor: pointer;
-  }
-  .Profilee_nAVsss {
-    font-size: 2.4rem;
-  }
-}
-.Profilee_container {
-  display: flex;
-  justify-content: center;
-}
-.Profilee_Contetnt- {
-  min-height: 500px;
+  flex-wrap: wrap;
+  gap: 8px;
 
-  margin-left: 191px;
+  li {
+    list-style: none;
+    margin-left: 0;
+  }
+
+  .Profilee_nAVsss {
+    font-size: 2rem;
+  }
+}
+
+.homeOnly {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(30, 41, 59, 0.82);
+  color: #67e8f9;
+}
+
+.navItemLink,
+.profileNavItem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 1.28rem;
+  font-weight: 500;
+  color: #cbd5e1;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    color: #67e8f9;
+    border-color: rgba(103, 232, 249, 0.34);
+    background: rgba(30, 41, 59, 0.75);
+  }
+}
+
+.navItemLink,
+.profileNavItem,
+.homeOnly {
+  transition: transform 0.16s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.navItemLink:hover,
+.profileNavItem:hover,
+.homeOnly:hover {
+  transform: translateY(-1px);
+}
+
+.navItemLinkActive,
+.profileNavItemActive {
+  color: #67e8f9;
+  border-color: rgba(34, 211, 238, 0.34);
+  background: rgba(14, 116, 144, 0.34);
+}
+
+.navItemDisabled {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px dashed rgba(148, 163, 184, 0.34);
+  background: rgba(15, 23, 42, 0.38);
+  color: #94a3b8;
+  font-size: 1.2rem;
+  cursor: not-allowed;
+}
+
+.artistStatus {
+  width: min(820px, 92vw);
+  margin: 90px auto 0;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.72);
+  padding: 14px 16px;
+  font-size: 1.35rem;
+}
+
+.artistStatus.loading {
+  color: #cbd5e1;
+}
+
+.artistStatus.error {
+  color: #fecaca;
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(127, 29, 29, 0.3);
+}
+
+.artistNews {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.56);
+  padding: 14px;
+}
+
+.artistNewsHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e2e8f0;
+  }
+
+  span {
+    font-size: 1.2rem;
+    color: #94a3b8;
+  }
+}
+
+.artistNewsList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.artistNewsCard {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 12px;
+  background: rgba(2, 6, 23, 0.64);
+  padding: 10px;
+}
+
+.artistNewsTitle {
+  font-size: 1.3rem;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.artistNewsExcerpt {
+  margin-top: 6px !important;
+  font-size: 1.18rem;
+  color: #cbd5e1;
+  line-height: 1.42;
+}
+
+.artistNewsDate {
+  margin-top: 6px !important;
+  font-size: 1.1rem;
+  color: #94a3b8;
+}
+
+.Profilee_container {
+  width: 100%;
+}
+
+.profileLayoutGrid {
+  align-items: flex-start;
+}
+
+.Profilee_Contetnt- {
+  min-height: 540px;
+  background: rgba(2, 6, 23, 0.58);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 16px;
+  margin-left: 0;
   margin-top: 0;
-  padding-top: 0;
+  padding: 14px;
+  box-shadow: 0 14px 26px rgba(2, 6, 23, 0.22);
 }
+
+.profileMainPanel {
+  min-width: 0;
+  min-height: 540px;
+}
+
 .Profileesss_sibar- {
-  min-height: 500px;
+  min-height: 540px;
 }
+
+.profileSidePanel {
+  min-width: 0;
+  min-height: 540px;
+}
+
+.profileOutletTransition {
+  animation: fadeSlideIn 0.24s ease;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .Cossssntsssdssentt_btn {
   display: flex;
   flex-direction: column;
@@ -103,6 +344,7 @@
       font-weight: 400 !important;
       margin-left: -10px;
     }
+
     .Cosssssssssssfsdntsssentt_btn {
       font-size: 14px;
       color: black;
@@ -111,10 +353,12 @@
     }
   }
 }
+
 .leduxa {
   display: flex;
   flex-wrap: wrap;
 }
+
 .icon_play {
   font-size: 2.5rem;
   color: white;
@@ -124,57 +368,71 @@
   transform: translate(-50%, -50%);
   display: none;
 }
+
 .Cossssntsssdssentt_btn:hover .icon_play {
   display: block;
 }
+
 .Cossssntsssdssentt_btn {
   cursor: pointer;
   position: relative;
+
   img {
     transition: 0.3s ease;
   }
+
   img:hover {
-    filter: blur(5px); /* Làm mờ ảnh khi hover */
+    filter: blur(5px);
   }
 }
+
 .hskjdh {
   width: 100%;
   height: 58px;
   display: flex;
   align-items: center;
-  background-color: #41cc76;
+  background-color: rgba(14, 116, 144, 0.65);
+  border: 1px solid rgba(103, 232, 249, 0.3);
+  border-radius: 10px;
+
   p {
     margin-left: 10px;
+
     span {
       font-size: 15px;
       color: white;
       margin-left: 10px;
     }
   }
+
   .hskjdh_oco {
     margin-left: 10px;
     font-size: 19px;
     color: white;
   }
 }
+
 .Cossssgasdgssssssssfsdsdgsddntsssentt_btn {
-  background-color: #2882bc;
+  background: linear-gradient(135deg, #0284c7, #0ea5e9);
   width: 140px !important;
   height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
+
   .Cosssssssssssdsdgsfsdntsssentt_btn {
     font-size: 6rem;
     color: white;
   }
 }
+
 .Cossssdgssssssssfsdntsssentt_btn,
 .Csdgosssssdggdsssssssfsdntsssentt_btn {
   font-size: 14px;
-  color: #333333;
+  color: #cbd5e1;
   margin-top: 10px !important;
 }
+
 .Cosdgsagdsssssssssssfsdntsssentt_btn {
   height: 31px;
   width: 84px;
@@ -185,49 +443,134 @@
   margin-top: 5px;
   cursor: pointer;
 }
+
 .Cossddssssssssssfsdntsssentt_btn {
   display: flex;
   flex-direction: column;
   width: 700px;
   margin-left: 15px;
 }
+
 .Cosssssssssssfsdsdgsddntsssentt_btn {
   display: flex;
   margin-left: 15px;
 }
+
 .Cosssssssdgasdgssssfsdntsssentt_btn {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333333;
+  color: #e2e8f0;
   float: left;
   width: 680px;
 }
+
 .Consdtedsdntt {
   background-color: red;
 }
+
 .Contedssdgsddgsgdntt {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   .Contedssasdgsddgsgdntt {
     font-size: 2.5rem;
     color: #2882bc;
     margin-left: 30px;
   }
 }
+
 .Contedsdntt {
   font-size: 14px;
   color: #333333;
-  padding: 0 !important ;
+  padding: 0 !important;
 }
 
-.Consdtedsdntt:hover .Contedsdntt {
-  color: white;
-}
+.Consdtedsdntt:hover .Contedsdntt,
 .Consdtedsdntt:focus .Contedsdntt {
   color: white;
 }
+
 .Contedsdntt {
   color: #e74c3c;
 }
+
+@media (max-width: 900px) {
+  .pprofile {
+    padding-bottom: 16px;
+  }
+
+  .Profilee_content {
+    padding: 12px 0;
+  }
+
+  .profileHero,
+  .artistHero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+  }
+
+  .Profilesse_content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .artistStats,
+  .Prossfisdsslee_cossssntdddent_img {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .Profilee_nAV,
+  .artistNav {
+    padding: 8px;
+  }
+
+  .Profilee_Contetnt- {
+    margin-top: 10px;
+    min-height: 440px;
+    padding: 10px;
+  }
+
+  .artistNewsList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .Profilee_main {
+    width: 94vw;
+  }
+
+  .Profilesse_content {
+    align-items: center;
+    text-align: center;
+  }
+
+  .artistStats,
+  .Prossfisdsslee_cossssntdddent_img {
+    grid-template-columns: 1fr;
+  }
+
+  .homeOnly {
+    display: none;
+  }
+
+  .navItemLink,
+  .profileNavItem {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1200px) {
+  .profileMainPanel {
+    min-width: 760px;
+  }
+
+  .profileSidePanel {
+    min-width: 320px;
+  }
+}
+

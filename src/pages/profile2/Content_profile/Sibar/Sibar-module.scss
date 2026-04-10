@@ -2,18 +2,21 @@
   width: 100%;
 }
 .Sibar_conternt {
-  margin-top: 20px;
-  width: 300px;
-  height: 240px;
+  margin-top: 4px;
+  width: 100%;
+  min-height: 220px;
   cursor: pointer;
-  border-radius: 15px;
+  border-radius: 14px;
   position: relative;
-  background-color: #2da3df;
+  overflow: hidden;
+  background: linear-gradient(140deg, #0891b2, #1d4ed8);
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  box-shadow: 0 16px 30px rgba(2, 6, 23, 0.28);
   p {
-    font-weight: bold;
+    font-weight: 700;
     text-align: center;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.88);
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.94);
     padding-top: 40px;
     position: relative;
     z-index: 2;
@@ -26,45 +29,116 @@
   margin-top: -40px;
   p {
     text-align: center;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    color: rgba(226, 232, 240, 0.94);
     position: relative;
     z-index: 2;
-    margin: 16px 17px 0px 17px;
+    margin: 16px 17px 0 17px;
+    line-height: 1.45;
   }
 }
 .ssSibsssssarsssssssss {
   position: absolute;
-  top: 65%;
-  left: 66px;
+  top: 68%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: #f8fafc;
   width: 160px;
-  height: 48px;
+  height: 44px;
   border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(2, 132, 199, 0.35);
   p {
-    color: #2da3df;
     margin: 0;
     padding: 0;
 
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #2daaed;
+    color: #0369a1;
     margin-left: 10px;
     cursor: pointer;
   }
 }
 .sssssdsjhsd {
-  color: #2da3df;
+  color: #0369a1;
 }
 .ssssssssdsjhsd {
-  margin-top: 30px;
+  margin-top: 20px;
+  background: rgba(15, 23, 42, 0.56);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 14px;
+  padding: 14px;
 }
 .dfiudsd {
-  font-size: 2.8rem;
-  font-weight: 400;
-  color: #2da3df;
-  margin-bottom: 20px;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #67e8f9;
+  margin-bottom: 12px;
+}
+
+.Musiacsa_right_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.Musiacsa_right_header:hover {
+  background: rgba(30, 41, 59, 0.68);
+}
+
+.Musiac_righst_header {
+  color: #38bdf8;
+  font-size: 1.4rem;
+}
+
+.Musiac_righsst_header {
+  color: #f8fafc;
+  font-size: 1.28rem;
+  font-weight: 600;
+}
+
+.Maausiac_righstss_header {
+  color: #cbd5e1;
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.Maausiac_sssssrighstaaass_header {
+  margin-top: 8px;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  background: rgba(14, 116, 144, 0.24);
+  color: #bae6fd;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.Maausiac_sssssrighstaaass_header p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+@media (max-width: 1200px) {
+  .Sibar_conternt {
+    min-height: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .Sibar_conternt {
+    min-height: 190px;
+  }
+
+  .ssSibsssssarsssssssss {
+    top: auto;
+    bottom: 16px;
+  }
 }

@@ -12,7 +12,6 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircle,
   faCircleCheck,
   faClock,
   faMicrophone,
@@ -24,6 +23,7 @@ import {
 
 import historyApi from "../../../../api/historymusic";
 import {useNavigate} from "react-router-dom"; // Đảm bảo đường dẫn đúng
+import { buildSongPath } from "../../../../utils/songRoute";
 
 const cx = classnames.bind(styles);
 
@@ -141,7 +141,7 @@ function History() {
               <span>Xóa</span>
             </button>
             {songs.map((song, index) => (
-                <div   onClick={() => navigate(`/Nhac/${song.id}`)} key={song.id} className={cx("History_dis_item")}>
+                <div   onClick={() => navigate(buildSongPath(song))} key={song.id} className={cx("History_dis_item")}>
                   <div className={cx("History_dis_item_details")}>
                     <FormControlLabel
                         control={
@@ -205,7 +205,7 @@ function History() {
                     }
                 />
                 <div className={cx("Histossry_dis_item_")}>
-                  <img className={cx("History_dis_item_IMG")} src={Imig_lis}/>
+                  <img className={cx("History_dis_item_IMG")} src={Imig_lis} alt="History song"/>
                   <div
                       className={cx(
                           "History_dis_item_music History_dis_item_music_ssit"

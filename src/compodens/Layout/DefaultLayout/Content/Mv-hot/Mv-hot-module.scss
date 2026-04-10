@@ -12,7 +12,7 @@
 .sectionTitle {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #1f1f1f;
+  color: #e2e8f0;
   letter-spacing: 0.4px;
 }
 
@@ -30,10 +30,11 @@
   position: relative;
   overflow: hidden;
   border-radius: 18px;
-  background: #fff;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  background: #0f172a;
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.45);
   transition: transform 0.28s ease, box-shadow 0.28s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .card:hover {
@@ -96,7 +97,7 @@
 .topTitle {
   font-size: 2rem;
   font-weight: 700;
-  color: #1f1f1f;
+  color: #e2e8f0;
 }
 
 .content-TOP100-IMG {
@@ -107,11 +108,12 @@
 
 .topCard {
   width: calc(20% - 14.4px);
-  background: #fff;
+  background: #0f172a;
   border-radius: 16px;
   padding: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 24px rgba(2, 6, 23, 0.45);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  text-decoration: none;
 }
 
 .topCard:hover {
@@ -131,7 +133,7 @@
   margin: 10px 0 4px;
   font-size: 1.4rem;
   font-weight: 700;
-  color: #202020;
+  color: #e2e8f0;
   line-height: 1.4;
   overflow: hidden;
   white-space: nowrap;
@@ -141,7 +143,7 @@
 .topCardArtist {
   margin: 0;
   font-size: 1.2rem;
-  color: #777;
+  color: #94a3b8;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -149,7 +151,7 @@
 
 .emptyText {
   font-size: 1.4rem;
-  color: #888;
+  color: #94a3b8;
   padding: 12px 0;
 }
 

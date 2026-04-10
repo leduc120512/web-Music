@@ -1,10 +1,20 @@
 .Musicvchauau-img {
   width: 90px;
   height: 90px;
+  border-radius: 12px;
+  object-fit: cover;
 }
 .Musicvchauau-list {
   display: flex;
-  border-top: 2px solid rgba(255, 255, 255, 0.4); // Add border top to all
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+  text-decoration: none;
+  color: inherit;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.Musicvchauau-list:hover {
+  background: rgba(56, 189, 248, 0.1);
 }
 
 .Musicvchauau-list:not(:last-child) {
@@ -25,10 +35,12 @@
 
 .Mvhots-main-text12 {
   font-size: 1.2rem;
+  color: #94a3b8;
 }
 
 .Mvhot-masin-tex22 {
   font-size: 1.4rem;
+  color: #e2e8f0;
 }
 
 .Mvhot-main-text12314s {
@@ -38,6 +50,7 @@
 
 .Musicvchauau-l2 {
   font-size: 2rem;
+  color: #38bdf8;
 }
 
 .Mussicvchauau-list {
@@ -52,7 +65,10 @@
 }
 .type-hot-img {
   margin-top: 10px;
-    width: 350px;
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 .type-hot {
   margin-top: 30px;

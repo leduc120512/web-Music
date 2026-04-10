@@ -18,6 +18,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import CrudForm from '../../crud/index'; // Đường dẫn đến CrudForm đã sửa (có modal bên trong)
+import { adminActionButtonSx, adminTableContainerSx, adminTableSx } from './adminUiTokens';
 const ASSET_BASE = 'http://localhost:8082';
 // Components nhỏ
 const Img = ({ src, alt, size = 50 }) =>
@@ -49,7 +50,7 @@ const EmptyRow = ({ colSpan, label = 'Không có dữ liệu' }) => (
 const LoadingState = () => (
     <Box display="flex" alignItems="center" gap={1} py={3} justifyContent="center">
         <CircularProgress size={20} />
-        <Typography variant="body2">Đang tải...</Typography>
+        <Typography variant="body2">Đang tải dữ liệu...</Typography>
     </Box>
 );
 
@@ -332,6 +333,7 @@ const EntityTable = ({ Api, type }) => {
                     startIcon={<AddIcon />}
                     onClick={openCreateModal}
                     disabled={loading || !currentApi?.create}
+                    sx={adminActionButtonSx}
                 >
                     Thêm mới {type === 'albums' ? 'Album' : type === 'users' ? 'Người dùng' : type === 'banner' ? 'Banner' : 'Bài hát'}
                 </Button>
@@ -345,12 +347,12 @@ const EntityTable = ({ Api, type }) => {
             )}
 
             {!loading && !error && (
-                <TableContainer component={Paper} elevation={2}>
-                    <Table size="small">
+                <TableContainer component={Paper} elevation={0} sx={adminTableContainerSx}>
+                    <Table size="small" sx={adminTableSx}>
                         <TableHead>
                             <TableRow>
                                 {columns.map((col) => (
-                                    <TableCell key={col.key} sx={{ fontWeight: 600, fontSize: 13 }}>
+                                    <TableCell key={col.key}>
                                         {col.label}
                                     </TableCell>
                                 ))}
@@ -363,7 +365,7 @@ const EntityTable = ({ Api, type }) => {
                                 data.map((row) => (
                                     <TableRow key={row.id} hover>
                                         {columns.map((col) => (
-                                            <TableCell key={col.key} sx={{ fontSize: 13, verticalAlign: 'middle' }}>
+                                            <TableCell key={col.key}>
                                                 {col.render ? col.render(row) : (row[col.key] ?? 'N/A')}
                                             </TableCell>
                                         ))}

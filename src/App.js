@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes, useParams } from "react-router-dom";
 import DefaultLayout from "./compodens/Layout/DefaultLayout";
 import PageTUYETAP from "./pages/layout-page/tuyentap";
 import PagePlayList from "./pages/layout-page/playlist";
@@ -19,8 +19,39 @@ import Contentt_main from "./pages/profile/Content_profile/Content_main";
 import Contentt_Video from "./pages/profile/Video_profile";
 import UpLoadd from "./pages/profile/Content_profile/quanli_upload";
 import Friend_live from "./pages/profile/Content_profile/Friend_live";
+import AuthorRequestPage from "./pages/profile/AuthorRequest";
+import EditAccountPage from "./pages/profile/EditAccount";
 import Top100_ from "./pages/layout-page/Top_100";
-import Admin from "../src/compodens/admin"
+import Admin from "../src/compodens/admin";
+import { buildSongPathFromId } from "./utils/songRoute";
+
+const PROFILE_CHILD_ROUTES = [
+  { path: "chinh-sua-thong-tin", element: EditAccountPage },
+  { index: true, element: Contentt },
+  { path: "Maiprofile", element: Contentt_main },
+  { path: "Contentt_Video", element: Contentt_Video },
+  { path: "upload_proifle", element: UpLoadd },
+  { path: "Friend_live", element: Friend_live },
+  { path: "author-request", element: AuthorRequestPage },
+];
+
+const PROFILE_AUTHOR_CHILD_ROUTES = [
+  { index: true, element: Contentt },
+  { path: "Maiprofile", element: Contentt_main },
+];
+
+const ADMIN_SECTION_ROUTES = [
+  { path: "/admin/reports", initialItem: "reports" },
+  { path: "/admin/artist-requests", initialItem: "artistRequests" },
+  { path: "/admin/permissions", initialItem: "permissions" },
+  { path: "/admin/users", initialItem: "users" },
+];
+
+function LegacySongRedirect() {
+  const { id } = useParams();
+  return <Navigate replace to={buildSongPathFromId(id)} />;
+}
+
 function App() {
   return (
     <Router>
@@ -31,17 +62,23 @@ function App() {
           <Route path="/Playlist" element={<PagePlayList />} />
           <Route path="/Video" element={<Pagevideo />} />
           <Route path="/top_100" element={<Top100_ />} />
+          <Route path="/bang-xep-hang" element={<Top100_ />} />
 
           <Route path="/UpLoad" element={<UpLoad />} />
-          <Route path="/Nhac/:id" element={<Play_music />} />
+          <Route path="/nhac/:songSlug" element={<Play_music />} />
+          <Route path="/Nhac/:id" element={<LegacySongRedirect />} />
 
           <Route path="/profile/:section" element={<Create_list />} />
 
-          <Route path="/Search_results/:id" element={<Search_results />} />
+          <Route path="/Search_results" element={<Search_results />} />
+          <Route path="/tim-kiem" element={<Search_results />} />
           <Route path="/Create_list_music" element={<Update_create />} />
 
           <Route path="/Update_list_music" element={<Create_list />} />
           <Route path="/admin" element={<Admin />} />
+          {ADMIN_SECTION_ROUTES.map(({ path, initialItem }) => (
+            <Route key={path} path={path} element={<Admin initialItem={initialItem} />} />
+          ))}
           <Route path="Vietnam" element={<Importt />}>
             {" "}
           </Route>
@@ -49,18 +86,17 @@ function App() {
         <Routes>
           <Route path="Losgin" element={<Login />} />
           <Route path="/Profile" element={<Profile />}>
-            <Route index element={<Contentt />} />
-            <Route path="Maiprofile" element={<Contentt_main />} />{" "}
-            <Route path="Contentt_Video" element={<Contentt_Video />} />
-            <Route path="upload_proifle" element={<UpLoadd />} />
-            <Route path="Friend_live" element={<Friend_live />} />
+            {PROFILE_CHILD_ROUTES.map(({ index, path, element: Element }) => (
+              <Route key={path || "index"} index={index} path={path} element={<Element />} />
+            ))}
           </Route>
+          <Route path="/dang-ky-tac-gia" element={<Navigate replace to="/Profile/author-request" />} />
         </Routes>
         <Routes>
-
           <Route path="/ProfileAuthor/:id" element={<Profile2 />}>
-            <Route index element={<Contentt />} />
-            <Route path="Maiprofile" element={<Contentt_main />} />
+            {PROFILE_AUTHOR_CHILD_ROUTES.map(({ index, path, element: Element }) => (
+              <Route key={path || "author-index"} index={index} path={path} element={<Element />} />
+            ))}
           </Route>
 
         </Routes>

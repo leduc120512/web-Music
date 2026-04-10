@@ -22,41 +22,38 @@ function Slider() {
     const intervalRef = useRef(null);
     const isHoveringRef = useRef(false);
 
-    // --- Debug checkpoints ---
-    console.log("[Slider] file loaded"); // khi file được import
-
     // Fetch banners
     useEffect(() => {
-        console.log("[Slider] useEffect(fetch) start");
         let isMounted = true;
 
         const fetchBanners = async () => {
             try {
-                // Homepage should use public endpoint (no login required)
+                // Homepage should use guest endpoint (no login required)
                 const res = await bannerApi.getPublic();
 
-                // Accept both payload styles:
-                // 1) { success, data: [...] }
-                // 2) [...]
+                // Accept common payload styles:
+                // 1) [...]
+                // 2) { data: [...] }
+                // 3) { data: { content: [...] } }
                 const payload = res?.data;
                 const list = Array.isArray(payload)
                     ? payload
                     : Array.isArray(payload?.data)
                         ? payload.data
-                        : [];
+                        : Array.isArray(payload?.data?.content)
+                            ? payload.data.content
+                            : [];
 
                 if (isMounted) {
                     setSlides(list);
                     setCurrent(0);
+                    setErrorMsg("");
                 }
-
-                console.log("✅ Banner data loaded:", list);
             } catch (err) {
-                console.error("❌ Lỗi khi load banner:", err);
-                if (isMounted) setErrorMsg("Không tải được banner");
+                console.error("Loi khi load banner:", err);
+                if (isMounted) setErrorMsg("Khong tai duoc banner");
             } finally {
                 if (isMounted) setLoading(false);
-                console.log("[Slider] useEffect(fetch) done");
             }
         };
 

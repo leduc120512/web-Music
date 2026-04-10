@@ -1,16 +1,17 @@
 // src/compodens/Layout/DefaultLayout/Sidebar/music-anh/index.js
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styles from "./Muisic-chauau-module.scss";
 import classnames from "classnames/bind";
 import Imgvb from "../1699029204532.jpg";
 import imgt from "../12437.jpg";
 import Text from "../../../../../pages/text";
 import axios from "axios";
+import { buildSongPath } from "../../../../../utils/songRoute";
 
 const cx = classnames.bind(styles);
 
-const API_ORIGIN =
-    import.meta?.env?.VITE_API_ORIGIN || "http://localhost:8082";
+const API_ORIGIN = process.env.REACT_APP_API_ORIGIN || "http://localhost:8082";
 
 const resolveImage = (path) => {
   if (!path) return Imgvb;
@@ -145,8 +146,9 @@ function MUSICANH({ id = 16 }) {
             </>
         )}
         {!loadingSongs && !errSongs && songs.map((song, idx) => (
-            <div
+            <Link
                 key={song.id}
+                to={buildSongPath(song)}
                 className={cx(
                     "Musicvchauau-list",
                     "Mussicvchauau-list",
@@ -177,7 +179,7 @@ function MUSICANH({ id = 16 }) {
                   {song.artistName || "Không rõ nghệ sĩ"}
                 </p>
               </div>
-            </div>
+            </Link>
         ))}
         {!loadingSongs && errSongs && (
             <div className={cx("error-box")}>Lỗi bài hát: {errSongs}</div>

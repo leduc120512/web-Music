@@ -4,13 +4,21 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  width: min(1320px, calc(100% - 56px));
   position: relative;
-  margin: auto;
-  margin-top: 64px;
+  margin: 82px auto 0;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 22px 38px rgba(2, 6, 23, 0.5);
+  background: #0b1220;
 }
-.img-slide-d-content{
-  margin-top: 10px;
+
+.img-slide-d-content {
+  width: 100%;
+  height: clamp(260px, 40vw, 430px);
+  object-fit: cover;
+  display: block;
 }
 
 /* Hide the images by default */
@@ -24,38 +32,50 @@
   cursor: pointer;
   position: absolute;
   top: 50%;
-  width: auto;
-  margin-top: -22px;
-  padding: 16px;
-  color: white;
+  width: 42px;
+  height: 42px;
+  margin-top: -21px;
+  display: grid;
+  place-items: center;
+  color: #f8fafc;
   font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
+  font-size: 1.8rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  border-radius: 999px;
   user-select: none;
+  border: 1px solid rgba(148, 163, 184, 0.42);
+  background: rgba(2, 6, 23, 0.6);
 }
 
 /* Position the "next button" to the right */
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+  right: 14px;
+}
+
+.prev {
+  left: 14px;
 }
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover,
 .next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(14, 165, 233, 0.32);
+  transform: translateY(-1px);
 }
 
 /* Caption text */
 .text {
-  color: #f2f2f2;
-  font-size: 15px;
-  padding: 8px 12px;
+  color: #f8fafc;
+  font-size: 1.45rem;
+  font-weight: 600;
+  padding: 14px 16px;
   position: absolute;
-  bottom: 8px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   text-align: center;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.82) 100%);
 }
 
 /* Number text (1/3 etc) */
@@ -70,18 +90,30 @@
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+  margin: 0 4px;
+  background-color: rgba(148, 163, 184, 0.55);
+  border-radius: 999px;
   display: inline-block;
-  transition: background-color 0.6s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .active,
 .dot:hover {
-  background-color: #717171;
+  background-color: #67e8f9;
+  transform: scale(1.1);
+}
+
+.loading,
+.fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  color: #cbd5e1;
+  font-size: 1.5rem;
+  background: rgba(15, 23, 42, 0.92);
 }
 
 /* Fading animation */

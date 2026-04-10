@@ -1,8 +1,22 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-test('renders learn react link', () => {
+// Keep App test lightweight by avoiding async side effects from full layout.
+jest.mock("./compodens/Layout/DefaultLayout", () => () => (
+  <div>Mock Default Layout</div>
+));
+
+let warnSpy;
+
+beforeEach(() => {
+  warnSpy = jest.spyOn(console, "warn").mockImplementation(() => {});
+});
+
+afterEach(() => {
+  warnSpy.mockRestore();
+});
+
+test("renders default route content", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(/mock default layout/i)).toBeInTheDocument();
 });

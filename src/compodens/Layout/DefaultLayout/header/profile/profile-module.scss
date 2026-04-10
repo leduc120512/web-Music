@@ -1,48 +1,80 @@
 .Profile {
-  width: 190px;
+  width: 280px;
   min-height: 50px;
+  max-height: min(76vh, 560px);
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background: rgba(15, 23, 42, 0.95);
   border-radius: 12px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 16px 30px rgba(2, 6, 23, 0.5);
   overflow: hidden;
   margin: 0;
+  box-sizing: border-box;
 
   a {
     text-decoration: none;
   }
+}
 
-  p {
-    margin: 0;
-    padding: 11px 12px;
-    font-size: 1.4rem;
-    color: #0f172a;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-  }
+.menuSection,
+.footerSection {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
 
-  p:hover {
-    background-color: #f1f5f9;
-    color: #1d4ed8;
-  }
+.menuLink {
+  display: block;
+}
+
+.menuItem,
+.menuStatic,
+.logoutBtn {
+  width: 100%;
+  min-height: 42px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  font-size: 1.35rem;
+  line-height: 1.25;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.menuItem,
+.logoutBtn {
+  color: #cbd5e1;
+  cursor: pointer;
+}
+
+.menuStatic {
+  margin: 0;
+  color: #94a3b8;
+  cursor: default;
+}
+
+.menuLink:hover .menuItem,
+.logoutBtn:hover {
+  background-color: rgba(30, 41, 59, 0.85);
+  color: #67e8f9;
+}
+
+.footerSection {
+  border-top: 1px solid rgba(148, 163, 184, 0.24);
 }
 
 .logoutBtn {
-  width: 100%;
-  border: none;
-  background: transparent;
-  text-align: left;
-  padding: 11px 12px;
-  font-size: 1.4rem;
-  color: #dc2626;
+  color: #f87171;
   cursor: pointer;
-  border-top: 1px solid #e2e8f0;
-  transition: background-color 0.2s ease, color 0.2s ease;
 
   &:hover {
-    background-color: #fef2f2;
-    color: #b91c1c;
+    background-color: rgba(127, 29, 29, 0.36);
+    color: #fecaca;
   }
 }
+

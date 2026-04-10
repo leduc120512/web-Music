@@ -8,6 +8,7 @@ import styles from "./List-item-today-module.scss";
 import Text from "../../../../../pages/text";
 import songApi from "../../../../../../src/api/api_music";
 import defaultImg from "../ANH/SONTUNG.webp";
+import { buildSongPath } from "../../../../../utils/songRoute";
 
 const cx = classnames.bind(styles);
 const ASSET_BASE = "http://localhost:8082";
@@ -40,7 +41,7 @@ function ListItemToday() {
           <div className={cx("list-music")}>
             {songs.map((song) => (
                 <div key={song.id} className={cx("item-music")}>
-                  <Link to={`/Nhac/${song.id}`} className={cx("item-link")}>
+                  <Link to={buildSongPath(song)} className={cx("item-link")}>
                     <div className={cx("image-wrapper")}>
                       <img
                           className={cx("list-SINGER")}

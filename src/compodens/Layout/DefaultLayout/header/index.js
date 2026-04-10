@@ -24,6 +24,9 @@ import Profile from "./profile";
 import Video from "./header-nav-music/video";
 import Cookies from "js-cookie";
 import songApi from "../../../../api/api_music"; // <-- gọi API ở file chính
+import searchHistoryApi from "../../../../api/search_history";
+import { buildSongPath } from "../../../../utils/songRoute";
+import { subscribeRequireLogin } from "../../../../utils/authPrompt";
 
 const cx = classnames.bind(styles);
 
@@ -51,9 +54,14 @@ function Header() {
   const [topSongs, setTopSongs] = useState([]);        // top mới nhất (mặc định)
   const [suggestedSongs, setSuggestedSongs] = useState([]); // gợi ý theo từ khóa
   const [loadingSuggest, setLoadingSuggest] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
 
   const wrapperRef = useRef(null);
   const navigate = useNavigate();
+
+  const refreshSearchHistory = () => {
+    setSearchHistory(searchHistoryApi.getAll(6));
+  };
 
   // click ra ngoài đóng dropdown
   useEffect(() => {
@@ -74,6 +82,14 @@ function Header() {
           if (res.data?.success) setTopSongs(res.data.data || []);
         })
         .catch((err) => console.error("Lỗi lấy top mới nhất:", err));
+
+    refreshSearchHistory();
+  }, []);
+
+  useEffect(() => {
+    return subscribeRequireLogin(() => {
+      setOpenLogin(true);
+    });
   }, []);
 
   // debounce tìm kiếm theo keyword
@@ -86,10 +102,10 @@ function Header() {
       }
       setLoadingSuggest(true);
       songApi
-          .search(q)
+          .searchSuggestions(q)
           .then((res) => {
             if (res.data?.success) {
-              const result = res.data.data?.content?.slice(0, 5) || [];
+              const result = res.data.data?.slice(0, 5) || [];
               setSuggestedSongs(result);
             }
           })
@@ -104,10 +120,35 @@ function Header() {
 
   const onSubmitSearch = (e) => {
     e?.preventDefault?.();
-    if (!keyword.trim()) return;
-    // Điều hướng tới trang kết quả tổng, bạn tùy route:
-    navigate(`/Search_results?keyword=${encodeURIComponent(keyword.trim())}`);
+    const cleanedKeyword = keyword.trim();
+    if (!cleanedKeyword) return;
+
+    searchHistoryApi.addKeyword(cleanedKeyword);
+    refreshSearchHistory();
+    navigate(`/tim-kiem?keyword=${encodeURIComponent(cleanedKeyword)}`);
     setIsInputFocused(false);
+  };
+
+  const handleSelectSong = (song) => {
+    if (!song?.id) return;
+    searchHistoryApi.addSong(song);
+    refreshSearchHistory();
+    setIsInputFocused(false);
+    navigate(buildSongPath(song));
+  };
+
+  const handleHistorySelect = (item) => {
+    setIsInputFocused(false);
+    if (item?.type === "song" && item.songId) {
+      navigate(buildSongPath({ id: item.songId, title: item.title || item.keyword }));
+      return;
+    }
+
+    const keywordValue = item?.keyword || item?.title;
+    if (keywordValue) {
+      setKeyword(keywordValue);
+      navigate(`/tim-kiem?keyword=${encodeURIComponent(keywordValue)}`);
+    }
   };
 
   return (
@@ -145,15 +186,15 @@ function Header() {
             {hovered.tuyenTap && <Tuyentap />}
           </a>
 
-          <a
-              href="top_100"
+          <Link
+              to="/top_100"
               className={cx("Header-nav-item")}
               onMouseEnter={() => handleMouseEnter("video")}
               onMouseLeave={() => handleMouseLeave("video")}
           >
             BXH
             {hovered.video && <Video />}
-          </a>
+          </Link>
 
           <a
               href="#"
@@ -175,7 +216,10 @@ function Header() {
                   placeholder="Search"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
-                  onFocus={() => setIsInputFocused(true)}
+                  onFocus={() => {
+                    refreshSearchHistory();
+                    setIsInputFocused(true);
+                  }}
               />
               <button className={cx("searchButton")} type="submit">
                 <FontAwesomeIcon className={cx("gf")} icon={faMagnifyingGlass} />
@@ -187,10 +231,17 @@ function Header() {
                     keyword={keyword}
                     topSongs={topSongs}
                     suggestedSongs={suggestedSongs}
+                    historyItems={searchHistory}
                     loading={loadingSuggest}
-                    onSelect={(songId) => {
-                      setIsInputFocused(false);
-                      navigate(`/Search_results/${songId}`);
+                    onSelect={handleSelectSong}
+                    onHistorySelect={handleHistorySelect}
+                    onRemoveHistory={(key) => {
+                      searchHistoryApi.removeItem(key);
+                      refreshSearchHistory();
+                    }}
+                    onClearHistory={() => {
+                      searchHistoryApi.clearAll();
+                      refreshSearchHistory();
                     }}
                 />
             )}
@@ -200,9 +251,9 @@ function Header() {
           <div className={cx("Row")}>
             <div>
               {user ? (
-                  <a href="UpLoad">
+                  <Link to="/UpLoad">
                     <FontAwesomeIcon className={cx("hearder-faUpload")} icon={faUpload} />
-                  </a>
+                  </Link>
               ) : (
                   <FontAwesomeIcon
                       className={cx("hearder-faUpload")}
@@ -234,7 +285,7 @@ function Header() {
                   )}
                 </div>
             ) : (
-                <div>
+                <div className={cx("auth-actions")}>
                   <Button className="auth-login" onClick={() => setOpenLogin(true)}>
                     Đăng Nhập
                   </Button>

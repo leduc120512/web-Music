@@ -1,109 +1,209 @@
 .Inpur_search_value {
-  width: 500px !important;
-  min-height: 300px;
-  background-color: aliceblue;
-  box-shadow: 1px 1px 1px 1px #111111;
-  margin-top: 0px;
-  margin-left: -5px;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  width: 100%;
+  min-height: 160px;
+  max-height: 72vh;
+  overflow: hidden auto;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  background: rgba(15, 23, 42, 0.97);
+  box-shadow: 0 18px 34px rgba(2, 6, 23, 0.55);
+  z-index: 35;
 
   p {
     margin: 0 !important;
   }
 }
+
 .Inpur_search_value_text {
   width: 100%;
-  height: 40px;
+  min-height: 40px;
   display: flex;
   align-items: center;
-  padding-left: 10px;
-  font-size: 1.7rem;
-  border-bottom: 0.2px solid #000;
+  padding: 10px 12px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
+
 .Inpur_search_List_hot_search {
   display: flex;
   flex-direction: column;
-
-  //div list anh trai
-  div {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-    cursor: pointer;
-    p {
-      margin: 0 !important;
-
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-left: 10px;
-      margin: 0;
-      font-size: 1.4rem;
-      color: #333;
-    }
-    .Inpur_search_List_hot_search_color1 {
-      font-weight: 700;
-      font-size: 15px;
-      color: #e74c3c;
-    }
-    .Inpur_search_List_hot_search_color2 {
-      font-weight: 700;
-      font-size: 15px;
-      color: #e74c3c;
-    }
-    .Inpur_search_List_hot_search_color3 {
-      font-weight: 700;
-      font-size: 15px;
-      color: #e74c3c;
-    }
-    .Inpur_search_List_hot_search_color4 {
-      font-weight: 700;
-      font-size: 15px;
-      color: #e74c3c;
-    }
-
-    .Inpur_search_List_hot_search_color5 {
-      font-weight: 700;
-      font-size: 15px;
-      color: #e74c3c;
-    }
-  }
+  padding: 6px;
 }
+
+.ResultLink {
+  text-decoration: none;
+}
+
+.ResultRow {
+  width: 100%;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.ResultRow:hover {
+  background: rgba(30, 41, 59, 0.88);
+  transform: translateX(1px);
+}
+
+.ResultRowText {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ResultRowArrow {
+  margin-left: auto;
+  color: #64748b;
+  font-size: 1.8rem;
+}
+
+.Inpur_search_List_hot_search_color1,
+.Inpur_search_List_hot_search_color2,
+.Inpur_search_List_hot_search_color3,
+.Inpur_search_List_hot_search_color4,
+.Inpur_search_List_hot_search_color5 {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #22d3ee;
+}
+
+.EmptyText {
+  padding: 10px;
+  color: #94a3b8;
+  font-size: 1.3rem;
+}
+
 .Inpur_search_List_hot_search_text_history {
   width: 100%;
-  height: 30px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #000;
-  border-top: 1px solid #000;
-  background-color: rgb(245 245 245);
+  padding: 8px 10px;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(2, 6, 23, 0.55);
+
+  a {
+    text-decoration: none;
+  }
+
   p {
-    padding-left: 10px;
-    font-size: 1.7rem;
+    font-size: 1.3rem;
+    color: #7dd3fc;
   }
 }
+
 .Inpur_search_List_icon {
-  padding-right: 10px;
-  font-size: 1.7rem;
+  font-size: 1.4rem;
+  color: #94a3b8;
   cursor: pointer;
+  transition: color 0.2s ease;
 }
+
+.ClearHistoryBtn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ClearHistoryBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.Inpur_search_List_icon:hover {
+  color: #f87171;
+}
+
 .Inpur_search_List_hot_search_do_not_history {
-  padding-left: 10px;
-  padding-right: 10px;
-  font-size: 1.3rem;
+  padding: 10px;
+  font-size: 1.2rem;
   font-style: italic;
-  cursor: pointer;
-  color: #a09e9e;
-  text-transform: none;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  color: #64748b;
 }
-.inputField {
-  position: relative;
+
+.HistoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+}
+
+.HistoryRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.HistoryRow:hover {
+  background: rgba(30, 41, 59, 0.75);
+}
+
+.HistorySelect {
+  flex: 1;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.HistoryTitle {
+  margin: 0;
+  color: #e2e8f0;
+  font-size: 1.35rem;
+}
+
+.HistorySub {
+  margin: 2px 0 0;
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+.HistoryRemove {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 1.3rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.HistoryRemove:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+@media (max-width: 768px) {
   .Inpur_search_value {
-    position: absolute;
-    top: 1000px !important;
-    left: 0;
+    max-height: 60vh;
+  }
+
+  .ResultRowText {
+    font-size: 1.3rem;
   }
 }

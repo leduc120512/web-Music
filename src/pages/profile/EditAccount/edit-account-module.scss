@@ -1,0 +1,173 @@
+.editAccount {
+  min-height: 100%;
+  max-width: 900px;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.9));
+  box-shadow: 0 20px 36px rgba(2, 6, 23, 0.3);
+  padding: 24px;
+}
+
+.heading h2 {
+  margin: 0;
+  font-size: 2.45rem;
+  color: #f8fafc;
+}
+
+.heading p {
+  margin: 9px 0 0;
+  font-size: 1.3rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(15, 23, 42, 0.54);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.rowReadonly {
+  background: rgba(15, 23, 42, 0.32);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.row label {
+  font-size: 1.3rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.row input,
+.row select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(148, 163, 184, 0.38);
+  border-radius: 10px;
+  background: rgba(2, 6, 23, 0.86);
+  color: #f8fafc;
+  padding: 9px 12px;
+  font-size: 1.3rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.row input:focus,
+.row select:focus {
+  outline: none;
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
+}
+
+.row input:disabled {
+  opacity: 0.68;
+  cursor: not-allowed;
+}
+
+.inputHint {
+  color: #94a3b8;
+  font-size: 1.15rem;
+}
+
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.primaryBtn {
+  margin-top: 2px;
+  min-width: 158px;
+  height: 44px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0891b2, #0369a1);
+  color: #f8fafc;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loadingText {
+  color: #cbd5e1;
+  font-size: 1.2rem;
+}
+
+.success,
+.error {
+  margin: 2px 0 0;
+  font-size: 1.24rem;
+}
+
+.statusText {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.success {
+  color: #86efac;
+  background: rgba(22, 101, 52, 0.24);
+  border-color: rgba(74, 222, 128, 0.26);
+}
+
+.error {
+  color: #fca5a5;
+  background: rgba(127, 29, 29, 0.26);
+  border-color: rgba(248, 113, 113, 0.28);
+}
+
+@media (max-width: 860px) {
+  .editAccount {
+    padding: 16px;
+  }
+
+  .heading h2 {
+    font-size: 2.1rem;
+  }
+
+  .metaGrid,
+  .split {
+    grid-template-columns: 1fr;
+  }
+
+  .actionBar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+

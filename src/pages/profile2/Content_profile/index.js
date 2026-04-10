@@ -1,119 +1,199 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classnames from "classnames/bind";
 import styles from "../profile-module.scss";
-import { faCircleDot, faHome } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-// grid
-import { styled } from "@mui/material/styles";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Cookies from "js-cookie";
 
 import Img_avatar from "../avatar_default_2020.png";
-import Contentt from "./Content_content-";
 import Sibar from "./Sibar";
-import { Outlet } from "react-router-dom";
+import artistApi from "../../../api/artist";
+
 const cx = classnames.bind(styles);
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
+const formatNumber = (value) => Number(value || 0).toLocaleString("vi-VN");
+
+const formatDate = (value) => {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("vi-VN");
+};
 
 function Profilee_content({ id }) {
-  useEffect(() => {
-    // Gọi API, fetch dữ liệu bằng id nếu cần
-    console.log("User ID:", id);
-  }, [id]);
-  const [user, setUser] = useState(null);
+  const [artist, setArtist] = useState(null);
+  const [artistNews, setArtistNews] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+  const location = useLocation();
+
+  const baseProfilePath = useMemo(() => `/ProfileAuthor/${id}`, [id]);
 
   useEffect(() => {
-    axios
-        .get(`http://localhost:8082/api/auth/public/users/${id}`)
-        .then((res) => {
-          setUser(res.data.data);      // Lấy thông tin trong key "data"
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Lỗi khi lấy user:", err);
-          setError("Không thể tải dữ liệu");
-          setLoading(false);
-        });
-  }, []);
+    if (!id) {
+      setArtist(null);
+      setArtistNews([]);
+      setLoading(false);
+      setError("Thiếu mã nghệ sĩ");
+      return;
+    }
 
-  if (loading) return <p>Đang tải dữ liệu...</p>;
-  if (error) return <p>{error}</p>;
+    let ignore = false;
+
+    const fetchArtistData = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const [profileRes, newsRes] = await Promise.all([
+          artistApi.getProfilePublic(id),
+          artistApi.getNewsPublic(id, 0, 10),
+        ]);
+
+        if (ignore) return;
+
+        setArtist(artistApi.unwrapData(profileRes) || null);
+        setArtistNews(artistApi.unwrapPageContent(newsRes));
+      } catch (err) {
+        if (!ignore) {
+          setArtist(null);
+          setArtistNews([]);
+          setError("Không thể tải thông tin nghệ sĩ");
+        }
+      } finally {
+        if (!ignore) setLoading(false);
+      }
+    };
+
+    fetchArtistData();
+
+    return () => {
+      ignore = true;
+    };
+  }, [id]);
+
+  if (loading) {
+    return <div className={cx("artistStatus", "loading")}>Đang tải dữ liệu nghệ sĩ...</div>;
+  }
+
+  if (error) {
+    return <div className={cx("artistStatus", "error")}>{error}</div>;
+  }
+
+  const displayName = artist?.stageName || artist?.username || "Đang cập nhật";
+  const realName = artist?.fullName || "Đang cập nhật";
+  const bio = artist?.bio || "Nghệ sĩ chưa cập nhật tiểu sử.";
+  const avatar = artist?.avatar || artist?.avatarUrl || Img_avatar;
+  const profileViews = artist?.profileViews ?? artist?.stats?.profileViews ?? 0;
+  const playlistPlays = artist?.playlistPlayCount ?? artist?.stats?.playlistPlayCount ?? 0;
+
   return (
-      <div className={cx("Profilee_content")}>
+    <div className={cx("Profilee_content")}>
+      <div className={cx("Profilee_main")}>
+        <div className={cx("artistHero")}>
+          <div className={cx("Profilesse_content")}>
+            <img
+              className={cx("Profilee_content_img")}
+              src={avatar}
+              alt={displayName}
+              onError={(e) => {
+                e.currentTarget.src = Img_avatar;
+              }}
+            />
 
-        <div className={cx("Profilee_main")}>
-          <div className={cx("Profilesssssse_content")}>
-            <div className={cx("Profilesse_content")}>
-              <img className={cx("Profilee_content_img")} src={Img_avatar}/>
-              <div className={cx("Prossfileess_content_img")}>
-                <p className={cx("Prossfilee_cossssntdddent_img")}>{user?.username || 'chua co'}</p>
-                <p>ID: 45316683</p>
-                <p>Tên thật:{user?.fullName || 'chua co'}</p>
-                <p>Sinh nhật: Đang cập nhật</p>
-                <p>Giới tính: Khác</p>
-              </div>
-            </div>
-            <div className={cx("Prossfisdsslee_cossssntdddent_img")}>
-              <div className={cx("Prossfisdsslessssse_cossssntdddent_img")}>
-                <p className={cx("Prossfisdsslessssdddse_cossssntdddent_img")}>
-                  <span>17</span>
-                </p>
-                <p>Lượt xem profile</p>
-              </div>
-              <div className={cx("Prossfisdsslessssse_cossssntdddent_img")}>
-                <p>
-                  <span>0</span>
-                </p>
-                <p>Lượt nghe playList</p>
-              </div>
+            <div className={cx("Prossfileess_content_img", "artistText")}> 
+              <p className={cx("Prossfilee_cossssntdddent_img")}>{displayName}</p>
+              <p className={cx("artistSubline")}>ID nghệ sĩ: {id}</p>
+              <p>Tên thật: {realName}</p>
+              <p className={cx("artistBio")}>{bio}</p>
             </div>
           </div>
-          <ul className={cx("Profilee_nAV")}>
-            <li>
-              {" "}
-              <FontAwesomeIcon className={cx("Profilee_nAVsss")} icon={faHome}/>
-            </li>
-            <Link to="/Profile/Maiprofile">
-              <li>PlayList</li>
-            </Link>
-            <Link to="/Profile/Contentt_Video">
-              {" "}
-              <li> Video</li>
-            </Link>
-            <Link to="/Profile/upload_proifle">
-              <li> Tui Upload</li>
-            </Link>
-            <Link to="/Profile/Friend_live">
-              {" "}
-              <li> Bạn Bè</li>
-            </Link>
-          </ul>
 
-          <Box className={cx("Profilee_container")} sx={{flexGrow: 1}}>
-            <Grid className={cx("Profilee_container")} container spacing={2}>
-              <Grid className={cx("Profilee_Contetnt-")} item xs={8} md={7}>
-                <Outlet/>
-              </Grid>
-              <Grid className={cx("Profileesss_sibar-")} item xs={4} md={3}>
-                <Sibar/>
-              </Grid>
-            </Grid>
-          </Box>
+          <div className={cx("Prossfisdsslee_cossssntdddent_img", "artistStats")}> 
+            <div className={cx("Prossfisdsslessssse_cossssntdddent_img", "statCard")}> 
+              <p className={cx("Prossfisdsslessssdddse_cossssntdddent_img")}>
+                <span>{formatNumber(profileViews)}</span>
+              </p>
+              <p>Lượt xem profile</p>
+            </div>
+
+            <div className={cx("Prossfisdsslessssse_cossssntdddent_img", "statCard")}> 
+              <p>
+                <span>{formatNumber(playlistPlays)}</span>
+              </p>
+              <p>Lượt nghe playlist</p>
+            </div>
+          </div>
         </div>
+
+        <ul className={cx("Profilee_nAV", "artistNav")}> 
+          <li className={cx("homeOnly")}> 
+            <FontAwesomeIcon className={cx("Profilee_nAVsss")} icon={faHome} />
+          </li>
+
+          <li>
+            <NavLink
+              to={`${baseProfilePath}/Maiprofile`}
+              className={({ isActive }) => cx("navItemLink", { navItemLinkActive: isActive })}
+            >
+              PlayList
+            </NavLink>
+          </li>
+
+          <li>
+            <button type="button" className={cx("navItemDisabled")} disabled>
+              Video (sắp có)
+            </button>
+          </li>
+
+          <li>
+            <button type="button" className={cx("navItemDisabled")} disabled>
+              Tải lên (sắp có)
+            </button>
+          </li>
+
+          <li>
+            <button type="button" className={cx("navItemDisabled")} disabled>
+              Bạn bè (sắp có)
+            </button>
+          </li>
+        </ul>
+
+        {artistNews.length > 0 && (
+          <div className={cx("artistNews")}> 
+            <div className={cx("artistNewsHead")}>
+              <p>Tin tuc nghe si</p>
+              <span>{artistNews.length} bài viết</span>
+            </div>
+
+            <div className={cx("artistNewsList")}>
+              {artistNews.slice(0, 3).map((news) => (
+                <article key={news.id} className={cx("artistNewsCard")}>
+                  <p className={cx("artistNewsTitle")}>{news.title || "Tin tức mới"}</p>
+                  {news.content && <p className={cx("artistNewsExcerpt")}>{news.content}</p>}
+                  <p className={cx("artistNewsDate")}>{formatDate(news.createdAt || news.updatedAt)}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <Box className={cx("Profilee_container")} sx={{ flexGrow: 1 }}>
+          <Grid className={cx("Profilee_container", "profileLayoutGrid")} container spacing={2}>
+            <Grid className={cx("Profilee_Contetnt-", "profileMainPanel")} item xs={12} lg={8}>
+              <div key={location.pathname} className={cx("profileOutletTransition")}>
+                <Outlet />
+              </div>
+            </Grid>
+            <Grid className={cx("Profileesss_sibar-", "profileSidePanel")} item xs={12} lg={4}>
+              <Sibar />
+            </Grid>
+          </Grid>
+        </Box>
       </div>
+    </div>
   );
 }
 

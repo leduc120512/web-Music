@@ -12,11 +12,13 @@
   transition: all 0.25s ease;
   cursor: pointer;
   position: relative;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* hover nâng cấp */
 .Musicvchauau-list:hover {
-  background: rgba(255, 94, 0, 0.08);
+  background: rgba(56, 189, 248, 0.12);
   transform: translateX(6px);
 }
 
@@ -42,7 +44,7 @@
 .Musicvchauau-l2 {
   font-size: 15px;
   font-weight: 800;
-  color: #ff5e00;
+  color: #38bdf8;
   width: 30px;
   text-align: center;
 }
@@ -62,7 +64,7 @@
 .Mvhot-main-tex22 {
   font-size: 14px;
   font-weight: 600;
-  color: #222;
+  color: #e2e8f0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -71,13 +73,13 @@
 
 /* hover đổi màu title */
 .Musicvchauau-list:hover .Mvhot-main-tex22 {
-  color: #ff5e00;
+  color: #7dd3fc;
 }
 
 /* ARTIST */
 .Mvhot-main-text12 {
   font-size: 12px;
-  color: #888;
+  color: #94a3b8;
 }
 
 /* HEADER ALBUM */
@@ -132,9 +134,9 @@
   border-radius: 12px;
   background: linear-gradient(
                   90deg,
-                  #f0f0f0 25%,
-                  #e0e0e0 50%,
-                  #f0f0f0 75%
+                  #1f2937 25%,
+                  #334155 50%,
+                  #1f2937 75%
   );
   background-size: 200% 100%;
   animation: loading 1.2s infinite;
@@ -152,8 +154,8 @@
 /* ERROR */
 .error-box {
   padding: 10px;
-  background: #ffeaea;
-  color: #e74c3c;
+  background: rgba(127, 29, 29, 0.35);
+  color: #fecaca;
   border-radius: 8px;
   font-size: 13px;
 }
