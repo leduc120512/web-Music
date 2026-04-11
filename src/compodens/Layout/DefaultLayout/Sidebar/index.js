@@ -29,8 +29,9 @@ function Siderbar() {
           width: "100%",
           p: "16px",
           borderRadius: "16px",
-          background: "#fff",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
+          background: "rgba(30,41,59,0.85)", // nền tối mờ
+          boxShadow: "0 8px 24px rgba(16,21,30,0.25)",
+          backdropFilter: "blur(8px)",
         }}
       >
         <TabContext value={value}>
@@ -65,16 +66,16 @@ function Siderbar() {
                   transition: "all 0.25s ease",
                   px: 2,
                   "&.MuiTab-root": {
-                    color: "#38bdf8", // Xanh dương nhạt
+                    color: "#e5e7eb", // Xám sáng
                   },
                   "&:hover": {
-                    background: "#1e293b", // Nền xanh đậm
-                    color: "#0ea5e9", // Xanh dương sáng
+                    background: "#334155", // Nền xanh đậm hơn
+                    color: "#38bdf8", // Xanh dương nhạt
                   },
                   "&.Mui-selected": {
-                    background: "linear-gradient(135deg, #0ea5e9, #38bdf8)",
+                    background: "linear-gradient(135deg, #38bdf8, #0ea5e9)",
                     color: "#fff",
-                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.3)",
+                    boxShadow: "0 4px 12px rgba(56, 189, 248, 0.3)",
                   },
                 }}
               />
