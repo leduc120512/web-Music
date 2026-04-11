@@ -12,7 +12,7 @@ function Content() {
   return (
       <div className={cx("coentent")}>
           <div className={cx("MV-HOT")}>
-              <Text>MV HOT</Text>
+              
               <Mv_hot/>
 
           </div>

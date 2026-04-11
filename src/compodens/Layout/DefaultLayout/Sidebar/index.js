@@ -65,16 +65,16 @@ function Siderbar() {
                   transition: "all 0.25s ease",
                   px: 2,
                   "&.MuiTab-root": {
-                    color: "#ff8a00",
+                    color: "#38bdf8", // Xanh dương nhạt
                   },
                   "&:hover": {
-                    background: "#ffeaea",
-                    color: "#e74c3c",
+                    background: "#1e293b", // Nền xanh đậm
+                    color: "#0ea5e9", // Xanh dương sáng
                   },
                   "&.Mui-selected": {
-                    background: "linear-gradient(135deg, #ff6a5b, #e74c3c)",
+                    background: "linear-gradient(135deg, #0ea5e9, #38bdf8)",
                     color: "#fff",
-                    boxShadow: "0 4px 12px rgba(231, 76, 60, 0.3)",
+                    boxShadow: "0 4px 12px rgba(14, 165, 233, 0.3)",
                   },
                 }}
               />
