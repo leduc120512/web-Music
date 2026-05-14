@@ -1,50 +1,20 @@
 .Sider-bar {
-  margin-top: 25px;
-  .tab {
-    width: 110px;
-    height: 35px !important;
-    font-size: 1.4rem;
-    color: #cbd5e1;
-    border-radius: 0;
-    background-color: #1e293b;
-    border: 1px solid rgba(148, 163, 184, 0.25);
-
-    &.Mui-selected {
-      color: #67e8f9;
-      background: #0f172a;
-      border-color: rgba(103, 232, 249, 0.45);
-    }
-
-    &:hover {
-      color: #f8fafc;
-      background-color: #0f172a;
-    }
-
-    &:focus {
-      color: #f8fafc;
-      background-color: #0f172a;
-    }
-  }
-
-  .tab-1 {
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-
-  .tab-3 {
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-  }
+  margin-top: 0;
 }
-// Tiêu đề Sider-bar
+
 .Sider-bar-TEXT {
   margin-bottom: 15px !important;
-  padding: 0 !important;
+  padding: 10px 0 !important;
   color: #fff !important;
-  font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: 1px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #1e293b 0%, #0ea5e9 100%);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(30, 41, 59, 0.15);
+  text-align: center;
 }
+
 .text-main {
   margin-bottom: 30px;
   color: #f1f5f9;

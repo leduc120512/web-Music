@@ -63,8 +63,8 @@ function AuthorRequestPage() {
   };
 
   return (
-    <section className={cx("authorRequestPage")}> 
-      <header className={cx("pageHeader")}> 
+    <section className={cx("authorRequestPage")}>
+      <header className={cx("pageHeader")}>
         <h2>Đăng ký trở thành tác giả</h2>
         <p>
           Hoàn tất thông tin để đội ngũ kiểm duyệt xác minh. Hồ sơ đầy đủ sẽ được duyệt nhanh hơn.
@@ -102,4 +102,3 @@ function AuthorRequestPage() {
 }
 
 export default AuthorRequestPage;
-

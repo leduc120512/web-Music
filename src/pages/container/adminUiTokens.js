@@ -1,8 +1,8 @@
 export const adminUiTokens = {
   radius: {
-    card: 3,
-    table: 3,
-    input: 2,
+    card: 2,
+    table: 2,
+    input: 1.5,
   },
   spacing: {
     section: 2,
@@ -34,19 +34,30 @@ export const adminTableContainerSx = {
   border: "1px solid rgba(148, 163, 184, 0.22)",
   background: "linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.9))",
   overflowX: "auto",
+  overflowY: "auto",
+  maxWidth: "100%",
+  maxHeight: "calc(100vh - 250px)",
+  boxShadow: "0 18px 34px rgba(2, 6, 23, 0.28)",
 }
 
 export const adminTableSx = {
-  minWidth: 980,
+  minWidth: 1120,
+  tableLayout: "auto",
   "& .MuiTableCell-head": {
-    fontSize: 13,
-    fontWeight: 700,
+    fontSize: "0.88rem",
+    fontWeight: 800,
     color: "#e2e8f0",
+    whiteSpace: "nowrap",
+    backgroundColor: "rgba(30, 41, 59, 0.96)",
+    position: "sticky",
+    top: 0,
+    zIndex: 4,
   },
   "& .MuiTableCell-body": {
-    fontSize: 13,
+    fontSize: "0.9rem",
     color: "#cbd5e1",
     verticalAlign: "middle",
+    whiteSpace: "nowrap",
   },
   "& .MuiTableRow-root": {
     transition: adminUiTokens.transition,
@@ -57,8 +68,29 @@ export const adminTableSx = {
   },
 }
 
+export const stickyCellSx = (side, offset = 0, zIndex = 3) => ({
+  position: "sticky",
+  [side]: offset,
+  zIndex,
+  backgroundColor: "rgba(15, 23, 42, 0.98)",
+  boxShadow:
+    side === "left"
+      ? "8px 0 16px -14px rgba(2, 6, 23, 0.9)"
+      : "-8px 0 16px -14px rgba(2, 6, 23, 0.9)",
+})
+
+export const stickyHeadCellSx = (side, offset = 0, zIndex = 6) => ({
+  ...stickyCellSx(side, offset, zIndex),
+  backgroundColor: "rgba(30, 41, 59, 1)",
+})
+
 export const adminActionButtonSx = {
   transition: adminUiTokens.transition,
+  minHeight: 38,
+  borderRadius: 1.5,
+  fontSize: "0.9rem",
+  fontWeight: 700,
+  textTransform: "none",
   "&:hover": {
     transform: "translateY(-1px)",
   },

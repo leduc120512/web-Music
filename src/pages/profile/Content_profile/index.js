@@ -2,11 +2,20 @@ import React, { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classnames from "classnames/bind";
 import styles from "../profile-module.scss";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faEnvelope,
+  faHome,
+  faIdBadge,
+  faList,
+  faMicrophone,
+  faPenToSquare,
+  faUpload,
+  faUserGroup,
+  faVenusMars,
+  faVideo,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
-// grid
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Cookies from "js-cookie";
 
 import Img_avatar from "../avatar_default_2020.png";
@@ -15,12 +24,12 @@ import Sibar from "./Sibar";
 const cx = classnames.bind(styles);
 
 const PROFILE_NAV_ITEMS = [
-  { to: "/Profile/chinh-sua-thong-tin", label: "Thông tin cá nhân" },
-  { to: "/Profile/Maiprofile", label: "PlayList" },
-  { to: "/Profile/Contentt_Video", label: "Video" },
-  { to: "/Profile/upload_proifle", label: "Tải lên" },
-  { to: "/Profile/Friend_live", label: "Bạn bè" },
-  { to: "/Profile/author-request", label: "Đăng ký tác giả" },
+  { to: "/Profile/chinh-sua-thong-tin", label: "Thông tin", icon: faPenToSquare },
+  { to: "/Profile/Maiprofile", label: "Playlist", icon: faList },
+  { to: "/Profile/Contentt_Video", label: "Video", icon: faVideo },
+  { to: "/Profile/upload_proifle", label: "Tải lên", icon: faUpload },
+  { to: "/Profile/Friend_live", label: "Bạn bè", icon: faUserGroup },
+  { to: "/Profile/author-request", label: "Tác giả", icon: faMicrophone },
 ];
 
 const readUserFromCookie = () => {
@@ -31,6 +40,12 @@ const readUserFromCookie = () => {
   } catch (error) {
     return null;
   }
+};
+
+const buildAvatarUrl = (avatar) => {
+  if (!avatar) return Img_avatar;
+  if (avatar.startsWith("http")) return avatar;
+  return `http://localhost:8082${avatar}`;
 };
 
 function Profilee_content() {
@@ -48,71 +63,84 @@ function Profilee_content() {
       displayName: user?.fullName || user?.username || "Người dùng",
       displayId: user?.id || "---",
       displayGender: user?.gender || "Chưa cập nhật",
-      avatar: user?.avatar ? `http://localhost:8082${user.avatar}` : Img_avatar,
+      avatar: buildAvatarUrl(user?.avatar || user?.avatarUrl),
       birthday: user?.birthday || user?.birthDate || "Đang cập nhật",
+      username: user?.username || "Chưa cập nhật",
+      email: user?.email || "Chưa cập nhật",
     }),
     [user]
   );
 
   return (
     <div className={cx("Profilee_content")}>
-      <div className={cx("Profilee_main")}>
-        <div className={cx("profileHero")}> 
-          <div className={cx("profileIdentity")}> 
-            <img className={cx("Profilee_content_img")} src={userMeta.avatar} alt={userMeta.displayName} />
-            <div className={cx("profileIdentityText")}> 
-              <p className={cx("profileTitle")}>{userMeta.displayName}</p>
-              <p>ID: {userMeta.displayId}</p>
-              <p>Tên thật: {user?.fullName || "Chưa cập nhật"}</p>
-              <p>Sinh nhật: {userMeta.birthday}</p>
-              <p>Giới tính: {userMeta.displayGender}</p>
+      <div className={cx("profilePageShell")}>
+        <aside className={cx("profileSidebar")}>
+          <section className={cx("profileCard")}>
+            <img className={cx("profileAvatar")} src={userMeta.avatar} alt={userMeta.displayName} />
+            <div className={cx("profileCardText")}>
+              <h1>{userMeta.displayName}</h1>
+              <p>@{userMeta.username}</p>
             </div>
-          </div>
 
-          <div className={cx("profileStatsRow")}> 
-            <div className={cx("profileStatCard")}> 
-              <p className={cx("profileStatValue")}>
-                <span>17</span>
-              </p>
-              <p>Lượt xem profile</p>
-            </div>
-            <div className={cx("profileStatCard")}> 
-              <p>
-                <span>0</span>
-              </p>
-              <p>Lượt nghe playList</p>
-            </div>
-          </div>
-        </div>
-
-        <nav className={cx("profileNavBar")}>
-          <Link to="/" className={cx("homeIconWrap")} aria-label="Trang chu">
-            <FontAwesomeIcon className={cx("Profilee_nAVsss")} icon={faHome} />
-          </Link>
-
-          {PROFILE_NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) => cx("profileNavItem", { profileNavItemActive: isActive })}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        <Box className={cx("Profilee_container")} sx={{ flexGrow: 1 }}>
-          <Grid className={cx("Profilee_container", "profileLayoutGrid")} container spacing={2}>
-            <Grid className={cx("Profilee_Contetnt-", "profileMainPanel")} item xs={12} lg={8}>
-              <div key={location.pathname} className={cx("profileOutletTransition")}>
-                <Outlet />
+            <div className={cx("profileQuickStats")}>
+              <div>
+                <strong>17</strong>
+                <span>Lượt xem</span>
               </div>
-            </Grid>
-            <Grid className={cx("Profileesss_sibar-", "profileSidePanel")} item xs={12} lg={4}>
-              <Sibar />
-            </Grid>
-          </Grid>
-        </Box>
+              <div>
+                <strong>0</strong>
+                <span>Lượt nghe</span>
+              </div>
+            </div>
+
+            <div className={cx("profileDetailList")}>
+              <span>
+                <FontAwesomeIcon icon={faIdBadge} />
+                ID: {userMeta.displayId}
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faEnvelope} />
+                {userMeta.email}
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faCalendarDays} />
+                {userMeta.birthday}
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faVenusMars} />
+                {userMeta.displayGender}
+              </span>
+            </div>
+          </section>
+
+          <nav className={cx("profileMenu")} aria-label="Profile navigation">
+            <Link to="/" className={cx("profileMenuItem")}>
+              <FontAwesomeIcon icon={faHome} />
+              <span>Trang chủ</span>
+            </Link>
+
+            {PROFILE_NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) => cx("profileMenuItem", { profileMenuItemActive: isActive })}
+              >
+                <FontAwesomeIcon icon={item.icon} />
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+
+          <div className={cx("profileRecommendations")}>
+            <Sibar />
+          </div>
+        </aside>
+
+        <main className={cx("profileContentCard")}>
+          <div key={location.pathname} className={cx("profileOutletTransition")}>
+            <Outlet />
+          </div>
+        </main>
       </div>
     </div>
   );

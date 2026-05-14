@@ -35,16 +35,16 @@ function Create_Acount({ open, handleClose }) {
   const [agree, setAgree] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, files, type } = e.target;
+  const handleChange = (event) => {
+    const { name, value, files, type } = event.target;
     setFormData((prev) => ({
       ...prev,
       [name]: type === "file" ? files?.[0] || null : value,
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
       alert("Mật khẩu không khớp.");
@@ -71,155 +71,156 @@ function Create_Acount({ open, handleClose }) {
       const response = await userApi.signup(payload);
 
       if (response.data.success) {
-        alert("Đăng ký thành công!");
+        alert("Đăng ký thành công.");
         handleClose();
       } else {
-        alert("Đăng ký thất bại: " + (response.data.message || "Lỗi không xác định."));
+        alert(`Đăng ký thất bại: ${response.data.message || "Lỗi không xác định."}`);
       }
     } catch (error) {
       console.error("Lỗi khi đăng ký:", error);
-      alert("Đăng ký thất bại: " + (error.response?.data?.message || "Lỗi server."));
+      alert(`Đăng ký thất bại: ${error.response?.data?.message || "Lỗi server."}`);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-      <Modal
-          open={open}
-          onClose={handleClose}
-          slotProps={{
-            backdrop: {
-              sx: {
-                backgroundColor: "rgba(2, 6, 23, 0.78)",
-                backdropFilter: "blur(4px)",
-              },
-            },
-          }}
-      >
-        <Box sx={style}>
-          <div className={cx("Create_Acount", "Create_main") }>
-            <div className={cx("Login_header")}>
-              <p>Đăng Ký</p>
-              <FontAwesomeIcon
-                  onClick={handleClose}
-                  className={cx("Login_icon1", "Login_close")}
-                  icon={faWindowClose}
+    <Modal
+      open={open}
+      onClose={handleClose}
+      slotProps={{
+        backdrop: {
+          sx: {
+            backgroundColor: "rgba(2, 6, 23, 0.78)",
+            backdropFilter: "blur(4px)",
+          },
+        },
+      }}
+    >
+      <Box sx={style}>
+        <div className={cx("Create_Acount", "Create_main")}>
+          <div className={cx("Login_header")}>
+            <p>Đăng ký</p>
+            <FontAwesomeIcon
+              onClick={handleClose}
+              className={cx("Login_icon1", "Login_close")}
+              icon={faWindowClose}
+            />
+          </div>
+
+          <form className={cx("Create_content")} onSubmit={handleSubmit}>
+            <p className={cx("Login_issfputs")}>Các trường có dấu (*) là bắt buộc.</p>
+
+            <div className={cx("Login_field")}>
+              <label htmlFor="register-username">Tên đăng nhập *</label>
+              <input
+                id="register-username"
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                required
+                placeholder="Nhập tên đăng nhập"
+                className={cx("Login_input")}
               />
             </div>
-            <form className={cx("Create_content")} onSubmit={handleSubmit}>
-              <p className={cx("Login_issfputs")}>Những thông tin có đánh dấu (*) là bắt buộc nhập</p>
+
+            <div className={cx("Login_field")}>
+              <label htmlFor="register-email">Email *</label>
+              <input
+                id="register-email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="Nhập email"
+                className={cx("Login_input")}
+              />
+            </div>
+
+            <div className={cx("Create_grid")}>
+              <div className={cx("Login_field")}>
+                <label htmlFor="register-password">Mật khẩu *</label>
+                <input
+                  id="register-password"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  placeholder="Nhập mật khẩu"
+                  className={cx("Login_input")}
+                />
+              </div>
 
               <div className={cx("Login_field")}>
-                <label htmlFor="register-username">Tên đăng nhập *</label>
+                <label htmlFor="register-confirm-password">Nhập lại mật khẩu *</label>
                 <input
-                    id="register-username"
-                    type="text"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                    placeholder="Nhập tên đăng nhập"
-                    className={cx("Login_input")}
+                  id="register-confirm-password"
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  required
+                  placeholder="Nhập lại mật khẩu"
+                  className={cx("Login_input")}
                 />
+              </div>
+            </div>
+
+            <div className={cx("Create_grid")}>
+              <div className={cx("Login_field")}>
+                <label htmlFor="register-gender">Giới tính *</label>
+                <select
+                  id="register-gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className={cx("Login_input")}
+                >
+                  <option value="MALE">Nam</option>
+                  <option value="FEMALE">Nữ</option>
+                  <option value="OTHER">Khác</option>
+                </select>
               </div>
 
               <div className={cx("Login_field")}>
-                <label htmlFor="register-email">Email *</label>
+                <label htmlFor="register-avatar">Ảnh đại diện tùy chọn</label>
                 <input
-                    id="register-email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="Nhập email"
-                    className={cx("Login_input")}
+                  id="register-avatar"
+                  type="file"
+                  name="avatar"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className={cx("Login_input")}
                 />
               </div>
+            </div>
 
-              <div className={cx("Create_grid") }>
-                <div className={cx("Login_field")}>
-                  <label htmlFor="register-password">Mật khẩu *</label>
-                  <input
-                      id="register-password"
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                      placeholder="Nhập mật khẩu"
-                      className={cx("Login_input")}
-                  />
-                </div>
+            <label className={cx("Create_agree")}>
+              <Checkbox
+                checked={agree}
+                onChange={(event) => setAgree(event.target.checked)}
+                sx={{ color: "#67e8f9", "&.Mui-checked": { color: "#22d3ee" } }}
+              />
+              <span>Tôi đã đọc và đồng ý với chính sách bảo mật và điều khoản sử dụng.</span>
+            </label>
 
-                <div className={cx("Login_field")}>
-                  <label htmlFor="register-confirm-password">Nhập lại mật khẩu *</label>
-                  <input
-                      id="register-confirm-password"
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      required
-                      placeholder="Nhập lại mật khẩu"
-                      className={cx("Login_input")}
-                  />
-                </div>
-              </div>
-
-              <div className={cx("Create_grid") }>
-                <div className={cx("Login_field")}>
-                  <label htmlFor="register-gender">Giới tính *</label>
-                  <select
-                    id="register-gender"
-                    name="gender"
-                    value={formData.gender}
-                    onChange={handleChange}
-                    className={cx("Login_input")}
-                  >
-                    <option value="MALE">Nam</option>
-                    <option value="FEMALE">Nữ</option>
-                    <option value="OTHER">Khác</option>
-                  </select>
-                </div>
-
-                <div className={cx("Login_field")}>
-                  <label htmlFor="register-avatar">Ảnh đại diện (tuỳ chọn)</label>
-                  <input
-                    id="register-avatar"
-                    type="file"
-                    name="avatar"
-                    accept="image/*"
-                    onChange={handleChange}
-                    className={cx("Login_input")}
-                  />
-                </div>
-              </div>
-
-              <label className={cx("Create_agree") }>
-                <Checkbox
-                    checked={agree}
-                    onChange={(e) => setAgree(e.target.checked)}
-                    sx={{ color: "#67e8f9", "&.Mui-checked": { color: "#22d3ee" } }}
-                />
-                <span>Tôi đã đọc và đồng ý với Chính sách bảo mật và điều khoản sử dụng</span>
-              </label>
-
-              <Button
-                  className={cx("Create_submit")}
-                  variant="contained"
-                  type="submit"
-                  disabled={loading}
-                  disableElevation
-                  fullWidth
-              >
-                {loading ? "Đang xử lý..." : "Đăng Ký Ngay"}
-              </Button>
-            </form>
-          </div>
-        </Box>
-      </Modal>
+            <Button
+              className={cx("Create_submit")}
+              variant="contained"
+              type="submit"
+              disabled={loading}
+              disableElevation
+              fullWidth
+            >
+              {loading ? "Đang xử lý..." : "Đăng ký ngay"}
+            </Button>
+          </form>
+        </div>
+      </Box>
+    </Modal>
   );
 }
 

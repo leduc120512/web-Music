@@ -7,6 +7,11 @@
     radial-gradient(circle at 96% 0%, rgba(99, 102, 241, 0.25) 0%, transparent 38%),
     #020617;
   color: #e2e8f0;
+  font-size: 0.95rem;
+}
+
+.adminShell.collapsed {
+  grid-template-columns: 78px minmax(0, 1fr);
 }
 
 .sidebar {
@@ -57,7 +62,7 @@
   p {
     margin: 0;
     color: #f8fafc;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
@@ -66,14 +71,14 @@
 
   span {
     color: #7dd3fc;
-    font-size: 1.15rem;
+    font-size: 0.78rem;
     font-weight: 500;
   }
 }
 
 .iconBtn {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 10px;
   background: rgba(15, 23, 42, 0.84);
@@ -93,18 +98,18 @@
   top: 50%;
   transform: translateY(-50%);
   color: #64748b;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
 }
 
 .searchInput {
   width: 100%;
-  min-height: 40px;
+  min-height: 44px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.62);
   color: #e2e8f0;
   padding: 0 12px 0 36px;
-  font-size: 1.25rem;
+  font-size: 0.95rem;
 }
 
 .menuBlock {
@@ -123,12 +128,12 @@
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 1.08rem;
+  font-size: 0.72rem;
 }
 
 .menuItem {
   width: 100%;
-  min-height: 40px;
+  min-height: 42px;
   margin-bottom: 6px;
   border: 1px solid transparent;
   border-radius: 12px;
@@ -142,14 +147,14 @@
   transition: all 0.18s ease;
 
   span {
-    font-size: 1.26rem;
+    font-size: 0.92rem;
     font-weight: 500;
   }
 }
 
 .menuIcon {
   width: 18px;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
 }
 
 .menuItem:hover {
@@ -183,13 +188,13 @@
 .accountName {
   margin: 0;
   color: #f8fafc;
-  font-size: 1.2rem;
+  font-size: 0.92rem;
   font-weight: 600;
 }
 
 .accountRole {
   color: #94a3b8;
-  font-size: 1.05rem;
+  font-size: 0.78rem;
 }
 
 .logoutBtn {
@@ -223,14 +228,14 @@
   h1 {
     margin: 2px 0 0;
     color: #f8fafc;
-    font-size: 2.1rem;
+    font-size: 1.35rem;
   }
 }
 
 .topLabel {
   margin: 0;
   color: #94a3b8;
-  font-size: 1.12rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -244,7 +249,7 @@
   border: 1px solid rgba(125, 211, 252, 0.35);
   background: rgba(14, 116, 144, 0.2);
   color: #67e8f9;
-  font-size: 1.15rem;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
@@ -262,7 +267,7 @@
   align-items: center;
   justify-content: center;
   color: #94a3b8;
-  font-size: 1.4rem;
+  font-size: 0.95rem;
 }
 
 @media (max-width: 980px) {

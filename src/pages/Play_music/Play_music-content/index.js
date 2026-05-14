@@ -31,6 +31,11 @@ const cx = classNames.bind(styles)
 const ASSET_BASE = 'http://localhost:8082'
 const COMMENT_PAGE_SIZE = 5
 const REPLY_PREVIEW_SIZE = 2
+const OLLAMA_URL = 'http://localhost:11434/api/generate'
+// file: Play_music-content/index.js
+const OLLAMA_MODEL = 'llama3.2:1b'  // thay vì 'llama3.1'
+
+const OLLAMA_TIMEOUT_MS = 30000
 
 const toNumber = (value) => {
   const parsed = Number(value)
@@ -74,6 +79,7 @@ function Music({ songId }) {
   })
   const [commentLoading, setCommentLoading] = useState(false)
   const [commentError, setCommentError] = useState('')
+  const [commentMessage, setCommentMessage] = useState('')
   const [newComment, setNewComment] = useState('')
   const [replyDrafts, setReplyDrafts] = useState({})
   const [editDrafts, setEditDrafts] = useState({})
@@ -113,6 +119,52 @@ function Music({ songId }) {
       setCommentLoading(false)
     }
   }, [songId])
+
+  const moderateCommentWithOllama = useCallback(async (content) => {
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), OLLAMA_TIMEOUT_MS)
+
+    try {
+      const prompt =
+        `Classify this comment as VIOLATION, NEGATIVE, or NORMAL.\n` +
+        `VIOLATION = hate speech, insults, harassment, threats, offensive language.\n` +
+        `NEGATIVE = negative but not offensive.\n` +
+        `NORMAL = everything else.\n` +
+        `Reply with ONLY this JSON, nothing else: {"verdict":"VIOLATION","reason":"why"}\n` +
+        `Comment: "${content}"`
+
+      const response = await fetch(OLLAMA_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: OLLAMA_MODEL, prompt, stream: false }),
+        signal: controller.signal,
+      })
+
+      const data = await response.json()
+      const raw = String(data?.response || '').trim()
+      console.log('[Ollama] raw response:', raw)
+      // extract JSON block từ response, loại bỏ ký tự thừa
+      const jsonMatch = raw.match(/\{[^{}]*\}/)
+      if (!jsonMatch) {
+        console.error('[Ollama] no valid JSON found')
+        return { verdict: 'UNKNOWN', reason: '' }
+      }
+      const parsed = JSON.parse(jsonMatch[0])
+      console.log('[Ollama] parsed:', parsed)
+      const verdict = String(parsed.verdict || 'UNKNOWN').toUpperCase()
+      console.log('[Ollama] verdict:', verdict)
+
+      return {
+        verdict,
+        reason: String(parsed.reason || '').trim(),
+      }
+    } catch (error) {
+      console.error('[Ollama] error:', error)
+      return { verdict: 'UNKNOWN', reason: '' }
+    } finally {
+      clearTimeout(timeout)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchLatestSongs = async () => {
@@ -267,7 +319,21 @@ function Music({ songId }) {
 
     try {
       setSubmittingAction(true)
-      await commentsApi.createSongComment(songId, { content: newComment.trim() })
+      setCommentError('')
+      setCommentMessage('')
+
+      const content = newComment.trim()
+      const moderation = await moderateCommentWithOllama(content)
+
+      // Chặn bình luận vi phạm
+      if (moderation.verdict === 'VIOLATION') {
+        alert('Bình luận của bạn vi phạm tiêu chuẩn cộng đồng và không được phép đăng.')
+        setNewComment('')
+        return
+      }
+
+      // Chỉ đăng khi NORMAL hoặc NEGATIVE
+      await commentsApi.createSongComment(songId, { content })
       setNewComment('')
       loadComments(0, false)
     } catch (error) {
@@ -527,6 +593,7 @@ function Music({ songId }) {
                   commentsPage={commentsPage}
                   loading={commentLoading}
                   error={commentError}
+                  message={commentMessage}
                   newComment={newComment}
                   onChangeNewComment={setNewComment}
                   onSubmitComment={handleSubmitComment}
@@ -877,6 +944,7 @@ function CommentsSection({
   commentsPage,
   loading,
   error,
+  message,
   newComment,
   onChangeNewComment,
   onSubmitComment,
@@ -915,6 +983,7 @@ function CommentsSection({
       </div>
 
       {error && <p className={cx('error-text')}>{error}</p>}
+      {message && <p className={cx('success-text')}>{message}</p>}
       {loading && <p className={cx('comment-muted')}>Đang tải bình luận...</p>}
 
       <div className={cx('comment-list')}>
@@ -1076,7 +1145,7 @@ function LyricsSection({
 
         <button type='button' className={cx('text-toggle')} onClick={onToggle}>
           <span>{expanded ? 'Thu gọn' : 'Xem thêm'}</span>
-          <FontAwesomeIcon icon={expanded ? faSortUp : faSortDown} />
+          <FontAwesomeIcon className={'artistName0d'} icon={expanded ? faSortUp : faSortDown} />
         </button>
       </section>
   )
@@ -1176,3 +1245,4 @@ function SongItem({ song, onToggleLike, currentSongId }) {
 }
 
 export default Music
+

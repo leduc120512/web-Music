@@ -1,128 +1,59 @@
-import React, { useState } from "react";
-
+import React from "react";
 import classnames from "classnames/bind";
 import styles from "../../profile-module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCirclePlay,
-  faMicrophone,
-  faPen,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlay, faPen, faPlus, faRecordVinyl } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import Img_item_content_profule from "../1473409265946.webp";
+
 const cx = classnames.bind(styles);
+
+const playlistItems = Array.from({ length: 6 }, (_, index) => ({
+  id: index,
+  title: index === 0 ? "Bài hát yêu thích" : `Playlist ${index + 1}`,
+  description: "Đang cập nhật",
+}));
 
 function Content_main() {
   return (
-    <div className={cx("Contentt")}>
-      <div className={cx("Contsssentt")}>
-        {" "}
-        <p>PLAYLIST | ALBULM</p>
+    <div className={cx("profileSection")}>
+      <div className={cx("profileSectionHeader")}>
         <div>
-          <Link to="/Create_list_music">
-            <button className={cx("Contsssentt_btn")}>
-              <FontAwesomeIcon
-                className={cx("Covvvntsssentt_btn")}
-                icon={faPen}
-              />
-              <p>Tạo playList</p>
-            </button>
+          <p className={cx("sectionEyebrow")}>Thư viện</p>
+          <h2>Playlist và album</h2>
+        </div>
+        <div className={cx("sectionActions")}>
+          <Link to="/Create_list_music" className={cx("primaryAction")}>
+            <FontAwesomeIcon icon={faPlus} />
+            Tạo playlist
           </Link>
+          <Link to="/Update_list_music" className={cx("secondaryAction")}>
+            <FontAwesomeIcon icon={faPen} />
+            Chỉnh sửa
+          </Link>
+        </div>
+      </div>
 
-          <button>
-            <FontAwesomeIcon
-              className={cx("Covvvntsssentt_btn")}
-              icon={faPen}
-            />
-            <Link to="/Update_list_music">
-              {" "}
-              <p>Chỉnh sửa</p>
-            </Link>
-          </button>
-        </div>
+      <div className={cx("playlistGrid")}>
+        {playlistItems.map((item) => (
+          <article key={item.id} className={cx("playlistCard")}>
+            <div className={cx("playlistCoverWrap")}>
+              <img className={cx("playlistCover")} src={Img_item_content_profule} alt={item.title} />
+              <span className={cx("playlistPlay")}>
+                <FontAwesomeIcon icon={faCirclePlay} />
+              </span>
+            </div>
+            <div className={cx("playlistInfo")}>
+              <p className={cx("playlistTitle")}>{item.title}</p>
+              <p className={cx("playlistDescription")}>{item.description}</p>
+            </div>
+          </article>
+        ))}
       </div>
-      {/* cung cap voi content-content in profile  */}
-      <div className={cx("leduxa")}>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-        <div className={cx("Cossssntsssentt_btn Cossssntsssdssentt_btn")}>
-          <img
-            className={cx("Cossssssssntsssentt_btn")}
-            src={Img_item_content_profule}
-          />
-          <div>
-            <p className={cx("Cosssssssssssfsdntsssentt_btn")}>
-              Bài hát yêu thích
-            </p>
-            <p>Đang cập nhật</p>
-          </div>
-        </div>
-      </div>
-      <div className={cx("hskjdh")}>
-        <p>
-          <FontAwesomeIcon className={cx("hskjdh_oco")} icon={faCirclePlay} />
-          <span>maileduc chưa có video nào lưu trong sự kiện</span>
-        </p>
+
+      <div className={cx("profileEmptyState")}>
+        <FontAwesomeIcon icon={faRecordVinyl} />
+        <span>Bạn chưa có video nào được lưu trong sự kiện.</span>
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 // src/api/userApi.js
 import axios from "axios";
 import Cookies from "js-cookie";
+import { clearAuthSession } from "../utils/authSession";
 
 const BASE_URL = "http://localhost:8082/api/auth";
 
@@ -115,7 +116,7 @@ const userApi = {
         }),
 
     // 🔹 Đăng xuất: xoá token
-    logout: () => Cookies.remove("token"),
+    logout: () => clearAuthSession(),
 };
 
 export default userApi;

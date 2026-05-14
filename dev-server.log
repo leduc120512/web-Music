@@ -1,0 +1,181 @@
+
+> duan1@0.1.0 start
+> react-app-rewired start
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+(node:25280) [DEP_WEBPACK_DEV_SERVER_ON_AFTER_SETUP_MIDDLEWARE] DeprecationWarning: 'onAfterSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:25280) [DEP_WEBPACK_DEV_SERVER_ON_BEFORE_SETUP_MIDDLEWARE] DeprecationWarning: 'onBeforeSetupMiddleware' option is deprecated. Please use the 'setupMiddlewares' option.
+Starting the development server...
+
+Compiled successfully!
+
+You can now view duan1 in the browser.
+
+  Local:            http://localhost:3001
+  On Your Network:  http://192.168.0.102:3001
+
+Note that the development build is not optimized.
+To create a production build, use yarn build.
+
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled successfully!
+webpack compiled [1m[32msuccessfully[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music must be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create must be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music must be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create must be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music must be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create must be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music must be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create must be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m
+Compiling...
+Compiled with warnings.
+
+[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ must be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music must be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results must be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create must be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list must be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+[1m[33mWARNING[39m[22m in [1m[eslint] 
+src\App.js
+  Line 66:43:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 67:49:  Imported JSX component Top100_ [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE         react/jsx-pascal-case
+  Line 70:50:  Imported JSX component Play_music [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE      react/jsx-pascal-case
+  Line 73:52:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+  Line 75:50:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 76:44:  Imported JSX component Search_results [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE  react/jsx-pascal-case
+  Line 77:53:  Imported JSX component Update_create [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE   react/jsx-pascal-case
+  Line 79:53:  Imported JSX component Create_list [1m[33mmust[39m[22m[1m be in PascalCase or SCREAMING_SNAKE_CASE     react/jsx-pascal-case
+
+[39m[22m
+
+webpack compiled with [1m[33m1 warning[39m[22m

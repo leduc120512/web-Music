@@ -1,68 +1,72 @@
-// Text.js
-
 import React from "react";
-import styles from "./Uploat-module.scss"; // Đường dẫn đúng đến file SCSS module
-
+import styles from "./Uploat-module.scss";
 import classnames from "classnames/bind";
-import Img_upload from "./web nhac.png";
+import ImgUpload from "./web nhac.png";
 import { Button } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCloudArrowUp, faFileAudio, faImage, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classnames.bind(styles);
 
+const uploadNotes = [
+  "Tài khoản cần đăng nhập và đã được kích hoạt.",
+  "File upload tối đa 120MB, bitrate từ 128kbps trở lên.",
+  "Hỗ trợ: .mp3, .wma, .mp2, .asf, .wav, .wmv, .mp4, .flv, .mpg, .avi, .3gp, .flac.",
+  "Thời gian kiểm duyệt: 72 giờ với user thường, 12 giờ với user VIP.",
+];
+
+const policyNotes = [
+  "Nội dung vi phạm thỏa thuận sử dụng có thể bị xóa khỏi hệ thống.",
+  "Ảnh bìa bài hát nên có kích thước tối thiểu 640x640px.",
+  "Ảnh bìa video nên có kích thước tối thiểu 840x472px.",
+  "Hình ảnh hoặc nội dung không phù hợp sẽ bị từ chối.",
+];
+
 const UpLoad = () => {
   return (
-    <div className={cx("UpLoad")}>
+    <main className={cx("UpLoad")}>
       <div className={cx("UpLoad_content")}>
-        <div className={cx("UpLoad_main_list")}>
-          {" "}
-          <img className={cx("UpLoad_img")} src={Img_upload} />
-          <h1>Chọn hoặc kéo thả file để tải lên</h1>
-          <div className={cx("UpLoad_imsg")}>
-            <p>
-              Hỗ trợ các định dạng .mp3, .wma, .mp2, .asf, .wav, .wmv, .mp4,
-              .flv, .mpg, .mpe, .avi, .3gp, .dat, .flac
-            </p>
-            <p>Hỗ trợ embed link Youtube</p>
+        <section className={cx("uploadHero")}>
+          <div className={cx("uploadArtwork")}>
+            <img className={cx("UpLoad_img")} src={ImgUpload} alt="Upload music" />
           </div>
-          <Button className={cx("UpLoad_btn")} variant="contained">
-            <p>Chọn File</p> 
-          </Button>
-        </div>
-        <div className={cx("UpLoad_regulations")}>
-          <div className={cx("UpLoad_regulations1")}>
-            <h4>Hướng dẫn:</h4>
-            <div>
-              <p>- Tài khoản đã được kích hoạt và đăng nhập thành công.</p>
-              <p>- File upload không quá 120Mb, bit-rate 128kbs trở lên.</p>
-              <p>
-                - Định dạng file upload: .mp3, .wma, .mp2, .asf, .wav, .wmv,
-                .mp4, .flv, .mpg, .mpe, .avi, .3gp, .dat, .flac.
-              </p>
-              <p>
-                - Thời gian kiểm duyệt: 72 giờ (User Thường) và 12 giờ (User
-                VIP).
-              </p>
-              <p>
-                - Hình ảnh bài hát (cover) phải có kích thước ít nhất là 640x640
-                pixel, hình ảnh video (cover) phải có kích thước ít nhất là
-                840x472 pixel.
-              </p>
-            </div>
+
+          <div className={cx("uploadDropzone")}>
+            <FontAwesomeIcon className={cx("uploadIcon")} icon={faCloudArrowUp} />
+            <h1>Chọn hoặc kéo thả file để tải lên</h1>
+            <p>Hỗ trợ file nhạc, video và embed link YouTube.</p>
+            <Button className={cx("UpLoad_btn")} variant="contained">
+              Chọn file
+            </Button>
           </div>
-          <div className={cx("UpLoad_regulations1")}>
-            {" "}
-            <h4>Hướng dẫn:</h4>
-            <div>
-              <p>
-                - Bài hát đăng tải vi phạm nội dung cung cấp trong Thỏa thuận sử
-                dụng sẽ bị xóa khỏi hệ thống và tài khoản sẽ bị xóa vĩnh viễn.
-              </p>
-              <p>- Hình ảnh có nội dung không phù hợp sẽ bị xóa.</p>
-            </div>
-          </div>
-        </div>
+        </section>
+
+        <section className={cx("UpLoad_regulations")}>
+          <article className={cx("UpLoad_regulations1")}>
+            <FontAwesomeIcon icon={faFileAudio} />
+            <h4>Yêu cầu file</h4>
+            {uploadNotes.map((note) => (
+              <p key={note}>{note}</p>
+            ))}
+          </article>
+
+          <article className={cx("UpLoad_regulations1")}>
+            <FontAwesomeIcon icon={faImage} />
+            <h4>Ảnh bìa và kiểm duyệt</h4>
+            {policyNotes.map((note) => (
+              <p key={note}>{note}</p>
+            ))}
+          </article>
+
+          <article className={cx("UpLoad_regulations1")}>
+            <FontAwesomeIcon icon={faShieldHalved} />
+            <h4>Lưu ý</h4>
+            <p>Chỉ tải lên nội dung bạn sở hữu hoặc có quyền sử dụng.</p>
+            <p>Thông tin chính xác giúp quá trình duyệt nhanh hơn.</p>
+          </article>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

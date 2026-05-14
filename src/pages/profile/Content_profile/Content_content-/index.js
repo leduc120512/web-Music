@@ -1,74 +1,48 @@
-import { React, useState } from "react";
-
+import React from "react";
 import { Link } from "react-router-dom";
 import classnames from "classnames/bind";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "./Content-module.scss";
-import { faMicrophone, faPen, faUser } from "@fortawesome/free-solid-svg-icons";
+import styles from "../../profile-module.scss";
+import { faMicrophone, faPen, faPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 
 import Img_item_content_profule from "../1473409265946.webp";
 
-import Create_content from "./Create_play_list";
 const cx = classnames.bind(styles);
 
 function Contentt() {
-  // open modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpen = () => setIsModalOpen(true);
-  const handleClose = () => setIsModalOpen(false);
-
   return (
-    <div className={cx("Contentt")}>
-      <div className={cx("Contsssentt")}>
-        {" "}
-        <p>PLAYLIST | ALBULM</p>
+    <div className={cx("profileSection")}>
+      <div className={cx("profileSectionHeader")}>
         <div>
-          <Link to="/Create_list_music">
-            <button className={cx("Contsssentt_btn")} onClick={handleOpen}>
-              <FontAwesomeIcon
-                className={cx("Covvvntsssentt_btn")}
-                icon={faPen}
-              />
-              <p>Tạo playList</p>
-            </button>
+          <p className={cx("sectionEyebrow")}>Tổng quan</p>
+          <h2>Hồ sơ âm nhạc</h2>
+        </div>
+        <div className={cx("sectionActions")}>
+          <Link to="/Create_list_music" className={cx("primaryAction")}>
+            <FontAwesomeIcon icon={faPlus} />
+            Tạo playlist
           </Link>
-
-          <Create_content open={isModalOpen} handleClose={handleClose} />
-          <button>
-            <FontAwesomeIcon
-              className={cx("Covvvntsssentt_btn")}
-              icon={faPen}
-            />
-            <Link to="/Update_list_music">
-              {" "}
-              <p>Chỉnh sửa</p>
-            </Link>
-          </button>
+          <Link to="/Profile/chinh-sua-thong-tin" className={cx("secondaryAction")}>
+            <FontAwesomeIcon icon={faPen} />
+            Sửa hồ sơ
+          </Link>
         </div>
       </div>
-      <div className={cx("Cossssntsssentt_btn")}>
-        <img
-          className={cx("Cossssssssntsssentt_btn")}
-          src={Img_item_content_profule}
-        />
-        <div>
-          <p>Bài hát yêu thích</p>
+
+      <article className={cx("overviewCard")}>
+        <img className={cx("overviewCover")} src={Img_item_content_profule} alt="Bài hát yêu thích" />
+        <div className={cx("overviewInfo")}>
+          <p className={cx("overviewTitle")}>Bài hát yêu thích</p>
           <p>
-            <FontAwesomeIcon
-              className={cx("Cossssssssntssssssentt_btn")}
-              icon={faMicrophone}
-            />
+            <FontAwesomeIcon icon={faMicrophone} />
             <span>Đang cập nhật</span>
           </p>
           <p>
-            <FontAwesomeIcon
-              className={cx("Cossssssssntssssssentt_btn")}
-              icon={faUser}
-            />
-            <span>gg.mailleduc05122004</span>
+            <FontAwesomeIcon icon={faUser} />
+            <span>Thông tin cá nhân sẽ hiển thị tại đây</span>
           </p>
         </div>
-      </div>
+      </article>
     </div>
   );
 }

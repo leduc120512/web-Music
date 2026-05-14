@@ -24,6 +24,7 @@ import EditAccountPage from "./pages/profile/EditAccount";
 import Top100_ from "./pages/layout-page/Top_100";
 import Admin from "../src/compodens/admin";
 import { buildSongPathFromId } from "./utils/songRoute";
+import PopupAdModal from "./compodens/PopupAdModal";
 
 const PROFILE_CHILD_ROUTES = [
   { path: "chinh-sua-thong-tin", element: EditAccountPage },
@@ -45,6 +46,7 @@ const ADMIN_SECTION_ROUTES = [
   { path: "/admin/artist-requests", initialItem: "artistRequests" },
   { path: "/admin/permissions", initialItem: "permissions" },
   { path: "/admin/users", initialItem: "users" },
+  { path: "/admin/popup-ads", initialItem: "popupAds" },
 ];
 
 function LegacySongRedirect() {
@@ -84,7 +86,8 @@ function App() {
           </Route>
         </Routes>
         <Routes>
-          <Route path="Losgin" element={<Login />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Losgin" element={<Navigate replace to="/Login" />} />
           <Route path="/Profile" element={<Profile />}>
             {PROFILE_CHILD_ROUTES.map(({ index, path, element: Element }) => (
               <Route key={path || "index"} index={index} path={path} element={<Element />} />
@@ -100,6 +103,7 @@ function App() {
           </Route>
 
         </Routes>
+        <PopupAdModal />
       </div>
     </Router>
   );

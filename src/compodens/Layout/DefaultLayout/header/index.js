@@ -18,7 +18,7 @@ import Tuyentap from "./header-nav-music/tuyentap";
 import Menu_elip from "./header-nav-music/menu-slip";
 import ReusableModal from "../../../../pages/Login_logOut/Login";
 import Create_Acount from "../../../../pages/Login_logOut/Create_acount";
-import ImgMain from "./G81A8377.JPG";
+import DefaultAvatar from "../../../../pages/profile/avatar_default_2020.png";
 import SearchDropdown from "./input_search"; // <-- đổi tên component phụ cho rõ vai trò (chỉ hiển thị)
 import Profile from "./profile";
 import Video from "./header-nav-music/video";
@@ -29,6 +29,23 @@ import { buildSongPath } from "../../../../utils/songRoute";
 import { subscribeRequireLogin } from "../../../../utils/authPrompt";
 
 const cx = classnames.bind(styles);
+const API_ORIGIN = "http://localhost:8082";
+
+const readUserFromCookie = () => {
+  const userCookie = Cookies.get("user");
+  if (!userCookie) return null;
+  try {
+    return JSON.parse(userCookie);
+  } catch (error) {
+    return null;
+  }
+};
+
+const buildAvatarUrl = (avatar) => {
+  if (!avatar) return DefaultAvatar;
+  if (avatar.startsWith("http")) return avatar;
+  return `${API_ORIGIN}${avatar}`;
+};
 
 function Header() {
   const [hovered, setHovered] = useState({
@@ -42,8 +59,7 @@ function Header() {
     video: false,
   });
 
-  const userCookie = Cookies.get("user");
-  const user = userCookie ? JSON.parse(userCookie) : null;
+  const [user, setUser] = useState(() => readUserFromCookie());
 
   const [openLogin, setOpenLogin] = useState(false);
   const [openRegister, setOpenRegister] = useState(false);
@@ -90,6 +106,12 @@ function Header() {
     return subscribeRequireLogin(() => {
       setOpenLogin(true);
     });
+  }, []);
+
+  useEffect(() => {
+    const syncUser = () => setUser(readUserFromCookie());
+    window.addEventListener("profile-updated", syncUser);
+    return () => window.removeEventListener("profile-updated", syncUser);
   }, []);
 
   // debounce tìm kiếm theo keyword
@@ -272,7 +294,14 @@ function Header() {
                     style={{ position: "relative" }}
                 >
                   <div className={cx("Header_login1")}>
-                    <img className={cx("Header_login_img")} src={ImgMain} alt="Profile" />
+                    <img
+                        className={cx("Header_login_img")}
+                        src={buildAvatarUrl(user?.avatar || user?.avatarUrl)}
+                        alt={user?.fullName || user?.username || "Profile"}
+                        onError={(event) => {
+                          event.currentTarget.src = DefaultAvatar;
+                        }}
+                    />
                     <div className={cx("Header_login2")}>
                       <p className={cx("Header_login2_name")}>{user?.fullName}</p>
                     </div>

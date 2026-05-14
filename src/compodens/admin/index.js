@@ -12,6 +12,7 @@ import {
   faGear,
   faHome,
   faQuestionCircle,
+  faRectangleAd,
   faRightFromBracket,
   faSearch,
   faShieldHalved,
@@ -33,7 +34,9 @@ import PermissionsContent from "../../pages/container/PermissionsContent";
 import songApi from "../../api/api_music";
 import albumsApi from "../../api/albums";
 import bannerApi from "../../api/banner";
+import popupAdsApi from "../../api/popupAds";
 import userApi from "../../api/api_user";
+import { logoutNow } from "../../utils/authSession";
 
 const cx = classNames.bind(styles);
 
@@ -43,6 +46,7 @@ const ALL_MENU = [
   { id: "products", label: "Bài hát", icon: faBox },
   { id: "albums", label: "Albums", icon: faBox },
   { id: "banner", label: "Banner", icon: faBox },
+  { id: "popupAds", label: "Popup quảng cáo", icon: faRectangleAd },
   { id: "reports", label: "Báo cáo", icon: faFlag },
   { id: "artistRequests", label: "Duyệt tác giả", icon: faUserCheck },
   { id: "permissions", label: "Phân quyền", icon: faShieldHalved },
@@ -70,6 +74,17 @@ const adminMuiTheme = createTheme({
   },
   typography: {
     fontFamily: '"Be Vietnam Pro", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+    fontSize: 15,
+    h1: { fontSize: "1.35rem", fontWeight: 800, lineHeight: 1.25 },
+    h4: { fontSize: "1.2rem", fontWeight: 800, lineHeight: 1.3 },
+    h5: { fontSize: "1.08rem", fontWeight: 800, lineHeight: 1.35 },
+    h6: { fontSize: "1rem", fontWeight: 800, lineHeight: 1.35 },
+    subtitle1: { fontSize: "0.95rem" },
+    subtitle2: { fontSize: "0.86rem" },
+    body1: { fontSize: "0.95rem" },
+    body2: { fontSize: "0.9rem" },
+    button: { fontSize: "0.9rem" },
+    caption: { fontSize: "0.78rem" },
   },
   components: {
     MuiCssBaseline: {
@@ -90,7 +105,7 @@ const adminMuiTheme = createTheme({
     MuiTableContainer: {
       styleOverrides: {
         root: {
-          borderRadius: 14,
+          borderRadius: 12,
           border: "1px solid rgba(148, 163, 184, 0.22)",
           background: "linear-gradient(180deg, rgba(15, 23, 42, 0.84), rgba(2, 6, 23, 0.9))",
         },
@@ -107,9 +122,63 @@ const adminMuiTheme = createTheme({
       styleOverrides: {
         root: {
           borderBottom: "1px solid rgba(148, 163, 184, 0.2)",
+          fontSize: "0.9rem",
+          padding: "10px 14px",
         },
         head: {
           color: "#e2e8f0",
+          fontWeight: 800,
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      },
+    },
+    MuiFormControl: {
+      defaultProps: {
+        size: "small",
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          minHeight: 44,
+          borderRadius: 10,
+          fontSize: "0.95rem",
+        },
+        input: {
+          fontSize: "0.95rem",
+          paddingTop: 11,
+          paddingBottom: 11,
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontSize: "0.9rem",
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          minHeight: 38,
+          borderRadius: 10,
+          fontSize: "0.9rem",
+          fontWeight: 700,
+          textTransform: "none",
+        },
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          height: 30,
+          borderRadius: 8,
+          fontSize: "0.85rem",
           fontWeight: 700,
         },
       },
@@ -179,6 +248,7 @@ function Admin({ initialItem = "dashboard" }) {
       products: <ProductsContent Api={songApiByRole} type="song" />,
       albums: <ProductsContent Api={albumsApi} type="albums" />,
       banner: <ProductsContent Api={bannerApi} type="banner" />,
+      popupAds: <ProductsContent Api={popupAdsApi} type="popupAds" />,
       reports: <ReportsContent />,
       artistRequests: <ArtistRequestsContent />,
       permissions: <PermissionsContent />,
@@ -207,10 +277,7 @@ function Admin({ initialItem = "dashboard" }) {
   }, [activeItem, permittedMenu]);
 
   const handleLogout = () => {
-    Cookies.remove("token");
-    Cookies.remove("user");
-    Cookies.remove("role");
-    window.location.href = "/";
+    logoutNow("/");
   };
 
   const currentContent = contentMap[activeItem] || (
@@ -220,7 +287,7 @@ function Admin({ initialItem = "dashboard" }) {
   return (
     <ThemeProvider theme={adminMuiTheme}>
       <CssBaseline />
-      <div className={cx("adminShell")}>
+      <div className={cx("adminShell", { collapsed: isCollapsed })}>
         <aside className={cx("sidebar", { collapsed: isCollapsed })}>
         <div className={cx("sidebarHeader")}>
           <div className={cx("brand")}>
