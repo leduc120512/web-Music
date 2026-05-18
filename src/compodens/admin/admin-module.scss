@@ -1,13 +1,13 @@
 .adminShell {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 284px minmax(0, 1fr);
+  grid-template-columns: 340px minmax(0, 1fr);
   background:
     radial-gradient(circle at 16% -10%, rgba(14, 165, 233, 0.25) 0%, transparent 42%),
     radial-gradient(circle at 96% 0%, rgba(99, 102, 241, 0.25) 0%, transparent 38%),
     #020617;
   color: #e2e8f0;
-  font-size: 0.95rem;
+  font-size: 1.28rem;
 }
 
 .adminShell.collapsed {
@@ -28,8 +28,8 @@
 }
 
 .sidebarHeader {
-  min-height: 74px;
-  padding: 14px 14px 12px;
+  min-height: 88px;
+  padding: 18px 16px 16px;
   border-bottom: 1px solid rgba(148, 163, 184, 0.12);
   display: flex;
   align-items: center;
@@ -45,8 +45,8 @@
 }
 
 .brandIcon {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
   display: inline-flex;
   align-items: center;
@@ -62,7 +62,7 @@
   p {
     margin: 0;
     color: #f8fafc;
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: 700;
     white-space: nowrap;
     overflow: hidden;
@@ -71,14 +71,14 @@
 
   span {
     color: #7dd3fc;
-    font-size: 0.78rem;
+    font-size: 1.14rem;
     font-weight: 500;
   }
 }
 
 .iconBtn {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 10px;
   background: rgba(15, 23, 42, 0.84);
@@ -87,33 +87,33 @@
 }
 
 .searchWrap {
-  margin: 12px;
-  margin-top: 10px;
+  margin: 16px;
+  margin-top: 14px;
   position: relative;
 }
 
 .searchIcon {
   position: absolute;
-  left: 12px;
+  left: 15px;
   top: 50%;
   transform: translateY(-50%);
   color: #64748b;
-  font-size: 0.95rem;
+  font-size: 1.12rem;
 }
 
 .searchInput {
   width: 100%;
-  min-height: 44px;
+  min-height: 56px;
   border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.62);
   color: #e2e8f0;
-  padding: 0 12px 0 36px;
-  font-size: 0.95rem;
+  padding: 0 14px 0 44px;
+  font-size: 1.24rem;
 }
 
 .menuBlock {
-  padding: 8px 10px;
+  padding: 10px 12px;
 }
 
 .menuBlock.secondary {
@@ -123,38 +123,38 @@
 }
 
 .menuTitle {
-  margin: 0 0 8px;
-  padding: 0 10px;
+  margin: 0 0 10px;
+  padding: 0 12px;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 0.72rem;
+  font-size: 1.06rem;
 }
 
 .menuItem {
   width: 100%;
-  min-height: 42px;
-  margin-bottom: 6px;
+  min-height: 54px;
+  margin-bottom: 8px;
   border: 1px solid transparent;
   border-radius: 12px;
   background: transparent;
   color: #cbd5e1;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 12px;
+  gap: 13px;
+  padding: 0 14px;
   cursor: pointer;
   transition: all 0.18s ease;
 
   span {
-    font-size: 0.92rem;
-    font-weight: 500;
+    font-size: 1.28rem;
+    font-weight: 700;
   }
 }
 
 .menuIcon {
-  width: 18px;
-  font-size: 0.95rem;
+  width: 22px;
+  font-size: 1.28rem;
 }
 
 .menuItem:hover {
@@ -174,7 +174,7 @@
 }
 
 .accountBox {
-  min-height: 48px;
+  min-height: 58px;
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   background: rgba(15, 23, 42, 0.7);
@@ -188,18 +188,18 @@
 .accountName {
   margin: 0;
   color: #f8fafc;
-  font-size: 0.92rem;
+  font-size: 1.24rem;
   font-weight: 600;
 }
 
 .accountRole {
   color: #94a3b8;
-  font-size: 0.78rem;
+  font-size: 1.12rem;
 }
 
 .logoutBtn {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border: 1px solid rgba(248, 113, 113, 0.45);
   border-radius: 10px;
   background: rgba(127, 29, 29, 0.22);
@@ -209,7 +209,7 @@
 
 .mainPane {
   min-width: 0;
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -219,7 +219,7 @@
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 14px;
   background: rgba(15, 23, 42, 0.72);
-  padding: 12px 14px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -228,28 +228,28 @@
   h1 {
     margin: 2px 0 0;
     color: #f8fafc;
-    font-size: 1.35rem;
+    font-size: 2.18rem;
   }
 }
 
 .topLabel {
   margin: 0;
   color: #94a3b8;
-  font-size: 0.72rem;
+  font-size: 1.06rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 .chip {
-  min-height: 34px;
-  padding: 0 12px;
+  min-height: 42px;
+  padding: 0 16px;
   display: inline-flex;
   align-items: center;
   border-radius: 999px;
   border: 1px solid rgba(125, 211, 252, 0.35);
   background: rgba(14, 116, 144, 0.2);
   color: #67e8f9;
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 
@@ -258,7 +258,7 @@
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 14px;
   background: linear-gradient(160deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.9));
-  padding: 14px;
+  padding: 24px;
 }
 
 .emptyState {
@@ -267,7 +267,7 @@
   align-items: center;
   justify-content: center;
   color: #94a3b8;
-  font-size: 0.95rem;
+  font-size: 1.28rem;
 }
 
 @media (max-width: 980px) {

@@ -181,9 +181,9 @@ function EntityTable({ Api, type }) {
       key: "__actions",
       label: "Thao tác",
       sticky: "actions",
-      width: 116,
+      width: 140,
       render: (row) => (
-        <Box display="flex" gap={0.75} justifyContent="flex-end">
+        <Box display="flex" gap={1} justifyContent="flex-end">
           <Tooltip title="Sửa">
             <IconButton color="primary" size="small" onClick={() => openEditModal(row)}>
               <EditIcon fontSize="small" />

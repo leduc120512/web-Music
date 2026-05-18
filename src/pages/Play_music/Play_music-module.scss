@@ -423,6 +423,31 @@
   filter: saturate(1.1) contrast(1.02);
 }
 
+.global-player-bridge {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.875rem 1rem;
+  border: 0.0625rem solid rgba(125, 211, 252, 0.22);
+  border-radius: 0.875rem;
+  background: rgba(15, 23, 42, 0.72);
+
+  span {
+    color: #94a3b8;
+    font-size: 1.25rem;
+  }
+}
+
+.player-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0;
+  white-space: nowrap;
+}
+
 .audio-empty {
   display: flex;
   align-items: center;
@@ -919,6 +944,11 @@
   &.liked {
     color: #ef4444;
   }
+}
+
+.favorite-album-inline {
+  margin-left: 0.75rem;
+  color: #67e8f9;
 }
 
 .sidebar-toggle {

@@ -36,15 +36,15 @@ export const adminTableContainerSx = {
   overflowX: "auto",
   overflowY: "auto",
   maxWidth: "100%",
-  maxHeight: "calc(100vh - 250px)",
+  maxHeight: "calc(100vh - 285px)",
   boxShadow: "0 18px 34px rgba(2, 6, 23, 0.28)",
 }
 
 export const adminTableSx = {
-  minWidth: 1120,
+  minWidth: 1280,
   tableLayout: "auto",
   "& .MuiTableCell-head": {
-    fontSize: "0.88rem",
+    fontSize: "1.26rem",
     fontWeight: 800,
     color: "#e2e8f0",
     whiteSpace: "nowrap",
@@ -54,10 +54,14 @@ export const adminTableSx = {
     zIndex: 4,
   },
   "& .MuiTableCell-body": {
-    fontSize: "0.9rem",
+    fontSize: "1.24rem",
     color: "#cbd5e1",
     verticalAlign: "middle",
     whiteSpace: "nowrap",
+  },
+  "& .MuiTableCell-root": {
+    paddingTop: "18px",
+    paddingBottom: "18px",
   },
   "& .MuiTableRow-root": {
     transition: adminUiTokens.transition,
@@ -86,9 +90,9 @@ export const stickyHeadCellSx = (side, offset = 0, zIndex = 6) => ({
 
 export const adminActionButtonSx = {
   transition: adminUiTokens.transition,
-  minHeight: 38,
+  minHeight: 58,
   borderRadius: 1.5,
-  fontSize: "0.9rem",
+  fontSize: "1.24rem",
   fontWeight: 700,
   textTransform: "none",
   "&:hover": {
@@ -98,6 +102,7 @@ export const adminActionButtonSx = {
 
 export const adminStatusChipSx = {
   fontWeight: 600,
+  fontSize: "1.12rem",
   transition: adminUiTokens.transition,
   "&:hover": {
     transform: "translateY(-1px)",

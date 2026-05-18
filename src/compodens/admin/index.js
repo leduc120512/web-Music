@@ -74,17 +74,17 @@ const adminMuiTheme = createTheme({
   },
   typography: {
     fontFamily: '"Be Vietnam Pro", "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
-    fontSize: 15,
-    h1: { fontSize: "1.35rem", fontWeight: 800, lineHeight: 1.25 },
-    h4: { fontSize: "1.2rem", fontWeight: 800, lineHeight: 1.3 },
-    h5: { fontSize: "1.08rem", fontWeight: 800, lineHeight: 1.35 },
-    h6: { fontSize: "1rem", fontWeight: 800, lineHeight: 1.35 },
-    subtitle1: { fontSize: "0.95rem" },
-    subtitle2: { fontSize: "0.86rem" },
-    body1: { fontSize: "0.95rem" },
-    body2: { fontSize: "0.9rem" },
-    button: { fontSize: "0.9rem" },
-    caption: { fontSize: "0.78rem" },
+    fontSize: 20,
+    h1: { fontSize: "2rem", fontWeight: 800, lineHeight: 1.25 },
+    h4: { fontSize: "1.75rem", fontWeight: 800, lineHeight: 1.3 },
+    h5: { fontSize: "1.58rem", fontWeight: 800, lineHeight: 1.35 },
+    h6: { fontSize: "1.44rem", fontWeight: 800, lineHeight: 1.35 },
+    subtitle1: { fontSize: "1.28rem" },
+    subtitle2: { fontSize: "1.18rem" },
+    body1: { fontSize: "1.24rem" },
+    body2: { fontSize: "1.16rem" },
+    button: { fontSize: "1.2rem" },
+    caption: { fontSize: "1.06rem" },
   },
   components: {
     MuiCssBaseline: {
@@ -122,8 +122,8 @@ const adminMuiTheme = createTheme({
       styleOverrides: {
         root: {
           borderBottom: "1px solid rgba(148, 163, 184, 0.2)",
-          fontSize: "0.9rem",
-          padding: "10px 14px",
+          fontSize: "1.24rem",
+          padding: "16px 20px",
         },
         head: {
           color: "#e2e8f0",
@@ -144,30 +144,30 @@ const adminMuiTheme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          minHeight: 44,
+          minHeight: 56,
           borderRadius: 10,
-          fontSize: "0.95rem",
+          fontSize: "1.22rem",
         },
         input: {
-          fontSize: "0.95rem",
-          paddingTop: 11,
-          paddingBottom: 11,
+          fontSize: "1.22rem",
+          paddingTop: 15,
+          paddingBottom: 15,
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: "0.9rem",
+          fontSize: "1.16rem",
         },
       },
     },
     MuiButton: {
       styleOverrides: {
         root: {
-          minHeight: 38,
+          minHeight: 52,
           borderRadius: 10,
-          fontSize: "0.9rem",
+          fontSize: "1.2rem",
           fontWeight: 700,
           textTransform: "none",
         },
@@ -176,9 +176,9 @@ const adminMuiTheme = createTheme({
     MuiChip: {
       styleOverrides: {
         root: {
-          height: 30,
+          height: 38,
           borderRadius: 8,
-          fontSize: "0.85rem",
+          fontSize: "1.12rem",
           fontWeight: 700,
         },
       },

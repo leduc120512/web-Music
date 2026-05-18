@@ -84,8 +84,14 @@ const moderationApi = {
     throw lastError;
   },
 
-  getSongViolationReports: (status = "PENDING") =>
+  getSongViolationReports: (status = "PENDING", tab) =>
     axios.get(`${API_BASE}/admin/moderation/song-violation-reports`, {
+      params: tab ? { status, tab } : { status },
+      headers: getAuthHeader(),
+    }),
+
+  getSongViolationReportSummary: (status = "PENDING") =>
+    axios.get(`${API_BASE}/admin/moderation/song-violation-reports/summary`, {
       params: { status },
       headers: getAuthHeader(),
     }),

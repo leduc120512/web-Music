@@ -1,0 +1,109 @@
+.mini-player {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1200;
+  width: min(23rem, calc(100vw - 2rem));
+  padding: 0.85rem;
+  border: 1px solid rgba(125, 211, 252, 0.26);
+  border-radius: 0.75rem;
+  background: rgba(2, 6, 23, 0.94);
+  box-shadow: 0 1rem 2.2rem rgba(2, 6, 23, 0.52);
+  color: #e2e8f0;
+  backdrop-filter: blur(1rem);
+}
+
+.mini-player__top {
+  display: grid;
+  grid-template-columns: 3.9rem minmax(0, 1fr) 2.6rem;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.mini-player__cover-link {
+  display: block;
+  width: 3.9rem;
+  height: 3.9rem;
+}
+
+.mini-player__cover {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.55rem;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.mini-player__meta {
+  min-width: 0;
+  text-align: left;
+}
+
+.mini-player__title {
+  display: block;
+  overflow: hidden;
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-player__artist {
+  margin: 0.2rem 0 0;
+  overflow: hidden;
+  color: #94a3b8;
+  font-size: 0.86rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-player__play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: none;
+  border-radius: 999rem;
+  background: #0ea5e9;
+  color: #f8fafc;
+  cursor: pointer;
+}
+
+.mini-player__progress-row,
+.mini-player__volume {
+  display: grid;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.7rem;
+}
+
+.mini-player__progress-row {
+  grid-template-columns: 2.5rem minmax(0, 1fr) 2.5rem;
+}
+
+.mini-player__volume {
+  grid-template-columns: 1rem minmax(0, 1fr);
+  color: #94a3b8;
+}
+
+.mini-player__progress-row span {
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini-player__range {
+  width: 100%;
+  accent-color: #0ea5e9;
+}
+
+@media (max-width: 38rem) {
+  .mini-player {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+}

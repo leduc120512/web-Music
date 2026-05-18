@@ -10,6 +10,8 @@ import {
   Paper,
   Select,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
@@ -21,6 +23,11 @@ const SOURCE_OPTIONS = [
   { value: "ALL", label: "Tat ca" },
   { value: "SONG", label: "Bai hat" },
   { value: "COMMENT", label: "Binh luan" },
+];
+const SONG_REPORT_STATUS = "PENDING";
+const SONG_REPORT_TABS = [
+  { value: "PRIORITY", label: "Can chu y" },
+  { value: "NORMAL", label: "Bao cao khac" },
 ];
 
 const statusColorMap = {
@@ -52,6 +59,10 @@ const normalizeSongReport = (item = {}) => ({
   detail: item.description || item.detail || "--",
   target: item.songTitle || item.songName || `Song #${item.songId || "--"}`,
   reporter: item.reporterUsername || item.createdByUsername || "--",
+  reporterRole: item.reporterRole || "--",
+  songReportCount: Number(item.songReportCount || 0),
+  authorReportCount: Number(item.authorReportCount || 0),
+  priorityVisible: Boolean(item.priorityVisible),
   createdAt: item.createdAt || item.reportedAt || "",
   original: item,
 });
@@ -71,6 +82,8 @@ const normalizeCommentReport = (item = {}) => ({
 function ReportsContent() {
   const [source, setSource] = useState("ALL");
   const [status, setStatus] = useState("PENDING");
+  const [songReportTab, setSongReportTab] = useState("PRIORITY");
+  const [songSummary, setSongSummary] = useState({ priorityCount: 0, normalCount: 0 });
   const [adminNote, setAdminNote] = useState("");
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -86,8 +99,16 @@ function ReportsContent() {
 
       const requests = [];
       if (source === "ALL" || source === "SONG") {
+        const isPriorityTab = songReportTab === "PRIORITY";
         requests.push(
-          moderationApi.getSongViolationReports(status).then((res) => readReportList(res).map(normalizeSongReport))
+          moderationApi.getSongViolationReports(SONG_REPORT_STATUS, songReportTab).then((res) =>
+            readReportList(res)
+              .map(normalizeSongReport)
+              .filter((report) => {
+                if (!isPriorityTab) return true;
+                return report.priorityVisible && report.songReportCount > 15 && report.authorReportCount > 0;
+              })
+          )
         );
       }
       if (source === "ALL" || source === "COMMENT") {
@@ -104,11 +125,34 @@ function ReportsContent() {
     } finally {
       setLoading(false);
     }
-  }, [source, status]);
+  }, [source, status, songReportTab]);
+
+  const loadSongSummary = useCallback(async () => {
+    if (source === "COMMENT") {
+      setSongSummary({ priorityCount: 0, normalCount: 0 });
+      return;
+    }
+
+    try {
+      const res = await moderationApi.getSongViolationReportSummary(SONG_REPORT_STATUS);
+      const data = moderationApi.unwrapData(res) || {};
+      setSongSummary({
+        priorityCount: Number(data.priorityCount || 0),
+        normalCount: Number(data.normalCount || 0),
+      });
+    } catch (err) {
+      console.error("[Reports] loadSongSummary error", err?.response?.status, err?.response?.data || err);
+      setSongSummary({ priorityCount: 0, normalCount: 0 });
+    }
+  }, [source]);
 
   useEffect(() => {
     loadReports();
   }, [loadReports]);
+
+  useEffect(() => {
+    loadSongSummary();
+  }, [loadSongSummary]);
 
   const counters = useMemo(
     () => ({
@@ -211,6 +255,33 @@ function ReportsContent() {
         </Button>
       </Stack>
 
+      {(source === "ALL" || source === "SONG") && (
+        <Paper variant="outlined" sx={{ ...adminCardSx, p: 1, mb: 2 }}>
+          <Tabs
+            value={songReportTab}
+            onChange={(_, value) => setSongReportTab(value)}
+            variant="scrollable"
+            allowScrollButtonsMobile
+          >
+            {SONG_REPORT_TABS.map((tab) => {
+              const count = tab.value === "PRIORITY" ? songSummary.priorityCount : songSummary.normalCount;
+              return (
+                <Tab
+                  key={tab.value}
+                  value={tab.value}
+                  label={
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <span>{tab.label}</span>
+                      <Chip size="small" label={count} color={tab.value === "PRIORITY" ? "warning" : "default"} />
+                    </Stack>
+                  }
+                />
+              );
+            })}
+          </Tabs>
+        </Paper>
+      )}
+
       <Stack direction={{ xs: "column", md: "row" }} spacing={1} mb={2}>
         <Chip label={`Tổng: ${counters.total}`} sx={adminStatusChipSx} />
         <Chip label={`Song report: ${counters.song}`} color="info" sx={adminStatusChipSx} />
@@ -250,6 +321,13 @@ function ReportsContent() {
                   <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
                     Reporter: {item.reporter} - {toDisplayDate(item.createdAt)}
                   </Typography>
+                  {item.source === "SONG" && (
+                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+                      <Chip size="small" label={`Song reports: ${item.songReportCount}`} sx={adminStatusChipSx} />
+                      <Chip size="small" label={`Author reports: ${item.authorReportCount}`} sx={adminStatusChipSx} />
+                      <Chip size="small" label={`Reporter role: ${item.reporterRole}`} sx={adminStatusChipSx} />
+                    </Stack>
+                  )}
                 </Box>
 
                 <Stack alignItems={{ xs: "stretch", md: "flex-end" }} spacing={1}>

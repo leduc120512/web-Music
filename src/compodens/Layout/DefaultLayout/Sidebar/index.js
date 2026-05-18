@@ -10,6 +10,7 @@ import Music_chauau from "./Muisic-chauau";
 import styles from "./Sider-bar-module.scss";
 import classnames from "classnames/bind";
 import Text from "../../../../pages/text";
+import RecommendedUsers from "./RecommendedUsers";
 
 const cx = classnames.bind(styles);
 
@@ -96,6 +97,8 @@ function Siderbar() {
           </TabPanel>
         </TabContext>
       </Box>
+
+      <RecommendedUsers />
     </aside>
   );
 }

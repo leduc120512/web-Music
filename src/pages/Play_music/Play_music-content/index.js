@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCaretRight,
-  faCopy,
   faExclamation,
   faHeadphones,
   faHeart,
   faMusic,
+  faPause,
   faPlay,
+  faPlus,
   faSortDown,
   faSortUp,
 } from '@fortawesome/free-solid-svg-icons'
@@ -26,6 +27,8 @@ import commentsApi from '../../../api/comments'
 import moderationApi from '../../../api/moderation'
 import imglist from './1438828376816.jpg'
 import { buildSongPath } from '../../../utils/songRoute'
+import FavoriteAlbumModal from '../../../compodens/FavoriteAlbumModal'
+import { usePlayer } from '../../../contexts/PlayerContext'
 
 const cx = classNames.bind(styles)
 const ASSET_BASE = 'http://localhost:8082'
@@ -36,6 +39,7 @@ const OLLAMA_URL = 'http://localhost:11434/api/generate'
 const OLLAMA_MODEL = 'llama3.2:1b'  // thay vì 'llama3.1'
 
 const OLLAMA_TIMEOUT_MS = 30000
+const ALLOWED_MODERATION_VERDICTS = new Set(['NORMAL', 'NEGATIVE'])
 
 const toNumber = (value) => {
   const parsed = Number(value)
@@ -60,9 +64,24 @@ const joinUrl = (base, path) => {
   return `${normalizedBase}${normalizedPath}`
 }
 
+const readModerationJson = (raw = '') => {
+  const matches = String(raw).match(/\{[^{}]*\}/g)
+  if (!matches?.length) return null
+
+  for (let index = matches.length - 1; index >= 0; index -= 1) {
+    try {
+      return JSON.parse(matches[index])
+    } catch (error) {
+      // Try the previous JSON-looking block.
+    }
+  }
+
+  return null
+}
+
 function Music({ songId }) {
-  const audioRef = useRef(null)
   const violationFormRef = useRef(null)
+  const { currentSong, isPlaying, playSong, togglePlay } = usePlayer()
   const [songData, setSongData] = useState(null)
   const [songLoading, setSongLoading] = useState(false)
   const [songError, setSongError] = useState('')
@@ -98,6 +117,7 @@ function Music({ songId }) {
   const [artistSongs, setArtistSongs] = useState([])
   const [artistSongsLoading, setArtistSongsLoading] = useState(false)
   const [artistSongsError, setArtistSongsError] = useState('')
+  const [favoriteAlbumSong, setFavoriteAlbumSong] = useState(null)
 
   const role = Cookies.get('role') || ''
   const canEditLyrics = role === 'ROLE_ADMIN' || role === 'ROLE_AUTHOR'
@@ -126,41 +146,47 @@ function Music({ songId }) {
 
     try {
       const prompt =
-        `Classify this comment as VIOLATION, NEGATIVE, or NORMAL.\n` +
-        `VIOLATION = hate speech, insults, harassment, threats, offensive language.\n` +
-        `NEGATIVE = negative but not offensive.\n` +
-        `NORMAL = everything else.\n` +
-        `Reply with ONLY this JSON, nothing else: {"verdict":"VIOLATION","reason":"why"}\n` +
-        `Comment: "${content}"`
+        `You moderate Vietnamese music website comments.\n` +
+        `Return ONLY valid JSON with keys: verdict, block, reason.\n` +
+        `verdict must be NORMAL, NEGATIVE, or VIOLATION.\n` +
+        `block must be true only for clear insults, harassment, threats, hate speech, sexual content, spam, or offensive profanity.\n` +
+        `Normal praise, greetings, opinions, short comments, and non-offensive negative feedback must have block false.\n` +
+        `Comment: ${JSON.stringify(content)}`
 
       const response = await fetch(OLLAMA_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: OLLAMA_MODEL, prompt, stream: false }),
+        body: JSON.stringify({
+          model: OLLAMA_MODEL,
+          prompt,
+          stream: false,
+          options: { temperature: 0, top_p: 0.2 },
+        }),
         signal: controller.signal,
       })
 
       const data = await response.json()
       const raw = String(data?.response || '').trim()
       console.log('[Ollama] raw response:', raw)
-      // extract JSON block từ response, loại bỏ ký tự thừa
-      const jsonMatch = raw.match(/\{[^{}]*\}/)
-      if (!jsonMatch) {
+      const parsed = readModerationJson(raw)
+      if (!parsed) {
         console.error('[Ollama] no valid JSON found')
-        return { verdict: 'UNKNOWN', reason: '' }
+        return { verdict: 'UNKNOWN', block: false, reason: '' }
       }
-      const parsed = JSON.parse(jsonMatch[0])
+
       console.log('[Ollama] parsed:', parsed)
       const verdict = String(parsed.verdict || 'UNKNOWN').toUpperCase()
-      console.log('[Ollama] verdict:', verdict)
+      const block = parsed.block === true && !ALLOWED_MODERATION_VERDICTS.has(verdict)
+      console.log('[Ollama] verdict:', verdict, 'block:', block)
 
       return {
         verdict,
+        block,
         reason: String(parsed.reason || '').trim(),
       }
     } catch (error) {
       console.error('[Ollama] error:', error)
-      return { verdict: 'UNKNOWN', reason: '' }
+      return { verdict: 'UNKNOWN', block: false, reason: '' }
     } finally {
       clearTimeout(timeout)
     }
@@ -326,7 +352,7 @@ function Music({ songId }) {
       const moderation = await moderateCommentWithOllama(content)
 
       // Chặn bình luận vi phạm
-      if (moderation.verdict === 'VIOLATION') {
+      if (moderation.block) {
         alert('Bình luận của bạn vi phạm tiêu chuẩn cộng đồng và không được phép đăng.')
         setNewComment('')
         return
@@ -505,19 +531,42 @@ function Music({ songId }) {
     }
   }
 
-  useEffect(() => {
-    if (!audioSrc || !audioRef.current) return
+  const playerSong = useMemo(() => {
+    if (!songData || !audioSrc) return null
 
-    audioRef.current.currentTime = 0
-    const playPromise = audioRef.current.play()
-    if (playPromise && typeof playPromise.catch === 'function') {
-      playPromise.catch(() => {
-        // Trinh duyet co the chan autoplay neu khong co user gesture hop le.
-      })
+    return {
+      id: songData.id ?? songId,
+      title: songData.title,
+      artistName: songData.artistName,
+      coverImage,
+      audioSrc,
+      path: buildSongPath(songData),
     }
-  }, [audioSrc, songId])
+  }, [audioSrc, coverImage, songData, songId])
+
+  const isCurrentPlayerSong = useMemo(() => {
+    if (!playerSong || !currentSong) return false
+    return String(playerSong.id ?? '') === String(currentSong.id ?? '') || playerSong.audioSrc === currentSong.audioSrc
+  }, [currentSong, playerSong])
+
+  const handlePlayerToggle = useCallback(() => {
+    if (!playerSong) return
+
+    if (isCurrentPlayerSong) {
+      togglePlay()
+      return
+    }
+
+    playSong(playerSong)
+  }, [isCurrentPlayerSong, playSong, playerSong, togglePlay])
+
+  useEffect(() => {
+    if (!playerSong) return
+    playSong(playerSong)
+  }, [playerSong, playSong])
 
   return (
+    <>
       <div className={cx('music-page')}>
         <div className={cx('music-container')}>
           <div className={cx('music-layout')}>
@@ -532,6 +581,7 @@ function Music({ songId }) {
                     coverImage={coverImage}
                     onToggleLike={handleToggleLike}
                     onOpenViolationForm={handleOpenSongViolation}
+                    onAddToFavoriteAlbum={setFavoriteAlbumSong}
                   />
 
                   <ArtistQuickCard
@@ -548,8 +598,10 @@ function Music({ songId }) {
                     songData={songData}
                     audioSrc={audioSrc}
                     songError={songError}
-                    audioRef={audioRef}
+                    isPlaying={isCurrentPlayerSong && isPlaying}
+                    onPlayerToggle={handlePlayerToggle}
                     onToggleLike={handleToggleLike}
+                    onAddToFavoriteAlbum={setFavoriteAlbumSong}
                 />
 
                 <UserActionsSection
@@ -627,6 +679,7 @@ function Music({ songId }) {
                         key={song.id}
                         song={song}
                         onToggleLike={handleToggleLike}
+                        onAddToFavoriteAlbum={setFavoriteAlbumSong}
                         currentSongId={currentSongId}
                       />
                   ))}
@@ -646,10 +699,16 @@ function Music({ songId }) {
           </div>
         </div>
       </div>
+      <FavoriteAlbumModal
+        open={Boolean(favoriteAlbumSong)}
+        song={favoriteAlbumSong}
+        onClose={() => setFavoriteAlbumSong(null)}
+      />
+    </>
   )
 }
 
-function HeroSection({ songData, songLoading, coverImage, onToggleLike, onOpenViolationForm }) {
+function HeroSection({ songData, songLoading, coverImage, onToggleLike, onOpenViolationForm, onAddToFavoriteAlbum }) {
   const title = songLoading ? 'Đang tải...' : songData?.title || 'Không có tiêu đề'
   const artistProfilePath = buildArtistProfilePath(songData)
 
@@ -687,6 +746,9 @@ function HeroSection({ songData, songLoading, coverImage, onToggleLike, onOpenVi
           </button>
           <button type='button' className={cx('hero-btn')} onClick={() => onToggleLike(songData)}>
             <FontAwesomeIcon icon={faHeart} /> {songData?.liked ? 'Đã thích' : 'Yêu thích'}
+          </button>
+          <button type='button' className={cx('hero-btn')} onClick={() => onAddToFavoriteAlbum(songData)}>
+            <FontAwesomeIcon icon={faPlus} /> Them vao album
           </button>
           <button type='button' className={cx('hero-btn')} onClick={onOpenViolationForm}>
             <FontAwesomeIcon icon={faExclamation} /> Báo cáo
@@ -808,20 +870,19 @@ function Breadcrumb({ songData }) {
   )
 }
 
-function SongInfo({ songData, audioSrc, songError, audioRef, onToggleLike }) {
+function SongInfo({ songData, audioSrc, songError, isPlaying, onPlayerToggle, onToggleLike, onAddToFavoriteAlbum }) {
   const artistProfilePath = buildArtistProfilePath(songData)
 
   return (
       <section className={cx('info-card')}>
         {audioSrc ? (
-            <audio
-                ref={audioRef}
-                className={cx('audio-player')}
-                src={audioSrc}
-                controls
-                preload='metadata'
-                crossOrigin='anonymous'
-            />
+            <div className={cx('global-player-bridge')}>
+              <button type='button' className={cx('action-button', 'player-toggle-button')} onClick={onPlayerToggle}>
+                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                <span>{isPlaying ? 'Tam dung' : 'Phat nhac'}</span>
+              </button>
+              <span>Nhac dang nam o trinh phat nho ben phai, chuyen trang van phat tiep.</span>
+            </div>
         ) : (
             <div className={cx('audio-empty')}>
               <FontAwesomeIcon icon={faMusic} />
@@ -838,6 +899,13 @@ function SongInfo({ songData, audioSrc, songError, audioRef, onToggleLike }) {
               onClick={() => onToggleLike(songData)}
             >
               <FontAwesomeIcon icon={faHeart} /> <span>{songData?.likeCount ?? 0}</span>
+            </button>
+            <button
+              type='button'
+              className={cx('like-button-inline', 'favorite-album-inline')}
+              onClick={() => onAddToFavoriteAlbum(songData)}
+            >
+              <FontAwesomeIcon icon={faPlus} /> <span>Them vao album</span>
             </button>
           </p>
           <p>
@@ -1189,7 +1257,7 @@ function SidebarHeader() {
   )
 }
 
-function SongItem({ song, onToggleLike, currentSongId }) {
+function SongItem({ song, onToggleLike, onAddToFavoriteAlbum, currentSongId }) {
   const cover = song.coverImage
       ? joinUrl(ASSET_BASE, song.coverImage)
       : 'https://via.placeholder.com/100'
@@ -1238,7 +1306,14 @@ function SongItem({ song, onToggleLike, currentSongId }) {
               }}
           />
 
-          <FontAwesomeIcon icon={faCopy} className={cx('song-action-icon')} />
+          <FontAwesomeIcon
+            icon={faPlus}
+            className={cx('song-action-icon', 'song-action-like')}
+            onClick={(event) => {
+              event.preventDefault()
+              onAddToFavoriteAlbum(song)
+            }}
+          />
         </div>
       </Link>
   )

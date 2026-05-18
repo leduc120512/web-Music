@@ -10,6 +10,7 @@ import {
   faList,
   faMicrophone,
   faPenToSquare,
+  faRecordVinyl,
   faUpload,
   faUserGroup,
   faVenusMars,
@@ -26,6 +27,7 @@ const cx = classnames.bind(styles);
 const PROFILE_NAV_ITEMS = [
   { to: "/Profile/chinh-sua-thong-tin", label: "Thông tin", icon: faPenToSquare },
   { to: "/Profile/Maiprofile", label: "Playlist", icon: faList },
+  { to: "/Profile/favorite-albums", label: "Album yeu thich", icon: faRecordVinyl },
   { to: "/Profile/Contentt_Video", label: "Video", icon: faVideo },
   { to: "/Profile/upload_proifle", label: "Tải lên", icon: faUpload },
   { to: "/Profile/Friend_live", label: "Bạn bè", icon: faUserGroup },

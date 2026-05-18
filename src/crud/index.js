@@ -6,8 +6,6 @@ import {
   CircularProgress,
   FormControl,
   FormControlLabel,
-  Grid,
-  InputLabel,
   MenuItem,
   Modal,
   Select,
@@ -67,24 +65,68 @@ const modalSx = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: { xs: "94vw", sm: 760 },
+  width: { xs: "94vw", sm: 640 },
   maxHeight: "90vh",
   overflowY: "auto",
-  bgcolor: "background.paper",
-  border: "1px solid rgba(148, 163, 184, 0.24)",
-  borderRadius: 2,
+  bgcolor: "#0f172a",
+  border: "1px solid rgba(125, 211, 252, 0.28)",
+  borderRadius: "16px",
   boxShadow: "0 24px 52px rgba(2, 6, 23, 0.65)",
   p: { xs: 2, sm: 3 },
 };
 
 const fieldSx = {
+  "& .MuiOutlinedInput-root": {
+    minHeight: 56,
+    fontSize: "1.08rem",
+    color: "#1e293b",
+    backgroundColor: "#f8fafc",
+    borderRadius: "7px",
+    boxShadow: "0 1px 0 rgba(255, 255, 255, 0.06)",
+    "& fieldset": {
+      borderColor: "rgba(15, 23, 42, 0.18)",
+    },
+    "&:hover fieldset": {
+      borderColor: "rgba(14, 165, 233, 0.65)",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#0891b2",
+      borderWidth: 2,
+    },
+  },
   "& .MuiInputBase-root": {
-    minHeight: 44,
-    fontSize: "0.95rem",
+    fontSize: "1.08rem",
   },
-  "& .MuiInputLabel-root": {
-    fontSize: "0.9rem",
+  "& .MuiInputBase-input": {
+    padding: "15px 16px",
+    "&::placeholder": {
+      color: "#64748b",
+      opacity: 1,
+    },
   },
+  "& textarea.MuiInputBase-input": {
+    minHeight: 96,
+  },
+};
+
+const fieldLabelSx = {
+  mb: 0.8,
+  color: "#67e8f9",
+  fontSize: "1.12rem",
+  fontWeight: 800,
+};
+
+const fileInputStyle = {
+  display: "block",
+  width: "100%",
+  minHeight: 56,
+  padding: "15px 16px",
+  borderRadius: 7,
+  border: "1px solid rgba(15, 23, 42, 0.18)",
+  background: "#f8fafc",
+  color: "#1e293b",
+  fontSize: "1.08rem",
+  boxShadow: "0 1px 3px rgba(15, 23, 42, 0.16)",
 };
 
 const getInitialFieldValue = (initialData, field) => {
@@ -236,24 +278,33 @@ export default function CrudForm({
         {loadingData && fields.some((field) => field.optionsKey) ? (
           <Box sx={{ textAlign: "center", py: 6 }}>
             <CircularProgress />
-            <Typography mt={2}>Đang tải dữ liệu tham chiếu...</Typography>
+            <Typography mt={2} sx={{ color: "#e2e8f0" }}>Đang tải dữ liệu tham chiếu...</Typography>
           </Box>
         ) : (
           <>
-            <Typography variant="h6" component="h2" mb={3}>
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{
+                mb: 2.5,
+                color: "#f8fafc",
+                fontSize: "1.45rem",
+                fontWeight: 900,
+              }}
+            >
               {isEdit ? `Chỉnh sửa ${type}` : `Tạo mới ${type}`}
             </Typography>
 
             <form onSubmit={handleSubmit} noValidate>
-              <Grid container spacing={2}>
+              <Box display="flex" flexDirection="column" gap={2.1}>
                 {fields.map((field) => {
                   const value = formData[field.name] ?? "";
 
                   if (field.type === "file") {
                     const currentValue = initialData?.[field.name];
                     return (
-                      <Grid item xs={12} key={field.name}>
-                        <Typography variant="body2" gutterBottom fontWeight={700}>
+                      <Box key={field.name}>
+                        <Typography sx={fieldLabelSx}>
                           {field.label} {field.required && "*"}
                         </Typography>
                         <input
@@ -262,31 +313,35 @@ export default function CrudForm({
                           accept={field.accept}
                           onChange={handleChange}
                           disabled={submitting}
-                          style={{
-                            display: "block",
-                            width: "100%",
-                            minHeight: 44,
-                            padding: "10px 12px",
-                            borderRadius: 10,
-                            border: "1px solid rgba(148, 163, 184, 0.35)",
-                            background: "rgba(2, 6, 23, 0.55)",
-                            color: "#e2e8f0",
-                            fontSize: "0.92rem",
-                          }}
+                          style={fileInputStyle}
                         />
                         {typeof currentValue === "string" && currentValue && (
-                          <Typography variant="caption" color="text.secondary" mt={1} display="block">
+                          <Typography variant="caption" sx={{ color: "#cbd5e1" }} mt={1} display="block">
                             Hiện có: {currentValue.split("/").pop()}
                           </Typography>
                         )}
-                      </Grid>
+                      </Box>
                     );
                   }
 
                   if (field.type === "checkbox") {
                     return (
-                      <Grid item xs={12} key={field.name}>
+                      <Box key={field.name}>
                         <FormControlLabel
+                          sx={{
+                            m: 0,
+                            px: 1.5,
+                            py: 1,
+                            width: "100%",
+                            borderRadius: "7px",
+                            color: "#075985",
+                            backgroundColor: "#f8fafc",
+                            boxShadow: "0 1px 3px rgba(15, 23, 42, 0.16)",
+                            border: "1px solid rgba(15, 23, 42, 0.18)",
+                            "& .MuiFormControlLabel-label": {
+                              fontWeight: 800,
+                            },
+                          }}
                           control={
                             <Checkbox
                               name={field.name}
@@ -298,7 +353,7 @@ export default function CrudForm({
                           }
                           label={field.label}
                         />
-                      </Grid>
+                      </Box>
                     );
                   }
 
@@ -307,15 +362,17 @@ export default function CrudForm({
                     const labelKey = field.optionsKey === "albums" ? "title" : "name";
 
                     return (
-                      <Grid item xs={12} sm={6} key={field.name}>
+                      <Box key={field.name}>
+                        <Typography sx={fieldLabelSx}>
+                          {field.label} {field.required && "*"}
+                        </Typography>
                         <FormControl fullWidth required={field.required} sx={fieldSx}>
-                          <InputLabel>{field.label}</InputLabel>
                           <Select
                             name={field.name}
                             value={value || ""}
-                            label={field.label}
                             onChange={handleChange}
                             disabled={submitting}
+                            displayEmpty
                           >
                             <MenuItem value="" disabled>
                               Chọn {field.label.toLowerCase()}
@@ -327,17 +384,20 @@ export default function CrudForm({
                             ))}
                           </Select>
                         </FormControl>
-                      </Grid>
+                      </Box>
                     );
                   }
 
                   return (
-                    <Grid item xs={12} sm={6} key={field.name}>
+                    <Box key={field.name}>
+                      <Typography sx={fieldLabelSx}>
+                        {field.label} {field.required && "*"}
+                      </Typography>
                       <TextField
-                        label={field.label}
                         name={field.name}
                         type={field.type}
                         value={value}
+                        placeholder={field.label}
                         onChange={handleChange}
                         fullWidth
                         multiline={field.multiline}
@@ -347,20 +407,33 @@ export default function CrudForm({
                         InputLabelProps={field.type === "datetime-local" ? { shrink: true } : undefined}
                         sx={fieldSx}
                       />
-                    </Grid>
+                    </Box>
                   );
                 })}
-              </Grid>
+              </Box>
 
-              <Box mt={4} display="flex" justifyContent="flex-end" gap={1.5}>
+              <Box mt={3} display="flex" flexDirection="column" gap={1.5}>
                 <Button
                   type="submit"
                   variant="contained"
                   color="primary"
                   disabled={submitting}
+                  fullWidth
                   startIcon={
                     submitting ? <CircularProgress size={16} color="inherit" /> : <FontAwesomeIcon icon={faSave} />
                   }
+                  sx={{
+                    minHeight: 56,
+                    borderRadius: "7px",
+                    background: "linear-gradient(135deg, #0891b2, #0369a1)",
+                    fontSize: "1.08rem",
+                    fontWeight: 900,
+                    textTransform: "none",
+                    boxShadow: "0 8px 18px rgba(3, 105, 161, 0.28)",
+                    "&:hover": {
+                      background: "linear-gradient(135deg, #0284c7, #075985)",
+                    },
+                  }}
                 >
                   {submitting ? "Đang lưu..." : "Lưu"}
                 </Button>
@@ -370,7 +443,17 @@ export default function CrudForm({
                   color="inherit"
                   onClick={onClose}
                   disabled={submitting}
+                  fullWidth
                   startIcon={<FontAwesomeIcon icon={faTimes} />}
+                  sx={{
+                    minHeight: 56,
+                    borderRadius: "7px",
+                    color: "#075985",
+                    borderColor: "rgba(7, 89, 133, 0.35)",
+                    backgroundColor: "rgba(255, 255, 255, 0.65)",
+                    fontWeight: 850,
+                    textTransform: "none",
+                  }}
                 >
                   Hủy
                 </Button>

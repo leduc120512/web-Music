@@ -21,10 +21,13 @@ import UpLoadd from "./pages/profile/Content_profile/quanli_upload";
 import Friend_live from "./pages/profile/Content_profile/Friend_live";
 import AuthorRequestPage from "./pages/profile/AuthorRequest";
 import EditAccountPage from "./pages/profile/EditAccount";
+import FavoriteAlbumsPage from "./pages/profile/FavoriteAlbums";
 import Top100_ from "./pages/layout-page/Top_100";
 import Admin from "../src/compodens/admin";
 import { buildSongPathFromId } from "./utils/songRoute";
 import PopupAdModal from "./compodens/PopupAdModal";
+import MiniPlayer from "./compodens/MiniPlayer";
+import { PlayerProvider } from "./contexts/PlayerContext";
 
 const PROFILE_CHILD_ROUTES = [
   { path: "chinh-sua-thong-tin", element: EditAccountPage },
@@ -33,6 +36,7 @@ const PROFILE_CHILD_ROUTES = [
   { path: "Contentt_Video", element: Contentt_Video },
   { path: "upload_proifle", element: UpLoadd },
   { path: "Friend_live", element: Friend_live },
+  { path: "favorite-albums", element: FavoriteAlbumsPage },
   { path: "author-request", element: AuthorRequestPage },
 ];
 
@@ -57,54 +61,57 @@ function LegacySongRedirect() {
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<DefaultLayout />} />
-          <Route path="/BAIHAT" element={<PageTUYETAP />} />
-          <Route path="/Playlist" element={<PagePlayList />} />
-          <Route path="/Video" element={<Pagevideo />} />
-          <Route path="/top_100" element={<Top100_ />} />
-          <Route path="/bang-xep-hang" element={<Top100_ />} />
+      <PlayerProvider>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<DefaultLayout />} />
+            <Route path="/BAIHAT" element={<PageTUYETAP />} />
+            <Route path="/Playlist" element={<PagePlayList />} />
+            <Route path="/Video" element={<Pagevideo />} />
+            <Route path="/top_100" element={<Top100_ />} />
+            <Route path="/bang-xep-hang" element={<Top100_ />} />
 
-          <Route path="/UpLoad" element={<UpLoad />} />
-          <Route path="/nhac/:songSlug" element={<Play_music />} />
-          <Route path="/Nhac/:id" element={<LegacySongRedirect />} />
+            <Route path="/UpLoad" element={<UpLoad />} />
+            <Route path="/nhac/:songSlug" element={<Play_music />} />
+            <Route path="/Nhac/:id" element={<LegacySongRedirect />} />
 
-          <Route path="/profile/:section" element={<Create_list />} />
+            <Route path="/profile/:section" element={<Create_list />} />
 
-          <Route path="/Search_results" element={<Search_results />} />
-          <Route path="/tim-kiem" element={<Search_results />} />
-          <Route path="/Create_list_music" element={<Update_create />} />
+            <Route path="/Search_results" element={<Search_results />} />
+            <Route path="/tim-kiem" element={<Search_results />} />
+            <Route path="/Create_list_music" element={<Update_create />} />
 
-          <Route path="/Update_list_music" element={<Create_list />} />
-          <Route path="/admin" element={<Admin />} />
-          {ADMIN_SECTION_ROUTES.map(({ path, initialItem }) => (
-            <Route key={path} path={path} element={<Admin initialItem={initialItem} />} />
-          ))}
-          <Route path="Vietnam" element={<Importt />}>
-            {" "}
-          </Route>
-        </Routes>
-        <Routes>
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Losgin" element={<Navigate replace to="/Login" />} />
-          <Route path="/Profile" element={<Profile />}>
-            {PROFILE_CHILD_ROUTES.map(({ index, path, element: Element }) => (
-              <Route key={path || "index"} index={index} path={path} element={<Element />} />
+            <Route path="/Update_list_music" element={<Create_list />} />
+            <Route path="/admin" element={<Admin />} />
+            {ADMIN_SECTION_ROUTES.map(({ path, initialItem }) => (
+              <Route key={path} path={path} element={<Admin initialItem={initialItem} />} />
             ))}
-          </Route>
-          <Route path="/dang-ky-tac-gia" element={<Navigate replace to="/Profile/author-request" />} />
-        </Routes>
-        <Routes>
-          <Route path="/ProfileAuthor/:id" element={<Profile2 />}>
-            {PROFILE_AUTHOR_CHILD_ROUTES.map(({ index, path, element: Element }) => (
-              <Route key={path || "author-index"} index={index} path={path} element={<Element />} />
-            ))}
-          </Route>
+            <Route path="Vietnam" element={<Importt />}>
+              {" "}
+            </Route>
+          </Routes>
+          <Routes>
+            <Route path="/Login" element={<Login />} />
+            <Route path="/Losgin" element={<Navigate replace to="/Login" />} />
+            <Route path="/Profile" element={<Profile />}>
+              {PROFILE_CHILD_ROUTES.map(({ index, path, element: Element }) => (
+                <Route key={path || "index"} index={index} path={path} element={<Element />} />
+              ))}
+            </Route>
+            <Route path="/dang-ky-tac-gia" element={<Navigate replace to="/Profile/author-request" />} />
+          </Routes>
+          <Routes>
+            <Route path="/ProfileAuthor/:id" element={<Profile2 />}>
+              {PROFILE_AUTHOR_CHILD_ROUTES.map(({ index, path, element: Element }) => (
+                <Route key={path || "author-index"} index={index} path={path} element={<Element />} />
+              ))}
+            </Route>
 
-        </Routes>
-        <PopupAdModal />
-      </div>
+          </Routes>
+          <PopupAdModal />
+          <MiniPlayer />
+        </div>
+      </PlayerProvider>
     </Router>
   );
 }
